@@ -81,7 +81,13 @@ Build a production-ready, highly polished cleaning service booking platform for 
 - Backend seed images must match data.js (update both when changing)
 - Sticky nav bottom-[60px] accounts for FloatingContact bar (60px height)
 
-## Backlog (P2+)
+### Phase 5 — Social Buttons + JustDial + Deploy Ready (Feb 2026)
+- Added 4 hero social circle buttons on mobile (Instagram pink, Call blue, WhatsApp green, JustDial orange)
+- JustDial URL (https://jsdl.in/DT-49TSAH54KXI) added to whatsapp.js constants
+- Desktop floating sidebar now has 4 icons including JustDial
+- Mobile bottom bar updated: Call | WhatsApp | JustDial | Book Now
+- Filter chips on /services and /gallery now horizontally scrollable on mobile (scrollbar-hide)
+- Deployment check: PASS ✅ (only minor DB projection recommendation)
 - PWA setup (manifest.json + service worker)
 - JWT_SECRET security hardening (remove default fallback)
 - CORS restriction for production
