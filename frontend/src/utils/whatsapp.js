@@ -2,6 +2,7 @@ export const WHATSAPP_NUMBER = "917498026390";
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const DEFAULT_WHATSAPP_MESSAGE = "Hello Royal Cleaning Services, I would like to book a cleaning service.";
 export const INSTAGRAM_URL = "https://www.instagram.com/royal_cleaning_and_services?igsh=MTljcjc5Z25nbjd4aQ==";
+export const JUSTDIAL_URL = "https://jsdl.in/DT-49TSAH54KXI";
 export const PHONE_NUMBER = "+91 74980 26390";
 export const PHONE_URL = "tel:+917498026390";
 

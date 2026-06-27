@@ -190,7 +190,7 @@ const ServicesPage = () => {
         {/* Filter + Cards */}
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           {/* Category filters */}
-          <div className="flex flex-wrap gap-3 mb-6">
+          <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-3 mb-6 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
             {categories.map(cat => (
               <button
                 key={cat}

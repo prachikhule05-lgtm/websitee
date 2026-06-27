@@ -33,7 +33,7 @@ const GalleryPage = () => {
 
         {/* Filter Tabs */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-wrap gap-3 mb-8 justify-center">
+          <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-3 mb-8 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center">
             {categories.map(cat => (
               <button
                 key={cat}
