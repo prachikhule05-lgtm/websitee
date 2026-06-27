@@ -1,55 +1,64 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "@/context/AuthContext";
+import { Toaster } from "@/components/ui/sonner";
+import FloatingContact from "@/components/FloatingContact";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+import HomePage from "@/pages/HomePage";
+import ServicesPage from "@/pages/ServicesPage";
+import BookingPage from "@/pages/BookingPage";
+import BookingSuccessPage from "@/pages/BookingSuccessPage";
+import GalleryPage from "@/pages/GalleryPage";
+import ContactPage from "@/pages/ContactPage";
+import LocalSEOPage from "@/pages/LocalSEOPage";
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+import AdminLoginPage from "@/pages/admin/AdminLoginPage";
+import AdminDashboardPage from "@/pages/admin/AdminDashboardPage";
+import AdminBookingsPage from "@/pages/admin/AdminBookingsPage";
+import AdminServicesPage from "@/pages/admin/AdminServicesPage";
+import AdminReviewsPage from "@/pages/admin/AdminReviewsPage";
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("adminToken");
+  return token ? children : <Navigate to="/admin/login" replace />;
 };
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
+          {/* Public Routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/booking/success" element={<BookingSuccessPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+
+          {/* Local SEO Routes */}
+          <Route path="/home-cleaning-pune" element={<LocalSEOPage service="home-deep-cleaning" />} />
+          <Route path="/sofa-cleaning-pune" element={<LocalSEOPage service="sofa-cleaning" />} />
+          <Route path="/kitchen-cleaning-pune" element={<LocalSEOPage service="kitchen-cleaning" />} />
+          <Route path="/bathroom-cleaning-pune" element={<LocalSEOPage service="bathroom-cleaning" />} />
+          <Route path="/office-cleaning-pune" element={<LocalSEOPage service="office-cleaning" />} />
+          <Route path="/commercial-cleaning-pune" element={<LocalSEOPage service="commercial-cleaning" />} />
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboardPage /></ProtectedRoute>} />
+          <Route path="/admin/bookings" element={<ProtectedRoute><AdminBookingsPage /></ProtectedRoute>} />
+          <Route path="/admin/services" element={<ProtectedRoute><AdminServicesPage /></ProtectedRoute>} />
+          <Route path="/admin/reviews" element={<ProtectedRoute><AdminReviewsPage /></ProtectedRoute>} />
+
+          {/* 404 */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <FloatingContact />
+        <Toaster richColors position="top-right" closeButton />
       </BrowserRouter>
-    </div>
+    </AuthProvider>
   );
 }
 
