@@ -1,0 +1,24 @@
+{
+  "summary": "Tested the real-time review feature: Write a Review button, ReviewForm, star picker, validation, form submission, backend POST/GET /api/reviews, and admin approval flow. All features working correctly.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_reviews.py",
+    "/app/test_reports/pytest/reviews_test.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": ["/app/backend/tests/test_reviews.py"],
+  "success_rate": {"backend": "100% (5/5 tests passed)", "frontend": "100% - all flows working"},
+  "seed_data_creation": "Created TEST_Customer and TEST_ApproveCustomer reviews during testing (pending status)",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Review feature fully tested and working. Backend: POST /api/reviews creates pending, GET /api/reviews returns approved only, admin PUT /api/admin/reviews/{id} approves reviews. Frontend: Write a Review button (data-testid=write-review-btn), form with star picker, validation toasts, success card with Thank You! message all verified on 390x844 mobile viewport."
+}
