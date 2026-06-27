@@ -1,15 +1,7 @@
 # Royal Cleaning Services - PRD
 
 ## Original Problem Statement
-Build a production-ready, highly polished cleaning service booking platform for "Royal Cleaning Services" with:
-- Premium UI with rich animations
-- Multi-step booking flow
-- Admin dashboard
-- WhatsApp/Instagram integration
-- Before-and-after image sliders
-- Local SEO pages
-- Dynamic pricing
-- Robust admin dashboard
+Build a production-ready, highly polished cleaning service booking platform for "Royal Cleaning Services" with premium UI, multi-step booking flow, admin dashboard, WhatsApp/Instagram integration, before-and-after image sliders, local SEO pages, dynamic pricing.
 
 ## Tech Stack
 - Frontend: React SPA (react-router-dom, framer-motion v11, Tailwind CSS, shadcn/ui)
@@ -20,24 +12,15 @@ Build a production-ready, highly polished cleaning service booking platform for 
 ## Architecture
 ```
 /app/
-├── backend/
-│   ├── server.py         (All API routes + seed data)
-│   ├── requirements.txt
-│   └── .env              (MONGO_URL, DB_NAME, JWT_SECRET)
-├── frontend/
-│   ├── src/
-│   │   ├── components/   (Header, Footer, FloatingContact, BeforeAfterSlider, sections/, ui/)
-│   │   ├── pages/        (HomePage, ServicesPage, BookingPage, BookingSuccessPage, GalleryPage, ContactPage, LocalSEOPage, admin/)
-│   │   ├── utils/        (api.js, whatsapp.js)
-│   │   ├── context/      (AuthContext.js)
-│   │   ├── constants/    (data.js, testIds.js)
-│   │   ├── App.js
-│   │   └── index.css
-│   ├── tailwind.config.js
-│   └── package.json
-└── memory/
-    ├── PRD.md
-    └── test_credentials.md
+├── backend/server.py         (All API routes + seed data)
+├── frontend/src/
+│   ├── components/           (Header, Footer, FloatingContact, BeforeAfterSlider, sections/)
+│   ├── pages/                (HomePage, ServicesPage, BookingPage, BookingSuccessPage, GalleryPage, ContactPage, LocalSEOPage, admin/)
+│   ├── utils/                (api.js, whatsapp.js)
+│   ├── context/              (AuthContext.js)
+│   ├── constants/            (data.js, testIds.js)
+│   └── index.css
+└── memory/PRD.md
 ```
 
 ## DB Schema
@@ -53,54 +36,54 @@ Build a production-ready, highly polished cleaning service booking platform for 
 - POST /api/bookings
 - GET /api/bookings (admin)
 - POST /api/leads
-- GET/POST /api/reviews
+- GET/POST/PUT/DELETE /api/reviews
 - GET /api/stats (admin)
 
 ## What's Been Implemented
 
-### Phase 1 (Session 1) - Complete
-- Full project setup and boilerplate
-- MongoDB integration with Motor
+### Phase 1 — Core Foundation
+- Full project setup: React SPA + FastAPI + MongoDB
 - Multi-step booking flow (9 steps)
-- Admin dashboard with booking/service/review management
-- Framer Motion v11 (downgraded from v12 to fix compile errors)
+- Admin dashboard (bookings, services, reviews)
 - Navy/Royal Blue/Gold color theme
-- Horizontal service card layout
+- WhatsApp & Instagram integration (target="_blank")
+- Framer Motion v11 (stable — do NOT upgrade to v12)
 
-### Phase 2 (Session 2 - Feb 2026) - Complete
-- Updated service images to match real cleaning services:
-  - Carpet Cleaning: user-uploaded real carpet cleaning photo
-  - Kitchen Deep Cleaning: user-uploaded kitchen cleaning photo
-  - Bathroom Deep Cleaning: Pexels bathroom tile scrubbing photo
-  - Office Cleaning: Unsplash office cleaning mop photo
-- Added smart Add-ons step (Step 2) to booking flow:
-  - Asks if user has sofa/furnished flat
-  - Dry or Wet sofa cleaning (wet = ₹499/seat)
-  - Chair cleaning: ₹150 per chair with +/- counter
-  - Updated grand total in summary step
+### Phase 2 — Service Images + Add-ons (Feb 2026)
+- Updated all 4 service images to real photos (carpet, kitchen, bathroom, office)
+- Smart Add-ons step (Step 2): sofa dry/wet cleaning (₹499/seat), chair cleaning (₹150/chair)
+- Updated MongoDB service records directly
+
+### Phase 3 — Slider + Admin Reviews (Feb 2026)
+- BeforeAfterSlider: clipPath-based clipping, global drag listeners, auto-animate on mount
+- Fixed bathroom before/after (was using same image for both)
+- Admin Reviews: Stats row, labeled approve/reject/reset/delete buttons, custom delete modal, filter tabs with counts, animated cards
+
+### Phase 4 — Android Mobile Optimization (Feb 2026)
+- Horizontal service cards in booking Step 1 (64×64 image left + text right)
+- Sticky Continue/Confirm bar on mobile (fixed bottom-[60px], sm:hidden)
+- Compact "STEP X OF 9" step indicator on mobile (replaces overflowing bubbles)
+- Anti-zoom CSS for Android inputs (font-size: 16px on mobile)
+- Removed blue tap-highlight flash on Android
+- Active:scale-97 tap feedback on buttons
+- .scrollbar-hide utility for filter chips
+- WhatsApp message upgraded to rich emoji format with full booking details
+- Auto-open WhatsApp after booking confirmation
 
 ## Routes
-- / (HomePage)
-- /services (ServicesPage)
-- /booking (BookingPage - 9 steps)
-- /booking/success (BookingSuccessPage)
-- /gallery (GalleryPage with BeforeAfterSlider)
-- /contact (ContactPage)
-- /home-cleaning-pune, /sofa-cleaning-pune, /kitchen-cleaning-pune, /bathroom-cleaning-pune, /office-cleaning-pune, /commercial-cleaning-pune (LocalSEOPage)
+- /, /services, /booking, /booking/success, /gallery, /contact
+- /home-cleaning-pune, /sofa-cleaning-pune, /kitchen-cleaning-pune, /bathroom-cleaning-pune, /office-cleaning-pune
 - /admin/login, /admin/dashboard, /admin/bookings, /admin/services, /admin/reviews
 
 ## Critical Notes
-- DO NOT upgrade framer-motion beyond v11.0.3 (v12 breaks with GroupAnimationWithThen errors)
-- Social media links always use <a target="_blank"> - never iframes
-- Always use REACT_APP_BACKEND_URL from .env for API calls
-- Backend seed data (SERVICES_SEED in server.py) is the source of truth for service images
+- DO NOT upgrade framer-motion beyond v11.0.3
+- Social media links: always <a target="_blank"> — never iframes
+- Backend seed images must match data.js (update both when changing)
+- Sticky nav bottom-[60px] accounts for FloatingContact bar (60px height)
 
-## P1 Backlog
-- Admin review moderation (approve/reject/delete full controls)
-- Before-After slider interactive drag comparison (currently displays)
-- PWA setup (manifest.json, service worker, offline fallback)
-
-## P2 Backlog
-- JWT_SECRET security hardening (remove fallback default)
-- CORS restriction for production (currently allow_origins=['*'])
-- Location area suggestions in booking step 4
+## Backlog (P2+)
+- PWA setup (manifest.json + service worker)
+- JWT_SECRET security hardening (remove default fallback)
+- CORS restriction for production
+- Location area autocomplete in booking step 4
+- Filter chips horizontal scroll on services/gallery pages
