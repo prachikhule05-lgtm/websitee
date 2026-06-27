@@ -69,8 +69,8 @@ html { scroll-behavior: smooth; }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(249, 115, 22, 0.4); }
-  50% { box-shadow: 0 0 25px rgba(249, 115, 22, 0.7), 0 0 50px rgba(249, 115, 22, 0.3); }
+  0%, 100% { box-shadow: 0 0 5px rgba(245, 158, 11, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.7), 0 0 50px rgba(245, 158, 11, 0.3); }
 }
 
 @keyframes shimmer {
@@ -112,7 +112,7 @@ html { scroll-behavior: smooth; }
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #2563EB, #F97316);
+  background: linear-gradient(135deg, #2563EB, #F59E0B);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -129,13 +129,20 @@ html { scroll-behavior: smooth; }
 
 /* Orange glow button */
 .btn-orange-glow {
-  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.35);
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
   transition: all 0.3s ease;
 }
 .btn-orange-glow:hover {
-  box-shadow: 0 8px 30px rgba(249, 115, 22, 0.5);
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
   transform: translateY(-2px);
 }
+
+@keyframes pulse-glow-green {
+  0%, 100% { box-shadow: 0 0 5px rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(37, 211, 102, 0.8), 0 0 50px rgba(37, 211, 102, 0.3); }
+}
+.animate-pulse-glow-green { animation: pulse-glow-green 2s ease-in-out infinite; }
+
 
 /* Blue glow button */
 .btn-blue-glow {
@@ -169,7 +176,7 @@ html { scroll-behavior: smooth; }
 }
 
 .step-completed {
-  background: #22C55E;
+  background: #10B981;
   color: white;
 }
 
@@ -180,7 +187,7 @@ html { scroll-behavior: smooth; }
 
 /* Service card badge */
 .badge-popular {
-  background: linear-gradient(135deg, #F97316, #EA580C);
+  background: linear-gradient(135deg, #F59E0B, #D97706);
   color: white;
   font-size: 11px;
   font-weight: 700;

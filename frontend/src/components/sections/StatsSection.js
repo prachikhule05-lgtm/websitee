@@ -4,8 +4,8 @@ import { Users, Star, Leaf, Award } from "lucide-react";
 
 const stats = [
   { icon: <Users className="w-6 h-6" />, value: 1000, suffix: "+", label: "Happy Customers", color: "text-[#2563EB]", bg: "bg-blue-50" },
-  { icon: <Star className="w-6 h-6" />, value: 4.9, suffix: "/5", label: "Average Rating", color: "text-[#F97316]", bg: "bg-orange-50", decimals: 1 },
-  { icon: <Leaf className="w-6 h-6" />, value: 100, suffix: "%", label: "Eco-Friendly Products", color: "text-[#22C55E]", bg: "bg-green-50" },
+  { icon: <Star className="w-6 h-6" />, value: 4.9, suffix: "/5", label: "Average Rating", color: "text-[#F59E0B]", bg: "bg-amber-50", decimals: 1 },
+  { icon: <Leaf className="w-6 h-6" />, value: 100, suffix: "%", label: "Eco-Friendly Products", color: "text-[#10B981]", bg: "bg-green-50" },
   { icon: <Award className="w-6 h-6" />, value: 5, suffix: "+", label: "Years of Experience", color: "text-[#2563EB]", bg: "bg-blue-50" },
 ];
 
@@ -50,7 +50,7 @@ const StatsSection = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <p className="font-body text-sm font-semibold text-[#F97316] uppercase tracking-widest mb-2">Our Numbers</p>
+          <p className="font-body text-sm font-semibold text-[#F59E0B] uppercase tracking-widest mb-2">Our Numbers</p>
           <h2 className="font-heading text-2xl sm:text-3xl font-bold text-[#0F172A]">Trusted by Pune's Homeowners</h2>
         </motion.div>
 
@@ -70,7 +70,7 @@ const StatsSection = () => {
               <div className={`font-heading text-3xl sm:text-4xl font-extrabold ${stat.color} mb-1`}>
                 <AnimatedNumber value={stat.value} suffix={stat.suffix} decimals={stat.decimals || 0} />
               </div>
-              <div className="font-body text-sm text-[#475569] font-medium">{stat.label}</div>
+              <div className="font-body text-sm text-[#1E293B] font-medium">{stat.label}</div>
             </motion.div>
           ))}
         </div>

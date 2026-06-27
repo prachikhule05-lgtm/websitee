@@ -48,7 +48,7 @@ const Header = () => {
               <div className={`font-heading font-extrabold text-base leading-none ${scrolled ? "text-[#0F172A]" : "text-white"}`}>
                 Royal Cleaning
               </div>
-              <div className={`font-body text-[10px] tracking-widest uppercase leading-none mt-0.5 ${scrolled ? "text-[#F97316]" : "text-[#F97316]"}`}>
+              <div className={`font-body text-[10px] tracking-widest uppercase leading-none mt-0.5 ${scrolled ? "text-[#F59E0B]" : "text-[#F59E0B]"}`}>
                 Services
               </div>
             </div>
@@ -64,7 +64,7 @@ const Header = () => {
                   ${isActive(link.href)
                     ? "text-[#2563EB] bg-blue-50 font-semibold"
                     : scrolled
-                    ? "text-[#475569] hover:text-[#2563EB] hover:bg-blue-50"
+                    ? "text-[#1E293B] hover:text-[#2563EB] hover:bg-blue-50"
                     : "text-white/90 hover:text-white hover:bg-white/10"
                   }`}
               >
@@ -95,7 +95,7 @@ const Header = () => {
             <Link
               to="/booking"
               data-testid={HEADER.bookNowBtn}
-              className="btn-orange-glow bg-[#F97316] text-white px-5 py-2.5 rounded-full font-body font-bold text-sm hover:bg-[#EA580C] transition-all duration-200"
+              className="btn-orange-glow bg-[#F59E0B] text-white px-5 py-2.5 rounded-full font-body font-bold text-sm hover:bg-[#D97706] transition-all duration-200"
             >
               Book Now
             </Link>
@@ -130,7 +130,7 @@ const Header = () => {
                   key={link.href}
                   to={link.href}
                   className={`block px-4 py-3 rounded-xl font-body font-medium text-sm transition-all
-                    ${isActive(link.href) ? "text-[#2563EB] bg-blue-50 font-semibold" : "text-[#475569] hover:text-[#2563EB] hover:bg-blue-50"}`}
+                    ${isActive(link.href) ? "text-[#2563EB] bg-blue-50 font-semibold" : "text-[#1E293B] hover:text-[#2563EB] hover:bg-blue-50"}`}
                 >
                   {link.label}
                 </Link>
@@ -139,7 +139,7 @@ const Header = () => {
                 <a href={PHONE_URL} className="flex items-center gap-2 px-4 py-3 rounded-xl bg-blue-50 text-[#2563EB] font-semibold text-sm">
                   <Phone className="w-4 h-4" /> {PHONE_NUMBER}
                 </a>
-                <Link to="/booking" className="btn-orange-glow bg-[#F97316] text-white px-4 py-3 rounded-xl font-bold text-sm text-center block">
+                <Link to="/booking" className="btn-orange-glow bg-[#F59E0B] text-white px-4 py-3 rounded-xl font-bold text-sm text-center block">
                   Book Now
                 </Link>
               </div>

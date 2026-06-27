@@ -81,7 +81,7 @@ const LocalSEOPage = ({ service }) => {
         <div className="bg-gradient-to-r from-[#0F172A] to-[#1E3A5F] pt-28 pb-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 mb-4">
-              <MapPin className="w-3.5 h-3.5 text-[#F97316]" />
+              <MapPin className="w-3.5 h-3.5 text-[#F59E0B]" />
               <span className="font-body text-sm text-white/80">Pune, Maharashtra</span>
             </motion.div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4">
@@ -91,7 +91,7 @@ const LocalSEOPage = ({ service }) => {
               {data.description}
             </motion.p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link to={`/booking?service=${data.serviceSlug}`} className="btn-orange-glow bg-[#F97316] hover:bg-[#EA580C] text-white px-6 py-3.5 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all">
+              <Link to={`/booking?service=${data.serviceSlug}`} className="btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-6 py-3.5 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all">
                 Book Now — {data.price} <ArrowRight className="w-4 h-4" />
               </Link>
               <a href={PHONE_URL} className="bg-white/10 border border-white/20 text-white px-6 py-3.5 rounded-full font-body font-semibold text-sm inline-flex items-center gap-2 hover:bg-white/20 transition-all">
@@ -110,7 +110,7 @@ const LocalSEOPage = ({ service }) => {
               {data.features.map(f => (
                 <div key={f} className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
                   <div className="w-7 h-7 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Check className="w-4 h-4 text-[#22C55E]" />
+                    <Check className="w-4 h-4 text-[#10B981]" />
                   </div>
                   <span className="font-body text-sm font-medium text-[#0F172A]">{f}</span>
                 </div>
@@ -127,7 +127,7 @@ const LocalSEOPage = ({ service }) => {
                   <MapPin className="w-3.5 h-3.5" /> {area}
                 </div>
               ))}
-              <div className="flex items-center gap-1.5 bg-gray-100 text-[#475569] px-4 py-2 rounded-full font-body text-sm">+ All Pune areas</div>
+              <div className="flex items-center gap-1.5 bg-gray-100 text-[#1E293B] px-4 py-2 rounded-full font-body text-sm">+ All Pune areas</div>
             </div>
           </div>
 
@@ -137,7 +137,7 @@ const LocalSEOPage = ({ service }) => {
             <p className="font-body text-slate-300 text-sm mb-5">Pay only after the service is completed. No advance required.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to={`/booking?service=${data.serviceSlug}`}
-                className="btn-orange-glow bg-[#F97316] hover:bg-[#EA580C] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center">
+                className="btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center">
                 Book Now <ArrowRight className="w-4 h-4" />
               </Link>
               <a href={getWhatsAppLink(`I need ${data.title}`)} target="_blank" rel="noopener noreferrer"

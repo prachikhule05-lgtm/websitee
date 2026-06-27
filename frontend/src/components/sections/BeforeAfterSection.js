@@ -17,7 +17,7 @@ const BeforeAfterSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <p className="font-body text-sm font-semibold text-[#F97316] uppercase tracking-widest mb-2">See The Difference</p>
+          <p className="font-body text-sm font-semibold text-[#F59E0B] uppercase tracking-widest mb-2">See The Difference</p>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white">Before & After Results</h2>
           <p className="font-body text-base text-slate-400 mt-3 max-w-xl mx-auto">
             Drag the slider to see the transformation. Real results from our cleaning professionals.
@@ -32,7 +32,7 @@ const BeforeAfterSection = () => {
               onClick={() => setActive(i)}
               className={`px-5 py-2 rounded-full font-body text-sm font-semibold transition-all ${
                 active === i
-                  ? "bg-[#F97316] text-white shadow-orange"
+                  ? "bg-[#F59E0B] text-white shadow-amber"
                   : "bg-white/10 text-white/70 hover:bg-white/20 border border-white/10"
               }`}
             >

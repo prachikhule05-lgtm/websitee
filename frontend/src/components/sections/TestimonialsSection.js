@@ -51,7 +51,7 @@ const TestimonialsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <p className="font-body text-sm font-semibold text-[#F97316] uppercase tracking-widest mb-2">Customer Reviews</p>
+          <p className="font-body text-sm font-semibold text-[#F59E0B] uppercase tracking-widest mb-2">Customer Reviews</p>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[#0F172A]">What Our Customers Say</h2>
           <div className="flex items-center justify-center gap-2 mt-3">
             <div className="flex">
@@ -60,7 +60,7 @@ const TestimonialsSection = () => {
               ))}
             </div>
             <span className="font-body font-bold text-[#0F172A]">4.9/5</span>
-            <span className="font-body text-[#475569] text-sm">based on 1000+ reviews</span>
+            <span className="font-body text-[#1E293B] text-sm">based on 1000+ reviews</span>
           </div>
         </motion.div>
 
@@ -81,7 +81,7 @@ const TestimonialsSection = () => {
                     {reviews[current]?.image ? (
                       <img src={reviews[current].image} alt={reviews[current].name} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[#2563EB] to-[#F97316] flex items-center justify-center text-white font-bold text-xl">
+                      <div className="w-full h-full bg-gradient-to-br from-[#2563EB] to-[#F59E0B] flex items-center justify-center text-white font-bold text-xl">
                         {reviews[current]?.name?.[0]}
                       </div>
                     )}
@@ -91,13 +91,13 @@ const TestimonialsSection = () => {
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <div className="font-heading font-bold text-[#0F172A] text-lg">{reviews[current]?.name}</div>
-                      <div className="font-body text-sm text-[#475569]">{reviews[current]?.service}</div>
+                      <div className="font-body text-sm text-[#1E293B]">{reviews[current]?.service}</div>
                       {reviews[current]?.location && <div className="font-body text-xs text-[#94A3B8] mt-0.5">{reviews[current].location}, Pune</div>}
                     </div>
                     <Quote className="w-8 h-8 text-[#E2E8F0] flex-shrink-0" />
                   </div>
                   <StarRating rating={reviews[current]?.rating || 5} />
-                  <p className="font-body text-base text-[#475569] mt-3 leading-relaxed italic">
+                  <p className="font-body text-base text-[#1E293B] mt-3 leading-relaxed italic">
                     "{reviews[current]?.text}"
                   </p>
                 </div>

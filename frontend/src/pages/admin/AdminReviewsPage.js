@@ -44,9 +44,9 @@ const AdminReviewsPage = () => {
   const filtered = filter === "all" ? reviews : reviews.filter(r => r.status === filter);
 
   const statusColor = (s) => {
-    if (s === "approved") return "bg-green-50 text-[#22C55E]";
+    if (s === "approved") return "bg-green-50 text-[#10B981]";
     if (s === "rejected") return "bg-red-50 text-red-500";
-    return "bg-orange-50 text-[#F97316]";
+    return "bg-amber-50 text-[#F59E0B]";
   };
 
   return (
@@ -56,7 +56,7 @@ const AdminReviewsPage = () => {
         <div className="flex gap-2 flex-wrap">
           {["all", "pending", "approved", "rejected"].map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-xl font-body text-sm font-semibold capitalize transition-all ${filter === f ? "bg-[#2563EB] text-white" : "bg-white border border-gray-200 text-[#475569] hover:border-[#2563EB]"}`}>
+              className={`px-4 py-2 rounded-xl font-body text-sm font-semibold capitalize transition-all ${filter === f ? "bg-[#2563EB] text-white" : "bg-white border border-gray-200 text-[#1E293B] hover:border-[#2563EB]"}`}>
               {f} ({f === "all" ? reviews.length : reviews.filter(r => r.status === f).length})
             </button>
           ))}
@@ -75,7 +75,7 @@ const AdminReviewsPage = () => {
                     {r.customerImage ? (
                       <img src={r.customerImage} alt={r.customerName} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[#2563EB] to-[#F97316] flex items-center justify-center text-white font-bold">
+                      <div className="w-full h-full bg-gradient-to-br from-[#2563EB] to-[#F59E0B] flex items-center justify-center text-white font-bold">
                         {r.customerName?.[0]}
                       </div>
                     )}
@@ -84,7 +84,7 @@ const AdminReviewsPage = () => {
                     <div className="flex items-center gap-2 flex-wrap mb-1">
                       <span className="font-heading font-bold text-sm text-[#0F172A]">{r.customerName}</span>
                       <span className="font-body text-xs text-[#94A3B8]">·</span>
-                      <span className="font-body text-xs text-[#475569]">{r.service}</span>
+                      <span className="font-body text-xs text-[#1E293B]">{r.service}</span>
                       <span className={`font-body text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${statusColor(r.status)}`}>{r.status}</span>
                     </div>
                     <div className="flex gap-0.5 mb-2">
@@ -92,12 +92,12 @@ const AdminReviewsPage = () => {
                         <Star key={i} className={`w-3.5 h-3.5 ${i < (r.rating || 5) ? "fill-yellow-400 text-yellow-400" : "fill-gray-200 text-gray-200"}`} />
                       ))}
                     </div>
-                    <p className="font-body text-sm text-[#475569] leading-relaxed">{r.text}</p>
+                    <p className="font-body text-sm text-[#1E293B] leading-relaxed">{r.text}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 flex-shrink-0">
                   {r.status !== "approved" && (
-                    <button onClick={() => update(r.id, "approved")} className="p-1.5 hover:bg-green-50 rounded-lg text-[#22C55E] transition-colors" title="Approve">
+                    <button onClick={() => update(r.id, "approved")} className="p-1.5 hover:bg-green-50 rounded-lg text-[#10B981] transition-colors" title="Approve">
                       <Check className="w-4 h-4" />
                     </button>
                   )}

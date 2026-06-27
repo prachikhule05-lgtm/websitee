@@ -126,13 +126,13 @@ const BookingPage = () => {
                   <span className={`font-body text-[10px] ${s.id === step ? "text-[#2563EB] font-semibold" : "text-[#94A3B8]"}`}>{s.label}</span>
                 </div>
                 {i < STEPS.length - 1 && (
-                  <div className={`h-0.5 flex-1 transition-colors min-w-[12px] ${s.id < step ? "bg-[#22C55E]" : "bg-gray-200"}`} />
+                  <div className={`h-0.5 flex-1 transition-colors min-w-[12px] ${s.id < step ? "bg-[#10B981]" : "bg-gray-200"}`} />
                 )}
               </React.Fragment>
             ))}
           </div>
           <div className="h-1 bg-gray-200 rounded-full mt-3">
-            <div className="h-full bg-gradient-to-r from-[#2563EB] to-[#F97316] rounded-full transition-all duration-500"
+            <div className="h-full bg-gradient-to-r from-[#2563EB] to-[#F59E0B] rounded-full transition-all duration-500"
               style={{ width: `${((step - 1) / (STEPS.length - 1)) * 100}%` }} />
           </div>
         </div>
@@ -154,7 +154,7 @@ const BookingPage = () => {
                 {step === 1 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Service</h2>
-                    <p className="font-body text-sm text-[#475569] mb-6">Choose the cleaning service you need</p>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">Choose the cleaning service you need</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                       {services.map(s => (
                         <button
@@ -189,7 +189,7 @@ const BookingPage = () => {
                 {step === 2 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Property Type</h2>
-                    <p className="font-body text-sm text-[#475569] mb-6">This helps us estimate the correct price</p>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">This helps us estimate the correct price</p>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                       {PROPERTY_TYPES.map(pt => {
                         const p = booking.serviceObj?.propertyPricing?.[pt] || 0;
@@ -201,8 +201,8 @@ const BookingPage = () => {
                             onClick={() => setBooking(b => ({ ...b, propertyType: pt }))}
                             className={`p-4 rounded-2xl border-2 text-center transition-all ${
                               booking.propertyType === pt
-                                ? "border-[#F97316] bg-orange-50"
-                                : "border-gray-100 hover:border-[#F97316] hover:bg-orange-50"
+                                ? "border-[#F59E0B] bg-amber-50"
+                                : "border-gray-100 hover:border-[#F59E0B] hover:bg-amber-50"
                             }`}
                           >
                             <div className="font-heading font-bold text-sm text-[#0F172A] mb-1">{pt}</div>
@@ -227,7 +227,7 @@ const BookingPage = () => {
                 {step === 3 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Location</h2>
-                    <p className="font-body text-sm text-[#475569] mb-6">Which area in Pune?</p>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">Which area in Pune?</p>
                     <div className="relative mb-4">
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94A3B8]" />
                       <input
@@ -264,7 +264,7 @@ const BookingPage = () => {
                 {step === 4 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Date</h2>
-                    <p className="font-body text-sm text-[#475569] mb-6">When would you like the cleaning?</p>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">When would you like the cleaning?</p>
                     <input
                       data-testid={BOOKING.datePicker}
                       type="date"
@@ -275,8 +275,8 @@ const BookingPage = () => {
                     />
                     {booking.date && (
                       <div className="mt-4 p-4 bg-green-50 rounded-2xl flex items-center gap-2">
-                        <Check className="w-4 h-4 text-[#22C55E]" />
-                        <p className="font-body text-sm text-[#22C55E] font-semibold">
+                        <Check className="w-4 h-4 text-[#10B981]" />
+                        <p className="font-body text-sm text-[#10B981] font-semibold">
                           Selected: {new Date(booking.date).toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
                         </p>
                       </div>
@@ -288,7 +288,7 @@ const BookingPage = () => {
                 {step === 5 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Time Slot</h2>
-                    <p className="font-body text-sm text-[#475569] mb-6">Available time slots for your selected date</p>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">Available time slots for your selected date</p>
                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                       {TIME_SLOTS.map(slot => (
                         <button
@@ -298,7 +298,7 @@ const BookingPage = () => {
                           className={`p-3 rounded-xl border-2 font-body text-sm font-semibold transition-all ${
                             booking.time === slot
                               ? "border-[#2563EB] bg-[#2563EB] text-white shadow-blue"
-                              : "border-gray-200 text-[#475569] hover:border-[#2563EB] hover:text-[#2563EB] hover:bg-blue-50"
+                              : "border-gray-200 text-[#1E293B] hover:border-[#2563EB] hover:text-[#2563EB] hover:bg-blue-50"
                           }`}
                         >
                           {slot}
@@ -312,22 +312,22 @@ const BookingPage = () => {
                 {step === 6 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Your Details</h2>
-                    <p className="font-body text-sm text-[#475569] mb-6">We'll use these to confirm your booking</p>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">We'll use these to confirm your booking</p>
                     <div className="space-y-4">
                       <div>
-                        <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1.5 block">Full Name *</label>
+                        <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1.5 block">Full Name *</label>
                         <input data-testid={BOOKING.customerName} type="text" placeholder="Enter your full name"
                           value={booking.customerName} onChange={e => setBooking(b => ({ ...b, customerName: e.target.value }))}
                           className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
                       </div>
                       <div>
-                        <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1.5 block">Mobile Number *</label>
+                        <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1.5 block">Mobile Number *</label>
                         <input data-testid={BOOKING.customerMobile} type="tel" placeholder="+91 XXXXX XXXXX"
                           value={booking.mobile} onChange={e => setBooking(b => ({ ...b, mobile: e.target.value }))}
                           className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
                       </div>
                       <div>
-                        <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1.5 block">Email (Optional)</label>
+                        <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1.5 block">Email (Optional)</label>
                         <input data-testid={BOOKING.customerEmail} type="email" placeholder="you@email.com"
                           value={booking.email} onChange={e => setBooking(b => ({ ...b, email: e.target.value }))}
                           className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
@@ -340,46 +340,46 @@ const BookingPage = () => {
                 {step === 7 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Service Address</h2>
-                    <p className="font-body text-sm text-[#475569] mb-6">Where should our team come?</p>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">Where should our team come?</p>
                     <div className="space-y-3">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                          <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1 block">House / Flat No. *</label>
+                          <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">House / Flat No. *</label>
                           <input type="text" placeholder="e.g. 402, B-Wing" value={booking.houseNo}
                             onChange={e => setBooking(b => ({ ...b, houseNo: e.target.value }))}
                             className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
                         </div>
                         <div>
-                          <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1 block">Street / Society *</label>
+                          <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Street / Society *</label>
                           <input type="text" placeholder="Street or society name" value={booking.street}
                             onChange={e => setBooking(b => ({ ...b, street: e.target.value }))}
                             className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
                         </div>
                       </div>
                       <div>
-                        <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1 block">Landmark (Optional)</label>
+                        <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Landmark (Optional)</label>
                         <input type="text" placeholder="Near landmark" value={booking.landmark}
                           onChange={e => setBooking(b => ({ ...b, landmark: e.target.value }))}
                           className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="sm:col-span-2">
-                          <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1 block">Area *</label>
+                          <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Area *</label>
                           <input type="text" placeholder="Area / Locality" value={booking.area}
                             onChange={e => setBooking(b => ({ ...b, area: e.target.value }))}
                             className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
                         </div>
                         <div>
-                          <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1 block">Pincode *</label>
+                          <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Pincode *</label>
                           <input type="text" placeholder="411XXX" value={booking.pincode} maxLength={6}
                             onChange={e => setBooking(b => ({ ...b, pincode: e.target.value }))}
                             className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
                         </div>
                       </div>
                       <div>
-                        <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1 block">City</label>
+                        <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">City</label>
                         <input type="text" value={booking.city} readOnly
-                          className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 font-body text-sm bg-gray-50 text-[#475569]" />
+                          className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 font-body text-sm bg-gray-50 text-[#1E293B]" />
                       </div>
                     </div>
                   </div>
@@ -389,7 +389,7 @@ const BookingPage = () => {
                 {step === 8 && (
                   <div data-testid={BOOKING.summary}>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Booking Summary</h2>
-                    <p className="font-body text-sm text-[#475569] mb-6">Review your booking details before confirming</p>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">Review your booking details before confirming</p>
                     <div className="space-y-3 mb-6">
                       {[
                         { label: "Service", value: booking.service },
@@ -413,16 +413,16 @@ const BookingPage = () => {
                       {pricing.isCustom ? (
                         <div className="text-center py-2">
                           <p className="font-heading font-bold text-[#0F172A]">Custom Quote Service</p>
-                          <p className="font-body text-sm text-[#475569] mt-1">Our team will contact you with pricing after inspection.</p>
+                          <p className="font-body text-sm text-[#1E293B] mt-1">Our team will contact you with pricing after inspection.</p>
                         </div>
                       ) : (
                         <>
                           <div className="flex justify-between mb-2">
-                            <span className="font-body text-sm text-[#475569]">Expected Price</span>
+                            <span className="font-body text-sm text-[#1E293B]">Expected Price</span>
                             <span className="font-body text-sm font-semibold text-[#0F172A]">₹{pricing.base.toLocaleString("en-IN")}</span>
                           </div>
                           <div className="flex justify-between mb-3 pb-3 border-b border-gray-200">
-                            <span className="font-body text-sm text-[#475569]">GST (18%)</span>
+                            <span className="font-body text-sm text-[#1E293B]">GST (18%)</span>
                             <span className="font-body text-sm font-semibold text-[#0F172A]">₹{pricing.gst.toLocaleString("en-IN")}</span>
                           </div>
                           <div className="flex justify-between">
@@ -436,10 +436,10 @@ const BookingPage = () => {
                     {/* Payment Note */}
                     <div className="bg-green-50 border border-green-200 rounded-2xl p-4 mb-5">
                       <div className="flex items-center gap-2">
-                        <Check className="w-5 h-5 text-[#22C55E] flex-shrink-0" />
+                        <Check className="w-5 h-5 text-[#10B981] flex-shrink-0" />
                         <div>
-                          <div className="font-heading font-bold text-sm text-[#22C55E]">Pay After Service</div>
-                          <div className="font-body text-xs text-[#475569]">No advance payment required. Pay only after the cleaning service is completed.</div>
+                          <div className="font-heading font-bold text-sm text-[#10B981]">Pay After Service</div>
+                          <div className="font-body text-xs text-[#1E293B]">No advance payment required. Pay only after the cleaning service is completed.</div>
                         </div>
                       </div>
                     </div>
@@ -453,7 +453,7 @@ const BookingPage = () => {
           <div className="flex items-center justify-between mt-6">
             {step > 1 ? (
               <button data-testid={BOOKING.prevBtn} onClick={() => go(-1)}
-                className="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-200 font-body font-semibold text-sm text-[#475569] hover:border-[#2563EB] hover:text-[#2563EB] transition-all">
+                className="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-200 font-body font-semibold text-sm text-[#1E293B] hover:border-[#2563EB] hover:text-[#2563EB] transition-all">
                 <ChevronLeft className="w-4 h-4" /> Back
               </button>
             ) : <div />}
@@ -463,7 +463,7 @@ const BookingPage = () => {
                 data-testid={BOOKING.nextBtn}
                 onClick={() => go(1)}
                 disabled={!canNext()}
-                className="flex items-center gap-2 btn-orange-glow bg-[#F97316] hover:bg-[#EA580C] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Continue <ChevronRight className="w-4 h-4" />
               </button>
@@ -472,7 +472,7 @@ const BookingPage = () => {
                 data-testid={BOOKING.confirmBtn}
                 onClick={handleSubmit}
                 disabled={loading}
-                className="flex items-center gap-2 bg-[#22C55E] hover:bg-[#16A34A] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-70 shadow-lg shadow-green-200"
+                className="flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-70 shadow-lg shadow-green-200"
               >
                 {loading ? <div className="spinner" /> : <><Check className="w-4 h-4" /> Confirm Booking</>}
               </button>

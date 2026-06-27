@@ -44,7 +44,7 @@ const Footer = () => {
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
               to="/booking"
-              className="btn-orange-glow bg-[#F97316] hover:bg-[#EA580C] text-white px-6 py-3 rounded-full font-bold font-body text-sm flex items-center gap-2 transition-all"
+              className="btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-6 py-3 rounded-full font-bold font-body text-sm flex items-center gap-2 transition-all"
             >
               Book Now <ArrowRight className="w-4 h-4" />
             </Link>
@@ -67,12 +67,12 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 bg-gradient-to-br from-[#2563EB] to-[#F97316] rounded-xl flex items-center justify-center">
+              <div className="w-9 h-9 bg-gradient-to-br from-[#2563EB] to-[#F59E0B] rounded-xl flex items-center justify-center">
                 <Crown className="w-5 h-5 text-white" />
               </div>
               <div>
                 <div className="font-heading font-extrabold text-base text-white leading-none">Royal Cleaning</div>
-                <div className="font-body text-[10px] text-[#F97316] tracking-widest uppercase">Services</div>
+                <div className="font-body text-[10px] text-[#F59E0B] tracking-widest uppercase">Services</div>
               </div>
             </div>
             <p className="font-body text-sm text-slate-400 leading-relaxed mb-5">
@@ -114,8 +114,8 @@ const Footer = () => {
             <ul className="space-y-2.5">
               {services.map((s) => (
                 <li key={s.name}>
-                  <Link to={s.href} className="font-body text-sm text-slate-400 hover:text-[#F97316] transition-colors flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-[#F97316] flex-shrink-0" />
+                  <Link to={s.href} className="font-body text-sm text-slate-400 hover:text-[#F59E0B] transition-colors flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-[#F59E0B] flex-shrink-0" />
                     {s.name}
                   </Link>
                 </li>
@@ -144,8 +144,8 @@ const Footer = () => {
             <ul className="space-y-2.5">
               {seoLinks.map((l) => (
                 <li key={l.name}>
-                  <Link to={l.href} className="font-body text-sm text-slate-400 hover:text-[#22C55E] transition-colors flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-[#22C55E] flex-shrink-0" />
+                  <Link to={l.href} className="font-body text-sm text-slate-400 hover:text-[#10B981] transition-colors flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-[#10B981] flex-shrink-0" />
                     {l.name}
                   </Link>
                 </li>

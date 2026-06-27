@@ -17,7 +17,7 @@ const BookingSuccessPage = () => {
         <Header />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <p className="font-body text-[#475569]">Booking details not found.</p>
+            <p className="font-body text-[#1E293B]">Booking details not found.</p>
             <Link to="/booking" className="font-body text-[#2563EB] hover:underline mt-2 block">Make a new booking</Link>
           </div>
         </div>
@@ -33,7 +33,7 @@ const BookingSuccessPage = () => {
       <Header />
       <main data-testid={SUCCESS.page} className="min-h-screen bg-[#F8FAFC] pb-16 md:pb-0">
         {/* Hero */}
-        <div className="bg-gradient-to-br from-[#22C55E] to-[#16A34A] pt-28 pb-16">
+        <div className="bg-gradient-to-br from-[#10B981] to-[#059669] pt-28 pb-16">
           <div className="max-w-xl mx-auto px-4 text-center">
             <motion.div
               initial={{ scale: 0 }}
@@ -81,8 +81,8 @@ const BookingSuccessPage = () => {
             <div className="space-y-3">
               {[
                 { icon: <Package className="w-4 h-4" />, label: "Service", value: booking.service, color: "text-[#2563EB] bg-blue-50" },
-                { icon: <Calendar className="w-4 h-4" />, label: "Date & Time", value: `${booking.date ? new Date(booking.date).toLocaleDateString("en-IN", { weekday: "short", month: "long", day: "numeric" }) : booking.date} at ${booking.time}`, color: "text-[#F97316] bg-orange-50" },
-                { icon: <Phone className="w-4 h-4" />, label: "Contact", value: booking.customerName ? `${booking.customerName} · ${booking.mobile}` : booking.mobile, color: "text-[#22C55E] bg-green-50" },
+                { icon: <Calendar className="w-4 h-4" />, label: "Date & Time", value: `${booking.date ? new Date(booking.date).toLocaleDateString("en-IN", { weekday: "short", month: "long", day: "numeric" }) : booking.date} at ${booking.time}`, color: "text-[#F59E0B] bg-amber-50" },
+                { icon: <Phone className="w-4 h-4" />, label: "Contact", value: booking.customerName ? `${booking.customerName} · ${booking.mobile}` : booking.mobile, color: "text-[#10B981] bg-green-50" },
                 { icon: <MapPin className="w-4 h-4" />, label: "Address", value: booking.address || `${booking.houseNo}, ${booking.street}, ${booking.area}, ${booking.city}`, color: "text-purple-600 bg-purple-50" },
               ].map(item => (
                 <div key={item.label} className="flex items-start gap-3 p-3 rounded-xl bg-gray-50">
@@ -104,7 +104,7 @@ const BookingSuccessPage = () => {
                   <p className="font-body text-xs text-[#94A3B8]">Expected Total</p>
                   <p className="font-heading font-extrabold text-xl text-[#2563EB]">₹{booking.grandTotal?.toLocaleString("en-IN")}</p>
                 </div>
-                <div className="bg-green-50 text-[#22C55E] px-4 py-2 rounded-full font-body font-bold text-sm">
+                <div className="bg-green-50 text-[#10B981] px-4 py-2 rounded-full font-body font-bold text-sm">
                   Pay After Service
                 </div>
               </div>

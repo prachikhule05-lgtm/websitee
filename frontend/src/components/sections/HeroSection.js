@@ -70,7 +70,7 @@ const HeroSection = () => {
           >
             Your Home
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-[#FBBF24]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] to-[#FBBF24]">
               Deserves Royal
             </span>
             <br />
@@ -98,7 +98,7 @@ const HeroSection = () => {
             <Link
               to="/booking"
               data-testid={HERO.bookNowBtn}
-              className="btn-orange-glow bg-[#F97316] hover:bg-[#EA580C] text-white px-7 py-4 rounded-full font-bold font-body text-base flex items-center justify-center gap-2 transition-all"
+              className="btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-7 py-4 rounded-full font-bold font-body text-base flex items-center justify-center gap-2 transition-all"
             >
               Book Now — Pay After Service <ArrowRight className="w-4 h-4" />
             </Link>

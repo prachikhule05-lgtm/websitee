@@ -21,9 +21,10 @@ module.exports = {
         brand: {
           primary: '#0F172A',
           blue: '#2563EB',
-          orange: '#F97316',
-          green: '#22C55E',
+          gold: '#F59E0B',
+          emerald: '#10B981',
           bg: '#F8FAFC',
+          text: '#1E293B',
         }
       },
       fontFamily: {
@@ -64,7 +65,7 @@ module.exports = {
       },
       backgroundImage: {
         'gradient-royal': 'linear-gradient(135deg, #0F172A 0%, #1E3A5F 50%, #2563EB 100%)',
-        'gradient-orange': 'linear-gradient(135deg, #F97316, #EA580C)',
+        'gradient-gold': 'linear-gradient(135deg, #F59E0B, #D97706)',
         'gradient-hero': 'linear-gradient(135deg, rgba(15,23,42,0.85) 0%, rgba(37,99,235,0.4) 100%)',
       }
     }

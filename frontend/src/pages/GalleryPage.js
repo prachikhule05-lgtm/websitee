@@ -19,7 +19,7 @@ const GalleryPage = () => {
         {/* Hero */}
         <div className="bg-gradient-to-r from-[#0F172A] to-[#1E3A5F] pt-28 pb-16">
           <div className="max-w-7xl mx-auto px-4 text-center">
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-body text-sm font-semibold text-[#F97316] uppercase tracking-widest mb-2">
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-body text-sm font-semibold text-[#F59E0B] uppercase tracking-widest mb-2">
               Our Results
             </motion.p>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-4xl sm:text-5xl font-extrabold text-white mb-4">
@@ -41,7 +41,7 @@ const GalleryPage = () => {
                 className={`px-5 py-2 rounded-full font-body text-sm font-semibold transition-all border ${
                   active === cat
                     ? "bg-[#2563EB] text-white border-[#2563EB] shadow-blue"
-                    : "bg-white text-[#475569] border-gray-200 hover:border-[#2563EB] hover:text-[#2563EB]"
+                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#2563EB] hover:text-[#2563EB]"
                 }`}
               >
                 {cat}
@@ -75,7 +75,7 @@ const GalleryPage = () => {
             </p>
             <a
               href="/booking"
-              className="inline-flex items-center gap-2 btn-orange-glow bg-[#F97316] hover:bg-[#EA580C] text-white px-8 py-4 rounded-full font-body font-bold text-base transition-all"
+              className="inline-flex items-center gap-2 btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-full font-body font-bold text-base transition-all"
             >
               Book Now — Pay After Service
             </a>

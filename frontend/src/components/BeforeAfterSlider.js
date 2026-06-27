@@ -43,7 +43,7 @@ const BeforeAfterSlider = ({ before, after, label = "", beforeLabel = "Before", 
       {/* After image (full) */}
       <div className="absolute inset-0">
         <img src={after} alt="After" className="w-full h-full object-cover" loading="lazy" />
-        <div className="absolute top-3 right-3 z-10 bg-[#22C55E] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide shadow-sm">
+        <div className="absolute top-3 right-3 z-10 bg-[#10B981] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide shadow-sm">
           {afterLabel}
         </div>
       </div>
@@ -51,7 +51,7 @@ const BeforeAfterSlider = ({ before, after, label = "", beforeLabel = "Before", 
       {/* Before image (clipped) */}
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${sliderPos}%` }}>
         <img src={before} alt="Before" className="absolute top-0 left-0 h-full object-cover" style={{ width: `${100 / (sliderPos / 100)}%`, maxWidth: "none" }} loading="lazy" />
-        <div className="absolute top-3 left-3 z-10 bg-[#F97316] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide shadow-sm">
+        <div className="absolute top-3 left-3 z-10 bg-[#F59E0B] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide shadow-sm">
           {beforeLabel}
         </div>
       </div>

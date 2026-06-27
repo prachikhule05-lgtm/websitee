@@ -44,16 +44,16 @@ const AdminLoginPage = () => {
           </div>
           <div>
             <div className="font-heading font-extrabold text-lg text-[#0F172A]">Royal Cleaning</div>
-            <div className="font-body text-xs text-[#F97316] font-semibold uppercase tracking-wide">Admin Panel</div>
+            <div className="font-body text-xs text-[#F59E0B] font-semibold uppercase tracking-wide">Admin Panel</div>
           </div>
         </div>
 
         <h1 className="font-heading text-2xl font-bold text-[#0F172A] text-center mb-1">Welcome Back</h1>
-        <p className="font-body text-sm text-[#475569] text-center mb-7">Sign in to manage your business</p>
+        <p className="font-body text-sm text-[#1E293B] text-center mb-7">Sign in to manage your business</p>
 
         <form data-testid={ADMIN.loginForm} onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1.5 block">Email Address</label>
+            <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1.5 block">Email Address</label>
             <input
               data-testid={ADMIN.emailInput}
               type="email"
@@ -65,7 +65,7 @@ const AdminLoginPage = () => {
             />
           </div>
           <div>
-            <label className="font-body text-xs font-semibold text-[#475569] uppercase tracking-wide mb-1.5 block">Password</label>
+            <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1.5 block">Password</label>
             <div className="relative">
               <input
                 data-testid={ADMIN.passwordInput}

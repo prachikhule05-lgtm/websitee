@@ -30,12 +30,12 @@ const AdminLayout = ({ children, title }) => {
       <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#0F172A] transform transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static lg:z-auto`}>
         <div className="p-6">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#2563EB] to-[#F97316] rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#2563EB] to-[#F59E0B] rounded-xl flex items-center justify-center">
               <Crown className="w-6 h-6 text-white" />
             </div>
             <div>
               <div className="font-heading font-bold text-white text-sm">Royal Cleaning</div>
-              <div className="font-body text-[10px] text-[#F97316] uppercase tracking-wide">Admin Panel</div>
+              <div className="font-body text-[10px] text-[#F59E0B] uppercase tracking-wide">Admin Panel</div>
             </div>
           </div>
           <nav className="space-y-1">
@@ -95,10 +95,10 @@ const StatCard = ({ label, value, icon, color, bg, trend }) => (
       <div className={`w-12 h-12 ${bg} rounded-2xl flex items-center justify-center`}>
         <span className={color}>{icon}</span>
       </div>
-      {trend && <span className="font-body text-xs text-[#22C55E] font-semibold bg-green-50 px-2 py-1 rounded-full">+{trend}</span>}
+      {trend && <span className="font-body text-xs text-[#10B981] font-semibold bg-green-50 px-2 py-1 rounded-full">+{trend}</span>}
     </div>
     <div className="font-heading font-extrabold text-3xl text-[#0F172A] mb-1">{value}</div>
-    <div className="font-body text-sm text-[#475569]">{label}</div>
+    <div className="font-body text-sm text-[#1E293B]">{label}</div>
   </motion.div>
 );
 
@@ -111,10 +111,10 @@ const AdminDashboardPage = () => {
   }, []);
 
   const statusColor = (status) => {
-    if (status === "confirmed") return "bg-green-50 text-[#22C55E]";
+    if (status === "confirmed") return "bg-green-50 text-[#10B981]";
     if (status === "completed") return "bg-blue-50 text-[#2563EB]";
     if (status === "cancelled") return "bg-red-50 text-red-500";
-    return "bg-orange-50 text-[#F97316]";
+    return "bg-amber-50 text-[#F59E0B]";
   };
 
   return (
@@ -128,7 +128,7 @@ const AdminDashboardPage = () => {
           {/* Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <StatCard label="Total Bookings" value={stats?.totalBookings || 0} icon={<Calendar className="w-6 h-6" />} color="text-[#2563EB]" bg="bg-blue-50" />
-            <StatCard label="Pending" value={stats?.pendingBookings || 0} icon={<Clock className="w-6 h-6" />} color="text-[#F97316]" bg="bg-orange-50" />
+            <StatCard label="Pending" value={stats?.pendingBookings || 0} icon={<Clock className="w-6 h-6" />} color="text-[#F59E0B]" bg="bg-amber-50" />
             <StatCard label="Total Leads" value={stats?.totalLeads || 0} icon={<Users className="w-6 h-6" />} color="text-purple-600" bg="bg-purple-50" />
             <StatCard label="Total Reviews" value={stats?.totalReviews || 0} icon={<Star className="w-6 h-6" />} color="text-yellow-500" bg="bg-yellow-50" />
           </div>
@@ -137,9 +137,9 @@ const AdminDashboardPage = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
               { href: "/admin/bookings", label: "Manage Bookings", color: "bg-[#2563EB] text-white" },
-              { href: "/admin/bookings?status=pending", label: `${stats?.pendingBookings || 0} Pending`, color: "bg-orange-50 text-[#F97316] border border-orange-200" },
+              { href: "/admin/bookings?status=pending", label: `${stats?.pendingBookings || 0} Pending`, color: "bg-amber-50 text-[#F59E0B] border border-amber-200" },
               { href: "/admin/reviews", label: `${stats?.pendingReviews || 0} Pending Reviews`, color: "bg-yellow-50 text-yellow-600 border border-yellow-200" },
-              { href: "/admin/services", label: "Manage Services", color: "bg-green-50 text-[#22C55E] border border-green-200" },
+              { href: "/admin/services", label: "Manage Services", color: "bg-green-50 text-[#10B981] border border-green-200" },
             ].map(a => (
               <Link key={a.href} to={a.href}
                 className={`${a.color} rounded-2xl p-4 font-body font-semibold text-sm text-center hover:opacity-90 transition-all shadow-sm`}>
@@ -168,8 +168,8 @@ const AdminDashboardPage = () => {
                     <tr key={b.bookingId || i} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                       <td className="px-5 py-3 font-body text-sm font-semibold text-[#2563EB]">{b.bookingId}</td>
                       <td className="px-5 py-3 font-body text-sm text-[#0F172A]">{b.customerName}</td>
-                      <td className="px-5 py-3 font-body text-sm text-[#475569]">{b.service}</td>
-                      <td className="px-5 py-3 font-body text-sm text-[#475569]">{b.date}</td>
+                      <td className="px-5 py-3 font-body text-sm text-[#1E293B]">{b.service}</td>
+                      <td className="px-5 py-3 font-body text-sm text-[#1E293B]">{b.date}</td>
                       <td className="px-5 py-3">
                         <span className={`font-body text-xs font-semibold px-2.5 py-1 rounded-full capitalize ${statusColor(b.status)}`}>{b.status}</span>
                       </td>

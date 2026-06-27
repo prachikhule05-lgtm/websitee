@@ -7,8 +7,8 @@ import api, { formatApiError } from "@/utils/api";
 import { ADMIN } from "@/constants/testIds";
 
 const statusColors = {
-  pending: "bg-orange-50 text-[#F97316]",
-  confirmed: "bg-green-50 text-[#22C55E]",
+  pending: "bg-amber-50 text-[#F59E0B]",
+  confirmed: "bg-green-50 text-[#10B981]",
   completed: "bg-blue-50 text-[#2563EB]",
   cancelled: "bg-red-50 text-red-500",
 };
@@ -97,9 +97,9 @@ const AdminBookingsPage = () => {
                       <div className="font-body text-sm font-semibold text-[#0F172A]">{b.customerName}</div>
                       <div className="font-body text-xs text-[#94A3B8]">{b.mobile}</div>
                     </td>
-                    <td className="px-4 py-3 font-body text-sm text-[#475569] whitespace-nowrap">{b.service}</td>
-                    <td className="px-4 py-3 font-body text-sm text-[#475569]">{b.propertyType}</td>
-                    <td className="px-4 py-3 font-body text-sm text-[#475569] whitespace-nowrap">
+                    <td className="px-4 py-3 font-body text-sm text-[#1E293B] whitespace-nowrap">{b.service}</td>
+                    <td className="px-4 py-3 font-body text-sm text-[#1E293B]">{b.propertyType}</td>
+                    <td className="px-4 py-3 font-body text-sm text-[#1E293B] whitespace-nowrap">
                       <div>{b.date}</div>
                       <div className="text-[#94A3B8] text-xs">{b.time}</div>
                     </td>
@@ -117,7 +117,7 @@ const AdminBookingsPage = () => {
                           <Eye className="w-4 h-4" />
                         </button>
                         {b.status === "pending" && (
-                          <button onClick={() => updateStatus(b.bookingId, "confirmed")} className="p-1.5 hover:bg-green-50 rounded-lg text-[#22C55E] transition-colors" title="Confirm">
+                          <button onClick={() => updateStatus(b.bookingId, "confirmed")} className="p-1.5 hover:bg-green-50 rounded-lg text-[#10B981] transition-colors" title="Confirm">
                             <Check className="w-4 h-4" />
                           </button>
                         )}
@@ -174,7 +174,7 @@ const AdminBookingsPage = () => {
               <div className="mt-5 flex gap-2">
                 {selected.status === "pending" && (
                   <button onClick={() => updateStatus(selected.bookingId, "confirmed")} disabled={updating}
-                    className="flex-1 bg-[#22C55E] text-white py-2.5 rounded-xl font-body font-bold text-sm">Confirm</button>
+                    className="flex-1 bg-[#10B981] text-white py-2.5 rounded-xl font-body font-bold text-sm">Confirm</button>
                 )}
                 {selected.status === "confirmed" && (
                   <button onClick={() => updateStatus(selected.bookingId, "completed")} disabled={updating}

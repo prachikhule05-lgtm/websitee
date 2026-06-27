@@ -15,9 +15,9 @@ const FAQSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <p className="font-body text-sm font-semibold text-[#F97316] uppercase tracking-widest mb-2">Got Questions?</p>
+          <p className="font-body text-sm font-semibold text-[#F59E0B] uppercase tracking-widest mb-2">Got Questions?</p>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[#0F172A]">Frequently Asked Questions</h2>
-          <p className="font-body text-base text-[#475569] mt-3">Everything you need to know about our cleaning services.</p>
+          <p className="font-body text-base text-[#1E293B] mt-3">Everything you need to know about our cleaning services.</p>
         </motion.div>
 
         <div className="space-y-3">
@@ -60,7 +60,7 @@ const FAQSection = () => {
                     transition={{ duration: 0.2 }}
                   >
                     <div className="px-5 pb-5 pl-16">
-                      <p className="font-body text-sm text-[#475569] leading-relaxed">{item.a}</p>
+                      <p className="font-body text-sm text-[#1E293B] leading-relaxed">{item.a}</p>
                     </div>
                   </motion.div>
                 )}
