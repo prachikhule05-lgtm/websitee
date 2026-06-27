@@ -10,5 +10,29 @@ export const getWhatsAppLink = (message = DEFAULT_WHATSAPP_MESSAGE) => {
 };
 
 export const getBookingWhatsAppMessage = (booking) => {
-  return `Hello Royal Cleaning Services, I have booked ${booking.service} service. Booking ID: ${booking.bookingId}. Date: ${booking.date} at ${booking.time}. Please confirm.`;
+  const addressParts = [booking.houseNo, booking.street, booking.landmark].filter(Boolean).join(", ");
+  const cityParts = [booking.area, booking.city || "Pune"].filter(Boolean).join(", ");
+  const total = booking.finalTotal || booking.grandTotal || booking.expectedPrice || 0;
+
+  // Normalize phone number
+  const phone = booking.mobile
+    ? `+91${String(booking.mobile).replace(/^(\+91|91|0)/, "")}`
+    : "";
+
+  return `🌟 *NEW BOOKING REQUEST - Royal Cleaning* 🌟
+📋 *Booking ID:* ${booking.bookingId || "N/A"}
+🧹 *Service:* ${booking.service || ""}
+🏠 *Property:* ${booking.propertyType || ""}
+📅 *Date:* ${booking.date || ""}
+⏰ *Time:* ${booking.time || ""}
+👤 *Customer Details*
+Name: ${booking.customerName || ""}
+Phone: ${phone}
+Email: ${booking.email || ""}
+📍 *Address*
+${addressParts ? addressParts + "\n" : ""}${cityParts}
+💳 *Payment*
+Pay After Service (CASH)
+💰 *Total Amount: ₹${Number(total).toLocaleString("en-IN")}*
+✅ Please confirm this slot. Thank you!`;
 };

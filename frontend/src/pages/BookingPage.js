@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import api, { formatApiError } from "@/utils/api";
 import { SERVICES_STATIC, PROPERTY_TYPES, PUNE_AREAS, TIME_SLOTS, calculatePrice } from "@/constants/data";
 import { BOOKING } from "@/constants/testIds";
+import { getBookingWhatsAppMessage, WHATSAPP_NUMBER } from "@/utils/whatsapp";
 
 const STEPS = [
   { id: 1, label: "Service", icon: <Home className="w-4 h-4" /> },
@@ -107,7 +108,11 @@ const BookingPage = () => {
       };
       const r = await api.post("/bookings", payload);
       toast.success("Booking confirmed!");
-      navigate("/booking/success", { state: { booking: { ...payload, bookingId: r.data.bookingId, ...r.data } } });
+      const successBooking = { ...payload, bookingId: r.data.bookingId, ...r.data };
+      // Auto-open WhatsApp with full booking details
+      const waMsg = getBookingWhatsAppMessage(successBooking);
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`, "_blank");
+      navigate("/booking/success", { state: { booking: successBooking } });
     } catch (err) {
       toast.error(formatApiError(err));
     } finally {
@@ -120,7 +125,7 @@ const BookingPage = () => {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[#F8FAFC] pb-20 md:pb-8">
+      <main className="min-h-screen bg-[#F8FAFC] pb-36 sm:pb-8">
         {/* Hero */}
         <div className="bg-gradient-to-r from-[#0F172A] to-[#1E3A5F] pt-28 pb-10">
           <div className="max-w-3xl mx-auto px-4 text-center">
@@ -130,8 +135,32 @@ const BookingPage = () => {
         </div>
 
         {/* Progress */}
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <div data-testid={BOOKING.stepIndicator} className="flex items-center gap-1 overflow-x-auto pb-2">
+        <div className="max-w-3xl mx-auto px-4 py-5">
+          {/* Mobile: compact "Step X of 9 — Label" + dot track */}
+          <div className="flex sm:hidden items-center justify-between mb-3">
+            <div>
+              <span className="font-body text-[11px] text-[#94A3B8] font-semibold uppercase tracking-wider">
+                Step {step} of {STEPS.length}
+              </span>
+              <p className="font-heading font-bold text-base text-[#0F172A] mt-0.5 leading-tight">
+                {STEPS[step - 1]?.label}
+              </p>
+            </div>
+            <div className="flex gap-1 items-center">
+              {STEPS.map(s => (
+                <button
+                  key={s.id}
+                  onClick={() => { if (s.id < step) { setDir(-1); setStep(s.id); } }}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    s.id === step ? "w-6 bg-[#2563EB]" : s.id < step ? "w-2 bg-[#10B981]" : "w-2 bg-gray-200"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop: Full step bubbles with labels */}
+          <div data-testid={BOOKING.stepIndicator} className="hidden sm:flex items-center gap-1 overflow-x-auto pb-2 scrollbar-hide">
             {STEPS.map((s, i) => (
               <React.Fragment key={s.id}>
                 <div
@@ -150,7 +179,9 @@ const BookingPage = () => {
               </React.Fragment>
             ))}
           </div>
-          <div className="h-1 bg-gray-200 rounded-full mt-3">
+
+          {/* Progress bar */}
+          <div className="h-1 bg-gray-200 rounded-full mt-2 sm:mt-3">
             <div className="h-full bg-gradient-to-r from-[#2563EB] to-[#F59E0B] rounded-full transition-all duration-500"
               style={{ width: `${((step - 1) / (STEPS.length - 1)) * 100}%` }} />
           </div>
@@ -172,31 +203,47 @@ const BookingPage = () => {
                 {/* Step 1: Service */}
                 {step === 1 && (
                   <div>
-                    <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Service</h2>
-                    <p className="font-body text-sm text-[#1E293B] mb-6">Choose the cleaning service you need</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    <h2 className="font-heading text-xl font-bold text-[#0F172A] mb-1">Select Service</h2>
+                    <p className="font-body text-sm text-[#1E293B] mb-4">Choose the cleaning service you need</p>
+                    <div className="space-y-2.5">
                       {services.map(s => (
                         <button
                           key={s.id || s.slug}
                           data-testid={BOOKING.serviceSelect}
                           onClick={() => setBooking(b => ({ ...b, service: s.name, serviceId: s.id || s.slug, serviceObj: s }))}
-                          className={`p-4 rounded-2xl border-2 text-left transition-all group ${
+                          className={`w-full flex items-center gap-3 p-3 rounded-2xl border-2 text-left transition-all active:scale-[0.98] ${
                             booking.service === s.name
-                              ? "border-[#2563EB] bg-blue-50 shadow-blue"
-                              : "border-gray-100 hover:border-[#2563EB] hover:bg-blue-50"
+                              ? "border-[#2563EB] bg-blue-50 shadow-[0_0_0_3px_rgba(37,99,235,0.15)]"
+                              : "border-gray-100 bg-white hover:border-[#2563EB] hover:bg-blue-50"
                           }`}
                         >
-                          <div className="relative w-full h-20 rounded-xl overflow-hidden mb-3">
-                            <img src={s.image} alt={s.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                          {/* Thumbnail */}
+                          <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                            <img src={s.image} alt={s.name} className="w-full h-full object-cover" loading="lazy" />
                             {booking.service === s.name && (
-                              <div className="absolute top-2 right-2 w-5 h-5 bg-[#2563EB] rounded-full flex items-center justify-center">
-                                <Check className="w-3 h-3 text-white" />
+                              <div className="absolute inset-0 bg-[#2563EB]/20 flex items-center justify-center">
+                                <div className="w-6 h-6 bg-[#2563EB] rounded-full flex items-center justify-center">
+                                  <Check className="w-3.5 h-3.5 text-white" />
+                                </div>
                               </div>
                             )}
                           </div>
-                          <div className="font-heading font-bold text-xs text-[#0F172A] leading-tight mb-1">{s.name}</div>
-                          <div className="font-body text-[10px] text-[#2563EB] font-semibold">
-                            {s.priceType === "custom" ? "Custom Quote" : `From ₹${s.startingPrice?.toLocaleString("en-IN")}`}
+                          {/* Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="font-heading font-bold text-sm text-[#0F172A] leading-tight">{s.name}</span>
+                              {s.isPopular && <span className="badge-popular flex-shrink-0">Popular</span>}
+                            </div>
+                            <p className="font-body text-xs text-[#94A3B8] mt-0.5 line-clamp-1">{s.duration || "Professional cleaning"}</p>
+                            <p className="font-body text-xs text-[#2563EB] font-bold mt-1">
+                              {s.priceType === "custom" ? "Custom Quote" : `From ₹${s.startingPrice?.toLocaleString("en-IN")}`}
+                            </p>
+                          </div>
+                          {/* Arrow indicator */}
+                          <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
+                            booking.service === s.name ? "bg-[#2563EB]" : "bg-gray-100"
+                          }`}>
+                            <Check className={`w-3.5 h-3.5 ${booking.service === s.name ? "text-white" : "text-gray-300"}`} />
                           </div>
                         </button>
                       ))}
@@ -609,35 +656,49 @@ const BookingPage = () => {
             </AnimatePresence>
           </div>
 
-          {/* Navigation */}
-          <div className="flex items-center justify-between mt-6">
+          {/* Navigation — desktop: inline below form */}
+          <div className="hidden sm:flex items-center justify-between mt-6">
             {step > 1 ? (
               <button data-testid={BOOKING.prevBtn} onClick={() => go(-1)}
                 className="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-200 font-body font-semibold text-sm text-[#1E293B] hover:border-[#2563EB] hover:text-[#2563EB] transition-all">
                 <ChevronLeft className="w-4 h-4" /> Back
               </button>
             ) : <div />}
-
             {step < 9 ? (
-              <button
-                data-testid={BOOKING.nextBtn}
-                onClick={() => go(1)}
-                disabled={!canNext()}
-                className="flex items-center gap-2 btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-              >
+              <button data-testid={BOOKING.nextBtn} onClick={() => go(1)} disabled={!canNext()}
+                className="flex items-center gap-2 btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed">
                 Continue <ChevronRight className="w-4 h-4" />
               </button>
             ) : (
-              <button
-                data-testid={BOOKING.confirmBtn}
-                onClick={handleSubmit}
-                disabled={loading}
-                className="flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-70 shadow-lg shadow-green-200"
-              >
+              <button data-testid={BOOKING.confirmBtn} onClick={handleSubmit} disabled={loading}
+                className="flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-70 shadow-lg shadow-green-200">
                 {loading ? <div className="spinner" /> : <><Check className="w-4 h-4" /> Confirm Booking</>}
               </button>
             )}
           </div>
+        </div>
+
+        {/* Navigation — mobile: sticky bar just above the floating contact bar */}
+        <div className="sm:hidden fixed bottom-[60px] left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] px-4 py-2.5 flex items-center justify-between gap-3">
+          {step > 1 ? (
+            <button data-testid={BOOKING.prevBtn} onClick={() => go(-1)}
+              className="flex items-center gap-1.5 px-5 py-2.5 rounded-full border-2 border-gray-200 font-body font-semibold text-sm text-[#1E293B] active:scale-95 transition-all">
+              <ChevronLeft className="w-4 h-4" /> Back
+            </button>
+          ) : <div />}
+          {/* Step name mini */}
+          <span className="font-body text-xs text-[#94A3B8] font-semibold hidden xs:block">{STEPS[step - 1]?.label}</span>
+          {step < 9 ? (
+            <button data-testid={BOOKING.nextBtn} onClick={() => go(1)} disabled={!canNext()}
+              className="flex items-center gap-1.5 btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-6 py-2.5 rounded-full font-body font-bold text-sm transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none">
+              Continue <ChevronRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <button data-testid={BOOKING.confirmBtn} onClick={handleSubmit} disabled={loading}
+              className="flex items-center gap-1.5 bg-[#10B981] hover:bg-[#059669] text-white px-6 py-2.5 rounded-full font-body font-bold text-sm transition-all active:scale-95 disabled:opacity-70 shadow-lg shadow-green-200">
+              {loading ? <div className="spinner" /> : <><Check className="w-4 h-4" /> Confirm Booking</>}
+            </button>
+          )}
         </div>
       </main>
       <Footer />
