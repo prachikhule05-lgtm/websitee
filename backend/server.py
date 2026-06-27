@@ -19,7 +19,7 @@ db = client[os.environ['DB_NAME']]
 app = FastAPI(title="Royal Cleaning Services API")
 api_router = APIRouter(prefix="/api")
 
-JWT_SECRET = os.environ.get('JWT_SECRET', 'royal-cleaning-jwt-secret-2024')
+JWT_SECRET = os.environ['JWT_SECRET']
 JWT_ALGORITHM = "HS256"
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -270,22 +270,42 @@ async def delete_review(review_id: str, admin=Depends(get_current_admin)):
 
 @api_router.get("/admin/stats")
 async def get_stats(admin=Depends(get_current_admin)):
-    total_bookings = await db.bookings.count_documents({})
-    pending = await db.bookings.count_documents({"status": "pending"})
-    confirmed = await db.bookings.count_documents({"status": "confirmed"})
-    completed = await db.bookings.count_documents({"status": "completed"})
-    cancelled = await db.bookings.count_documents({"status": "cancelled"})
+    # Single aggregation per collection — 3 DB calls instead of 8
+    booking_stats = await db.bookings.aggregate([
+        {"$facet": {
+            "total":     [{"$count": "n"}],
+            "pending":   [{"$match": {"status": "pending"}},   {"$count": "n"}],
+            "confirmed": [{"$match": {"status": "confirmed"}}, {"$count": "n"}],
+            "completed": [{"$match": {"status": "completed"}}, {"$count": "n"}],
+            "cancelled": [{"$match": {"status": "cancelled"}}, {"$count": "n"}],
+        }}
+    ]).to_list(1)
+    review_stats = await db.reviews.aggregate([
+        {"$facet": {
+            "total":   [{"$count": "n"}],
+            "pending": [{"$match": {"status": "pending"}}, {"$count": "n"}],
+        }}
+    ]).to_list(1)
     total_leads = await db.leads.count_documents({})
-    total_reviews = await db.reviews.count_documents({})
-    pending_reviews = await db.reviews.count_documents({"status": "pending"})
     recent_bookings = await db.bookings.find().sort("createdAt", -1).limit(5).to_list(5)
     for b in recent_bookings:
         b["id"] = str(b["_id"]); del b["_id"]
-    return {"totalBookings": total_bookings, "pendingBookings": pending,
-            "confirmedBookings": confirmed, "completedBookings": completed,
-            "cancelledBookings": cancelled, "totalLeads": total_leads,
-            "totalReviews": total_reviews, "pendingReviews": pending_reviews,
-            "recentBookings": recent_bookings}
+
+    def _n(facet, key):
+        return (facet[0].get(key) or [{}])[0].get("n", 0) if facet else 0
+
+    bs, rs = booking_stats, review_stats
+    return {
+        "totalBookings":     _n(bs, "total"),
+        "pendingBookings":   _n(bs, "pending"),
+        "confirmedBookings": _n(bs, "confirmed"),
+        "completedBookings": _n(bs, "completed"),
+        "cancelledBookings": _n(bs, "cancelled"),
+        "totalLeads":        total_leads,
+        "totalReviews":      _n(rs, "total"),
+        "pendingReviews":    _n(rs, "pending"),
+        "recentBookings":    recent_bookings,
+    }
 
 @api_router.get("/timeslots")
 async def get_time_slots():
