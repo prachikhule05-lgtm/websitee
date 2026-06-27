@@ -88,8 +88,14 @@ Build a production-ready, highly polished cleaning service booking platform for 
 - Mobile bottom bar updated: Call | WhatsApp | JustDial | Book Now
 - Filter chips on /services and /gallery now horizontally scrollable on mobile (scrollbar-hide)
 - Deployment check: PASS ✅ (only minor DB projection recommendation)
+
+### Phase 6 — Deployment Hardening (Feb 2026)
+- Removed JWT_SECRET hardcoded fallback (os.environ['JWT_SECRET'] — fails fast if missing)
+- /admin/stats: 8 separate DB calls → 3 calls using MongoDB $facet aggregation pipeline
+- Deployment agent re-run: PASS ✅ zero blockers, zero findings
+- Regression test iteration_4: 100% pass (backend + frontend)
+
+## Backlog (P2+)
 - PWA setup (manifest.json + service worker)
-- JWT_SECRET security hardening (remove default fallback)
 - CORS restriction for production
 - Location area autocomplete in booking step 4
-- Filter chips horizontal scroll on services/gallery pages
