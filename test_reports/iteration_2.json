@@ -1,0 +1,39 @@
+{
+  "summary": "Tested new Add-ons step (Step 2) in booking flow and service image updates. Add-ons flow works correctly end-to-end. Service images have a backend data issue - updated images in data.js are overridden by backend API seed data.",
+  "backend_issues": {
+    "critical": [
+      {
+        "endpoint": "/api/services",
+        "issue": "Backend server.py seed data still has old Unsplash image URLs for Carpet Cleaning (photo-1558618666), Kitchen Deep Cleaning (photo-1556909114), Bathroom Deep Cleaning (photo-1552321554), and Office Cleaning (photo-1497366216548). These override the updated URLs in frontend data.js (customer-assets URLs for carpet/kitchen, pexels for bathroom, unsplash mop image for office). The frontend data.js was updated correctly but backend was not.",
+        "priority": "HIGH"
+      }
+    ],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/test_reports/iteration_2.json"],
+  "action_items": [
+    "Update backend/server.py seed data image URLs for Carpet Cleaning to https://customer-assets.emergentagent.com/job_royal-book-clean/artifacts/ej574u9w_carpet.jpg",
+    "Update backend/server.py seed data image URLs for Kitchen Deep Cleaning to https://customer-assets.emergentagent.com/job_royal-book-clean/artifacts/3z9n88b3_kitchen.jpg",
+    "Update backend/server.py seed data image URLs for Bathroom Deep Cleaning to https://images.pexels.com/photos/9462766/pexels-photo-9462766.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "Update backend/server.py seed data image URLs for Office Cleaning to https://images.unsplash.com/photo-1779345169505-be7319f62b97?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85"
+  ],
+  "critical_code_review_comments": [
+    "Backend server.py has its own service seed data that overrides frontend data.js. When both are updated independently, they can go out of sync. Consider making the backend the single source of truth and removing SERVICES_STATIC fallback, or syncing image URLs via an admin update script."
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "N/A (frontend only test)",
+    "frontend": "90% - Add-ons step fully working, service images showing old backend data"
+  },
+  "test_credentials": "admin: prachikhule05@gmail.com / Prachi@2799",
+  "seed_data_creation": "No seed data created",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Add-ons Step 2 works: sofa Yes/No validation (Continue disabled until Yes/No clicked), sofa dry/wet/skip options, wet sofa seat counter, chair counter with +/-, addon pricing in summary (Wet sofa 1 seat x 499, chairs x 150, add-on GST 18%). Full booking flow completes to Summary. Issue: service images on /services page and /booking step 1 show old Unsplash images because backend API returns old seed data overriding data.js updates.",
+  "rca_of_issue": "Service images not updated because frontend data.js was updated but backend server.py seed data (around line 322-338) was not. The BookingPage.js and ServicesPage.js both call api.get('/services') and if successful, replace SERVICES_STATIC with the API response. The fix is to update the image URLs in the backend seed data to match data.js."
+}

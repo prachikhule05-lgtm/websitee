@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Check, ChevronRight, ChevronLeft, MapPin, Calendar, Clock, User, Home, FileText, Search } from "lucide-react";
+import { Check, ChevronRight, ChevronLeft, MapPin, Calendar, Clock, User, Home, FileText, Search, Plus, Minus, Sofa } from "lucide-react";
 import { toast } from "sonner";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,13 +11,14 @@ import { BOOKING } from "@/constants/testIds";
 
 const STEPS = [
   { id: 1, label: "Service", icon: <Home className="w-4 h-4" /> },
-  { id: 2, label: "Property", icon: <Home className="w-4 h-4" /> },
-  { id: 3, label: "Location", icon: <MapPin className="w-4 h-4" /> },
-  { id: 4, label: "Date", icon: <Calendar className="w-4 h-4" /> },
-  { id: 5, label: "Time", icon: <Clock className="w-4 h-4" /> },
-  { id: 6, label: "Details", icon: <User className="w-4 h-4" /> },
-  { id: 7, label: "Address", icon: <MapPin className="w-4 h-4" /> },
-  { id: 8, label: "Summary", icon: <FileText className="w-4 h-4" /> },
+  { id: 2, label: "Add-ons", icon: <Plus className="w-4 h-4" /> },
+  { id: 3, label: "Property", icon: <Home className="w-4 h-4" /> },
+  { id: 4, label: "Location", icon: <MapPin className="w-4 h-4" /> },
+  { id: 5, label: "Date", icon: <Calendar className="w-4 h-4" /> },
+  { id: 6, label: "Time", icon: <Clock className="w-4 h-4" /> },
+  { id: 7, label: "Details", icon: <User className="w-4 h-4" /> },
+  { id: 8, label: "Address", icon: <MapPin className="w-4 h-4" /> },
+  { id: 9, label: "Summary", icon: <FileText className="w-4 h-4" /> },
 ];
 
 const stepVariants = {
@@ -38,6 +39,7 @@ const BookingPage = () => {
 
   const [booking, setBooking] = useState({
     service: "", serviceId: "", serviceObj: null,
+    hasSofa: null, sofaCleaningType: "none", sofaSeats: 1, chairCount: 0,
     propertyType: "", location: "", date: "", time: "",
     customerName: "", mobile: "", email: "",
     houseNo: "", street: "", landmark: "", area: "", city: "Pune", pincode: "",
@@ -52,25 +54,36 @@ const BookingPage = () => {
     }
   }, []);
 
+  const SOFA_WET_PRICE = 499;
+  const CHAIR_PRICE = 150;
+
   const pricing = booking.serviceObj && booking.propertyType
     ? calculatePrice(booking.serviceObj, booking.propertyType)
     : { base: 0, gst: 0, total: 0, isCustom: false };
+
+  const addonBase =
+    (booking.sofaCleaningType === "wet" ? booking.sofaSeats * SOFA_WET_PRICE : 0) +
+    (booking.chairCount * CHAIR_PRICE);
+  const addonGst = Math.round(addonBase * 0.18);
+  const addonTotal = addonBase + addonGst;
+  const grandTotal = pricing.total + addonTotal;
 
   const today = new Date().toISOString().split("T")[0];
 
   const go = (dir2) => {
     setDir(dir2);
-    setStep(s => Math.max(1, Math.min(8, s + dir2)));
+    setStep(s => Math.max(1, Math.min(9, s + dir2)));
   };
 
   const canNext = () => {
     if (step === 1) return !!booking.service;
-    if (step === 2) return !!booking.propertyType;
-    if (step === 3) return !!booking.location;
-    if (step === 4) return !!booking.date;
-    if (step === 5) return !!booking.time;
-    if (step === 6) return booking.customerName && booking.mobile && booking.mobile.length >= 10;
-    if (step === 7) return booking.houseNo && booking.street && booking.area && booking.pincode;
+    if (step === 2) return booking.hasSofa !== null;
+    if (step === 3) return !!booking.propertyType;
+    if (step === 4) return !!booking.location;
+    if (step === 5) return !!booking.date;
+    if (step === 6) return !!booking.time;
+    if (step === 7) return booking.customerName && booking.mobile && booking.mobile.length >= 10;
+    if (step === 8) return booking.houseNo && booking.street && booking.area && booking.pincode;
     return true;
   };
 
@@ -85,6 +98,12 @@ const BookingPage = () => {
         houseNo: booking.houseNo, street: booking.street, landmark: booking.landmark,
         area: booking.area, city: booking.city, pincode: booking.pincode,
         expectedPrice: pricing.base, gst: pricing.gst, grandTotal: pricing.total,
+        addons: {
+          sofaCleaning: booking.sofaCleaningType !== "none" ? { type: booking.sofaCleaningType, seats: booking.sofaSeats } : null,
+          chairCleaning: booking.chairCount > 0 ? { count: booking.chairCount, pricePerChair: CHAIR_PRICE } : null,
+          addonBase, addonGst, addonTotal,
+        },
+        finalTotal: grandTotal,
       };
       const r = await api.post("/bookings", payload);
       toast.success("Booking confirmed!");
@@ -185,8 +204,121 @@ const BookingPage = () => {
                   </div>
                 )}
 
-                {/* Step 2: Property Type */}
+                {/* Step 2: Add-on Services */}
                 {step === 2 && (
+                  <div>
+                    <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Add-on Services</h2>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">Enhance your booking with optional extras</p>
+
+                    {/* Sofa Question */}
+                    <div className="mb-6 p-5 bg-[#F8FAFC] rounded-2xl border border-gray-100">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center">
+                          <Sofa className="w-4 h-4 text-[#2563EB]" />
+                        </div>
+                        <h3 className="font-heading font-bold text-base text-[#0F172A]">Do you have a sofa or furnished flat?</h3>
+                      </div>
+                      <div className="flex gap-3 mb-4">
+                        <button
+                          onClick={() => setBooking(b => ({ ...b, hasSofa: true }))}
+                          className={`flex-1 py-3 rounded-xl border-2 font-body font-bold text-sm transition-all ${booking.hasSofa === true ? "border-[#2563EB] bg-blue-50 text-[#2563EB]" : "border-gray-200 text-[#1E293B] hover:border-[#2563EB]"}`}
+                        >Yes, I do</button>
+                        <button
+                          onClick={() => setBooking(b => ({ ...b, hasSofa: false, sofaCleaningType: "none", sofaSeats: 1 }))}
+                          className={`flex-1 py-3 rounded-xl border-2 font-body font-bold text-sm transition-all ${booking.hasSofa === false ? "border-[#94A3B8] bg-gray-50 text-[#1E293B]" : "border-gray-200 text-[#1E293B] hover:border-gray-400"}`}
+                        >No, skip</button>
+                      </div>
+
+                      {booking.hasSofa === true && (
+                        <div className="space-y-3">
+                          <p className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide">Sofa cleaning type:</p>
+                          <div className="grid grid-cols-3 gap-2">
+                            {[
+                              { key: "dry", label: "Dry Cleaning", sub: "Included" },
+                              { key: "wet", label: "Wet Cleaning", sub: "₹499/seat" },
+                              { key: "none", label: "Skip", sub: "No cleaning" },
+                            ].map(opt => (
+                              <button
+                                key={opt.key}
+                                onClick={() => setBooking(b => ({ ...b, sofaCleaningType: opt.key }))}
+                                className={`p-3 rounded-xl border-2 text-center transition-all ${booking.sofaCleaningType === opt.key ? "border-[#F59E0B] bg-amber-50" : "border-gray-100 hover:border-[#F59E0B]"}`}
+                              >
+                                <div className="font-heading font-bold text-xs text-[#0F172A]">{opt.label}</div>
+                                <div className={`font-body text-[10px] mt-0.5 ${opt.key === "wet" ? "text-[#2563EB] font-semibold" : "text-[#94A3B8]"}`}>{opt.sub}</div>
+                              </button>
+                            ))}
+                          </div>
+
+                          {booking.sofaCleaningType === "wet" && (
+                            <div className="mt-3 flex items-center gap-4 bg-blue-50 rounded-xl p-4">
+                              <span className="font-body text-sm font-semibold text-[#0F172A] flex-1">Number of sofa seats:</span>
+                              <div className="flex items-center gap-3">
+                                <button onClick={() => setBooking(b => ({ ...b, sofaSeats: Math.max(1, b.sofaSeats - 1) }))}
+                                  className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#2563EB] transition-all">
+                                  <Minus className="w-3 h-3" />
+                                </button>
+                                <span className="font-heading font-extrabold text-xl text-[#2563EB] w-6 text-center">{booking.sofaSeats}</span>
+                                <button onClick={() => setBooking(b => ({ ...b, sofaSeats: b.sofaSeats + 1 }))}
+                                  className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#2563EB] transition-all">
+                                  <Plus className="w-3 h-3" />
+                                </button>
+                              </div>
+                              <span className="font-heading font-bold text-[#2563EB] text-sm">₹{(booking.sofaSeats * 499).toLocaleString("en-IN")}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Chair Cleaning */}
+                    <div className="p-5 bg-[#F8FAFC] rounded-2xl border border-gray-100 mb-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-amber-100 rounded-xl flex items-center justify-center">
+                            <User className="w-4 h-4 text-[#F59E0B]" />
+                          </div>
+                          <div>
+                            <h3 className="font-heading font-bold text-base text-[#0F172A]">Chair Cleaning</h3>
+                            <p className="font-body text-xs text-[#94A3B8]">₹150 per chair</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <button onClick={() => setBooking(b => ({ ...b, chairCount: Math.max(0, b.chairCount - 1) }))}
+                            className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#F59E0B] transition-all">
+                            <Minus className="w-3 h-3" />
+                          </button>
+                          <span className="font-heading font-extrabold text-xl text-[#0F172A] w-6 text-center">{booking.chairCount}</span>
+                          <button onClick={() => setBooking(b => ({ ...b, chairCount: b.chairCount + 1 }))}
+                            className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#F59E0B] transition-all">
+                            <Plus className="w-3 h-3" />
+                          </button>
+                        </div>
+                      </div>
+                      {booking.chairCount > 0 && (
+                        <div className="bg-amber-50 rounded-xl px-4 py-2 flex justify-between">
+                          <span className="font-body text-sm text-[#1E293B]">{booking.chairCount} chair{booking.chairCount > 1 ? "s" : ""} × ₹150</span>
+                          <span className="font-heading font-bold text-[#F59E0B]">₹{(booking.chairCount * 150).toLocaleString("en-IN")}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Addon Total */}
+                    {addonBase > 0 && (
+                      <div className="bg-green-50 border border-green-200 rounded-2xl p-4 flex justify-between items-center">
+                        <div>
+                          <span className="font-body text-sm font-semibold text-[#10B981]">Add-on Total (incl. 18% GST)</span>
+                        </div>
+                        <span className="font-heading font-extrabold text-lg text-[#10B981]">₹{addonTotal.toLocaleString("en-IN")}</span>
+                      </div>
+                    )}
+                    {addonBase === 0 && (
+                      <div className="text-center py-3 text-[#94A3B8] font-body text-sm">No add-ons selected — you can skip this step</div>
+                    )}
+                  </div>
+                )}
+
+                {/* Step 3: Property Type */}
+                {step === 3 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Property Type</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">This helps us estimate the correct price</p>
@@ -223,8 +355,8 @@ const BookingPage = () => {
                   </div>
                 )}
 
-                {/* Step 3: Location */}
-                {step === 3 && (
+                {/* Step 4: Location */}
+                {step === 4 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Location</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">Which area in Pune?</p>
@@ -260,8 +392,8 @@ const BookingPage = () => {
                   </div>
                 )}
 
-                {/* Step 4: Date */}
-                {step === 4 && (
+                {/* Step 5: Date */}
+                {step === 5 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Date</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">When would you like the cleaning?</p>
@@ -284,8 +416,8 @@ const BookingPage = () => {
                   </div>
                 )}
 
-                {/* Step 5: Time */}
-                {step === 5 && (
+                {/* Step 6: Time */}
+                {step === 6 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Time Slot</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">Available time slots for your selected date</p>
@@ -308,8 +440,8 @@ const BookingPage = () => {
                   </div>
                 )}
 
-                {/* Step 6: Customer Details */}
-                {step === 6 && (
+                {/* Step 7: Customer Details */}
+                {step === 7 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Your Details</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">We'll use these to confirm your booking</p>
@@ -336,8 +468,8 @@ const BookingPage = () => {
                   </div>
                 )}
 
-                {/* Step 7: Address */}
-                {step === 7 && (
+                {/* Step 8: Address */}
+                {step === 8 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Service Address</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">Where should our team come?</p>
@@ -385,8 +517,8 @@ const BookingPage = () => {
                   </div>
                 )}
 
-                {/* Step 8: Summary */}
-                {step === 8 && (
+                {/* Step 9: Summary */}
+                {step === 9 && (
                   <div data-testid={BOOKING.summary}>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Booking Summary</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">Review your booking details before confirming</p>
@@ -406,6 +538,21 @@ const BookingPage = () => {
                           <span className="font-body text-sm text-[#0F172A] font-medium text-right">{item.value || "—"}</span>
                         </div>
                       ))}
+                      {/* Add-on rows */}
+                      {booking.sofaCleaningType !== "none" && booking.hasSofa && (
+                        <div className="flex items-start justify-between gap-4 py-2 border-b border-gray-50">
+                          <span className="font-body text-xs font-semibold text-[#94A3B8] uppercase tracking-wide">Sofa Cleaning</span>
+                          <span className="font-body text-sm text-[#0F172A] font-medium text-right">
+                            {booking.sofaCleaningType === "wet" ? `Wet - ${booking.sofaSeats} seat(s) × ₹499` : "Dry cleaning"}
+                          </span>
+                        </div>
+                      )}
+                      {booking.chairCount > 0 && (
+                        <div className="flex items-start justify-between gap-4 py-2 border-b border-gray-50">
+                          <span className="font-body text-xs font-semibold text-[#94A3B8] uppercase tracking-wide">Chair Cleaning</span>
+                          <span className="font-body text-sm text-[#0F172A] font-medium text-right">{booking.chairCount} chair(s) × ₹150</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Pricing */}
@@ -418,16 +565,29 @@ const BookingPage = () => {
                       ) : (
                         <>
                           <div className="flex justify-between mb-2">
-                            <span className="font-body text-sm text-[#1E293B]">Expected Price</span>
+                            <span className="font-body text-sm text-[#1E293B]">Service Price</span>
                             <span className="font-body text-sm font-semibold text-[#0F172A]">₹{pricing.base.toLocaleString("en-IN")}</span>
                           </div>
-                          <div className="flex justify-between mb-3 pb-3 border-b border-gray-200">
+                          <div className="flex justify-between mb-2">
                             <span className="font-body text-sm text-[#1E293B]">GST (18%)</span>
                             <span className="font-body text-sm font-semibold text-[#0F172A]">₹{pricing.gst.toLocaleString("en-IN")}</span>
                           </div>
+                          {addonBase > 0 && (
+                            <>
+                              <div className="flex justify-between mb-2">
+                                <span className="font-body text-sm text-[#1E293B]">Add-on Services</span>
+                                <span className="font-body text-sm font-semibold text-[#10B981]">₹{addonBase.toLocaleString("en-IN")}</span>
+                              </div>
+                              <div className="flex justify-between mb-3 pb-3 border-b border-gray-200">
+                                <span className="font-body text-sm text-[#1E293B]">Add-on GST (18%)</span>
+                                <span className="font-body text-sm font-semibold text-[#0F172A]">₹{addonGst.toLocaleString("en-IN")}</span>
+                              </div>
+                            </>
+                          )}
+                          {addonBase === 0 && <div className="border-b border-gray-200 mb-3" />}
                           <div className="flex justify-between">
                             <span className="font-heading font-bold text-[#0F172A]">Grand Total</span>
-                            <span className="font-heading font-extrabold text-xl text-[#2563EB]">₹{pricing.total.toLocaleString("en-IN")}</span>
+                            <span className="font-heading font-extrabold text-xl text-[#2563EB]">₹{grandTotal.toLocaleString("en-IN")}</span>
                           </div>
                         </>
                       )}
@@ -458,7 +618,7 @@ const BookingPage = () => {
               </button>
             ) : <div />}
 
-            {step < 8 ? (
+            {step < 9 ? (
               <button
                 data-testid={BOOKING.nextBtn}
                 onClick={() => go(1)}
