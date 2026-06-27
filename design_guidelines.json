@@ -1,0 +1,124 @@
+{
+  "theme": "Light",
+  "archetype": "4 (Swiss & High-Contrast) adapted for Premium Home Utility",
+  "brand_name": "Royal Cleaning Services",
+  "target_audience": "Homeowners, office managers, and businesses in Pune looking for professional cleaning services.",
+  "colors": {
+    "primary": "#0F172A",
+    "secondary": "#2563EB",
+    "accent": "#F97316",
+    "success": "#22C55E",
+    "background": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text_main": "#0F172A",
+    "text_muted": "#475569",
+    "border": "#E2E8F0"
+  },
+  "typography": {
+    "heading_font": "Plus Jakarta Sans",
+    "body_font": "Inter",
+    "h1": "text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#0F172A] leading-tight",
+    "h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#0F172A]",
+    "h3": "text-xl sm:text-2xl font-bold text-[#0F172A]",
+    "body": "text-base font-normal text-[#475569] leading-relaxed",
+    "small": "text-sm text-[#64748B] tracking-wide uppercase",
+    "button": "text-base font-semibold tracking-wide"
+  },
+  "spacing_and_layout": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_padding": "py-16 md:py-24",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8",
+    "border_radius": {
+      "card": "rounded-2xl",
+      "button": "rounded-full",
+      "image": "rounded-3xl"
+    }
+  },
+  "surfaces_and_effects": {
+    "glassmorphism": "bg-white/70 backdrop-blur-xl border border-white/20 shadow-sm",
+    "card_shadow": "shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-shadow duration-300",
+    "hero_overlay": "bg-gradient-to-r from-[#0F172A]/80 to-[#2563EB]/40",
+    "gradient_text": "bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] to-[#F97316]"
+  },
+  "components": {
+    "header": {
+      "style": "fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-gray-100",
+      "instructions": "Transparent at top, glassmorphic on scroll. Must include 'Book Now' CTA."
+    },
+    "buttons": {
+      "primary": "bg-[#F97316] text-white hover:bg-[#EA580C] rounded-full px-8 py-4 transition-all hover:-translate-y-1 shadow-lg shadow-[#F97316]/30",
+      "secondary": "bg-[#2563EB] text-white hover:bg-[#1D4ED8] rounded-full px-8 py-4 transition-all shadow-md",
+      "outline": "border-2 border-[#0F172A] text-[#0F172A] hover:bg-[#0F172A] hover:text-white rounded-full px-8 py-4 transition-all"
+    },
+    "floating_contact": {
+      "desktop": "fixed left-6 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-40",
+      "mobile_bottom_bar": "fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50 flex justify-between items-center p-3 sm:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.05)]",
+      "whatsapp_link": "https://wa.me/917498026390",
+      "instagram_link": "https://www.instagram.com/royal_cleaning_and_services",
+      "phone": "+91 74980 26390"
+    },
+    "booking_form": {
+      "style": "bg-white rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+      "instructions": "8-step multi-step form. Use smooth framer-motion transitions between steps. Progress bar required."
+    },
+    "service_cards": {
+      "style": "bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer hover:-translate-y-1 relative overflow-hidden"
+    },
+    "before_after_slider": {
+      "style": "relative w-full aspect-video rounded-3xl overflow-hidden cursor-ew-resize",
+      "instructions": "Use custom slider component to reveal 'Before' and 'After' images seamlessly."
+    }
+  },
+  "animations": {
+    "scroll_reveal": "Use framer-motion for whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 20 }}. Stagger children arrays.",
+    "hover_microinteractions": "Scale icons slightly on hover, soft background color shifts.",
+    "page_transitions": "Fade in on mount."
+  },
+  "testing": {
+    "instructions": "All interactive elements MUST include data-testid. e.g., data-testid='book-now-button'"
+  },
+  "media": {
+    "hero_backgrounds": [
+      {
+        "url": "https://images.unsplash.com/photo-1724582586529-62622e50c0b3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwbW9kZXJuJTIwbGl2aW5nJTIwcm9vbSUyMGJyaWdodHxlbnwwfHx8fDE3ODI1NDQxMzF8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Modern bright living room, perfect for hero section background with overlay."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1705326701287-346fc37a2c86?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwzfHxwcmVtaXVtJTIwbW9kZXJuJTIwbGl2aW5nJTIwcm9vbSUyMGJyaWdodHxlbnwwfHx8fDE3ODI1NDQxMzF8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Living room with white couch, great alternative hero."
+      }
+    ],
+    "services_and_cleaning": [
+      {
+        "url": "https://images.unsplash.com/photo-1740657254989-42fe9c3b8cce?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBjbGVhbmluZyUyMHNlcnZpY2UlMjBob3VzZXxlbnwwfHx8fDE3ODI1NDQxMzF8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Person in gloves cleaning floor (Deep Cleaning / Floor Cleaning service)."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBjbGVhbmluZyUyMHNlcnZpY2UlMjBob3VzZXxlbnwwfHx8fDE3ODI1NDQxMzF8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Woman cleaning window (Window/Glass Cleaning service)."
+      },
+      {
+        "url": "https://images.pexels.com/photos/6196685/pexels-photo-6196685.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Cleaning crew approaching house (Home/Villa Deep Cleaning)."
+      }
+    ],
+    "testimonials": [
+      {
+        "url": "https://images.unsplash.com/photo-1757744705465-ea08b0ddc38a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTV8MHwxfHNlYXJjaHwxfHxzbWlsaW5nJTIwaW5kaWFuJTIwcHJvZmVzc2lvbmFsJTIwZmFjZXxlbnwwfHx8fDE3ODI1NDQxMzF8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Happy customer 1"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1725033489648-a819750348eb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTV8MHwxfHNlYXJjaHwyfHxzbWlsaW5nJTIwaW5kaWFuJTIwcHJvZmVzc2lvbmFsJTIwZmFjZXxlbnwwfHx8fDE3ODI1NDQxMzF8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Happy customer 2"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1589386417686-0d34b5903d23?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTV8MHwxfHNlYXJjaHwzfHxzbWlsaW5nJTIwaW5kaWFuJTIwcHJvZmVzc2lvbmFsJTIwZmFjZXxlbnwwfHx8fDE3ODI1NDQxMzF8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Happy customer 3"
+      }
+    ]
+  },
+  "icons": {
+    "library": "lucide-react",
+    "instructions": "Use Lucide React icons for all UI elements. Ensure consistent stroke widths."
+  }
+}
