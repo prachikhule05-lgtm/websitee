@@ -72,19 +72,19 @@ const HorizontalServiceCard = ({ service, index }) => {
           </p>
 
           {/* Features - horizontal chips */}
-<div className="flex flex-wrap gap-1.5 mb-4">
-  {Array.isArray(service.features) && service.features.slice(0, 3).map((f, fi) => (
-    <div key={fi} className="flex items-center gap-1 bg-[#F8FAFC] rounded-full px-2.5 py-1 border border-gray-100">
-      <Check className="w-2.5 h-2.5 text-[#10B981] flex-shrink-0" />
-      <span className="font-body text-[10px] text-[#1E293B]">{f}</span>
-    </div>
-  ))}
-  {Array.isArray(service.features) && service.features.length > 3 && (
-    <div className="bg-[#F8FAFC] rounded-full px-2.5 py-1 border border-gray-100">
-      <span className="font-body text-[10px] text-[#94A3B8]">+{service.features.length - 3} more</span>
-    </div>
-  )}
-</div>
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {Array.isArray(service.features) && service.features.slice(0, 3).map((f, fi) => (
+              <div key={fi} className="flex items-center gap-1 bg-[#F8FAFC] rounded-full px-2.5 py-1 border border-gray-100">
+                 <Check className="w-2.5 h-2.5 text-[#10B981] flex-shrink-0" />
+                 <span className="font-body text-[10px] text-[#1E293B]">{f}</span>
+             </div>
+           ))}
+           {Array.isArray(service.features) && service.features.length > 3 && (
+             <div className="bg-[#F8FAFC] rounded-full px-2.5 py-1 border border-gray-100">
+               <span className="font-body text-[10px] text-[#94A3B8]">+{service.features.length - 3} more</span>
+            </div>
+          )}
+        </div>
         </div>
 
         {/* Bottom row - rating + book button */}
