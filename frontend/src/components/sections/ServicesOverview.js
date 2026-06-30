@@ -52,7 +52,9 @@ const ServiceCard = ({ service, index }) => {
     </motion.div>
   );
 };
-
+console.log("=== NEW BUILD ===");
+console.log("services =", services);
+console.log("isArray =", Array.isArray(services));
 const ServicesOverview = () => {
   const [services, setServices] = useState(SERVICES_STATIC.slice(0, 6));
 
