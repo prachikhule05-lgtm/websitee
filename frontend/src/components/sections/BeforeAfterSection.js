@@ -9,7 +9,7 @@ const BeforeAfterSection = () => {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="py-12 bg-[#0F172A]">
+    <section className="py-8 bg-[#0F172A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
