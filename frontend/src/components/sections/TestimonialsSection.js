@@ -162,9 +162,9 @@ const SuccessCard = ({ onWriteAnother }) => (
 );
 
 const STATIC_REVIEWS = [
-  { name: "Priya Sharma", service: "Home Deep Cleaning", rating: 5, text: "Outstanding service! The team was punctual, professional, and left my home spotless."},
-  { name: "Rahul Mehta", service: "Sofa Cleaning", rating: 5, text: "My sofa looks brand new after wet cleaning. Amazing results!" },
-  { name: "Sneha Kulkarni", service: "Kitchen Deep Cleaning", rating: 5, text: "The kitchen cleaning was thorough and they used eco-friendly products." },
+  { name: "Priya Sharma", service: "Home Deep Cleaning", rating: 5, text: "Outstanding service! The team was punctual, professional, and left my home spotless.",image: null,},
+  { name: "Rahul Mehta", service: "Sofa Cleaning", rating: 5, text: "My sofa looks brand new after wet cleaning. Amazing results!",image: null, },
+  { name: "Sneha Kulkarni", service: "Kitchen Deep Cleaning", rating: 5, text: "The kitchen cleaning was thorough and they used eco-friendly products.",image: null, },
 ];
 
 const TestimonialsSection = () => {
