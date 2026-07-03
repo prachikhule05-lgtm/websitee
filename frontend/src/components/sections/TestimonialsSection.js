@@ -262,7 +262,7 @@ const TestimonialsSection = () => {
                     <div className="font-body text-xs text-[#94A3B8] mt-0.5">
                       {review.location}, Pune
                     </div>
-                 )}
+                  )}
                </div>
 
                <Quote className="w-8 h-8 text-[#E2E8F0] flex-shrink-0" />
