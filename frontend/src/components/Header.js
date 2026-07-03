@@ -69,11 +69,10 @@ const Header = () => {
           <button onClick={() => handleNavClick({ path: "/" })} data-testid={HEADER.logo} className="flex items-center gap-3 group focus:outline-none">
             <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden bg-white border border-gray-100 shadow-sm flex items-center justify-center">
               <img
-                src="/site-logo/cleaning.png"
-                alt="Royal Cleaning Services"
-               className="w-full h-full object-contain p-0"
-                loading="lazy"
-              />
+                 src="/site-logo/cleaning.png"
+                 alt="Royal Cleaning Services"
+                 className="w-full h-full object-contain"
+               />
             </div>
             <div className="leading-tight text-left">
               <div className={`font-heading font-extrabold text-base leading-none ${scrolled ? "text-[#0F172A]" : "text-white"}`}>
