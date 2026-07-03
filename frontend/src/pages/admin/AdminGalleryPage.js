@@ -24,20 +24,14 @@ const AdminGalleryPage = () => {
   useEffect(() => { fetchImages(); }, []);
 
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const url = window.prompt("Enter the absolute web URL address of your image:");
+    if (!url) return;
 
-    // Use FormData to correctly transmit image binary streams over HTTP
-    const formData = new FormData();
-    formData.append("image", file);
-
-    setUploading(true);
+   setUploading(true);
     try {
-      await api.post("/admin/gallery/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      toast.success("Image uploaded to gallery successfully!");
-      fetchImages(); // Refresh lists
+      await api.post("/admin/gallery/upload", { url: url });
+      toast.success("Image added to live gallery showcase!");
+      fetchImages();
     } catch (err) {
       toast.error(formatApiError(err));
     } finally {
