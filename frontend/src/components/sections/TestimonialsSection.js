@@ -249,18 +249,7 @@ const TestimonialsSection = () => {
               transition={{ duration: 0.4 }}
               className="bg-white rounded-3xl p-8 md:p-10 shadow-card border border-gray-100"
             >
-              <div className="flex flex-col">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-gray-100 shadow-sm">
-                    {review.image ? (
-                      <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[#2563EB] to-[#F59E0B] flex items-center justify-center text-white font-bold text-xl">
-                        {review.name?.[0]}
-                      </div>
-                    )}
-                  </div>
-                </div>
+             
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-3">
                     <div>
