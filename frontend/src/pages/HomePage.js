@@ -6,9 +6,11 @@ import ServicesOverview from "@/components/sections/ServicesOverview";
 import StatsSection from "@/components/sections/StatsSection";
 import HowItWorks from "@/components/sections/HowItWorks";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import TrustedClientsSection from "@/components/sections/TrustedClientsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import ContactSection from "@/components/sections/ContactSection";
 import BeforeAfterSection from "@/components/sections/BeforeAfterSection";
+
 
 const HomePage = () => {
   return (
@@ -21,6 +23,7 @@ const HomePage = () => {
         <HowItWorks />
         <BeforeAfterSection />
         <TestimonialsSection />
+        <TrustedClientsSection />
         <FAQSection />
         <ContactSection />
       </main>
