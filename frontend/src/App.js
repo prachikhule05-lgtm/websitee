@@ -51,7 +51,7 @@ function App() {
           <Route path="/admin/bookings" element={<ProtectedRoute><AdminBookingsPage /></ProtectedRoute>} />
           <Route path="/admin/services" element={<ProtectedRoute><AdminServicesPage /></ProtectedRoute>} />
           <Route path="/admin/reviews" element={<ProtectedRoute><AdminReviewsPage /></ProtectedRoute>} />
-
+          <Route path="/admin/gallery" element={<AdminGalleryPage />} />
           {/* 404 */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
