@@ -241,29 +241,40 @@ const TestimonialsSection = () => {
         {/* Carousel */}
         <div className="relative max-w-4xl mx-auto mb-10">
           <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.4 }}
-              className="bg-white rounded-3xl p-8 md:p-10 shadow-card border border-gray-100"
+           <motion.div
+             key={current}
+             initial={{ opacity: 0, x: 30 }}
+             animate={{ opacity: 1, x: 0 }}
+             exit={{ opacity: 0, x: -30 }}
+             transition={{ duration: 0.4 }}
+             className="bg-white rounded-3xl p-8 md:p-10 shadow-card border border-gray-100"
             >
-             
-                <div className="flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <div className="font-heading font-bold text-[#0F172A] text-lg">{review.name}</div>
-                      <div className="font-body text-sm text-[#1E293B]">{review.service}</div>
-                      {review.location && <div className="font-body text-xs text-[#94A3B8] mt-0.5">{review.location}, Pune</div>}
-                    </div>
-                    <Quote className="w-8 h-8 text-[#E2E8F0] flex-shrink-0" />
+             <div className="flex-1">
+               <div className="flex items-start justify-between mb-3">
+                 <div>
+                  <div className="font-heading font-bold text-[#0F172A] text-lg">
+                   {review.name}
                   </div>
-                  <StarRating rating={review.rating || 5} />
-                  <p className="font-body text-base text-[#1E293B] mt-3 leading-relaxed italic">"{review.text}"</p>
-                </div>
-              </div>
-            </motion.div>
+                  <div className="font-body text-sm text-[#1E293B]">
+                   {review.service}
+                  </div>
+                  {review.location && (
+                    <div className="font-body text-xs text-[#94A3B8] mt-0.5">
+                      {review.location}, Pune
+                    </div>
+                 )}
+               </div>
+
+               <Quote className="w-8 h-8 text-[#E2E8F0] flex-shrink-0" />
+             </div>
+
+             <StarRating rating={review.rating || 5} />
+
+             <p className="font-body text-base text-[#1E293B] mt-3 leading-relaxed italic">
+              "{review.text}"
+             </p>
+           </div>
+         </motion.div>
           </AnimatePresence>
 
           {/* Nav */}
