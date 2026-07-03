@@ -162,9 +162,9 @@ const SuccessCard = ({ onWriteAnother }) => (
 );
 
 const STATIC_REVIEWS = [
-  { name: "Priya Sharma", service: "Home Deep Cleaning", rating: 5, text: "Outstanding service! The team was punctual, professional, and left my home spotless.", image: "" },
-  { name: "Rahul Mehta", service: "Sofa Cleaning", rating: 5, text: "My sofa looks brand new after wet cleaning. Amazing results!", image: "" },
-  { name: "Sneha Kulkarni", service: "Kitchen Deep Cleaning", rating: 5, text: "The kitchen cleaning was thorough and they used eco-friendly products.", image: "" },
+  { name: "Priya Sharma", service: "Home Deep Cleaning", rating: 5, text: "Outstanding service! The team was punctual, professional, and left my home spotless."},
+  { name: "Rahul Mehta", service: "Sofa Cleaning", rating: 5, text: "My sofa looks brand new after wet cleaning. Amazing results!" },
+  { name: "Sneha Kulkarni", service: "Kitchen Deep Cleaning", rating: 5, text: "The kitchen cleaning was thorough and they used eco-friendly products." },
 ];
 
 const TestimonialsSection = () => {
@@ -249,7 +249,7 @@ const TestimonialsSection = () => {
               transition={{ duration: 0.4 }}
               className="bg-white rounded-3xl p-8 md:p-10 shadow-card border border-gray-100"
             >
-              <div className="flex flex-col md:flex-row gap-6 items-start">
+              <div className="flex flex-col">
                 <div className="flex-shrink-0">
                   <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-gray-100 shadow-sm">
                     {review.image ? (
