@@ -17,6 +17,7 @@ import AdminDashboardPage from "@/pages/admin/AdminDashboardPage";
 import AdminBookingsPage from "@/pages/admin/AdminBookingsPage";
 import AdminServicesPage from "@/pages/admin/AdminServicesPage";
 import AdminReviewsPage from "@/pages/admin/AdminReviewsPage";
+import AdminGalleryPage from "./pages/admin/AdminGalleryPage";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("adminToken");
