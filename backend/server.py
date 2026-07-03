@@ -88,6 +88,9 @@ class BookingCreate(BaseModel):
     grandTotal: int
     notes: Optional[str] = ""
 
+class GalleryCreate(BaseModel):
+    url: str
+    
 class LeadCreate(BaseModel):
     name: str
     phone: str
@@ -462,3 +465,35 @@ app.add_middleware(
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+
+@api_router.get("/gallery")
+async def get_gallery():
+    try:
+        images = await db.gallery.find().sort("createdAt", -1).to_list(100)
+        for img in images:
+            img["_id"] = str(img["_id"])
+        return images
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.post("/admin/gallery/upload")
+async def upload_gallery_image(payload: GalleryCreate, admin=Depends(get_current_admin)):
+    try:
+        doc = {
+            "url": payload.url,
+            "createdAt": datetime.now(timezone.utc).isoformat()
+        }
+        result = await db.gallery.insert_one(doc)
+        return {"_id": str(result.inserted_id), "url": payload.url, "message": "Image added successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.delete("/admin/gallery/{image_id}")
+async def delete_gallery_image(image_id: str, admin=Depends(get_current_admin)):
+    try:
+        result = await db.gallery.delete_one({"_id": ObjectId(image_id)})
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Image not found")
+        return {"message": "Image removed completely"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
