@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { LayoutDashboard, Calendar, Star, Settings, LogOut, Crown, Menu, X, TrendingUp, Users, Clock, CheckCircle } from "lucide-react";
+// Change line 3 to look like this:
+import { LayoutDashboard, Calendar, Star, Settings, LogOut, Crown, Menu, X, TrendingUp, Users, Clock, CheckCircle, Image } from "lucide-react";
 import api from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
 import { ADMIN } from "@/constants/testIds";
@@ -22,6 +23,7 @@ const AdminLayout = ({ children, title }) => {
     { href: "/admin/bookings", label: "Bookings", icon: <Calendar className="w-5 h-5" /> },
     { href: "/admin/services", label: "Services", icon: <Settings className="w-5 h-5" /> },
     { href: "/admin/reviews", label: "Reviews", icon: <Star className="w-5 h-5" /> },
+    { href: "/admin/gallery", label: "Gallery", icon: <Image className="w-5 h-5" /> }, // <-- ADD THIS EXACT LINE
   ];
 
   return (
@@ -140,7 +142,8 @@ const AdminDashboardPage = () => {
               { href: "/admin/bookings?status=pending", label: `${stats?.pendingBookings || 0} Pending`, color: "bg-amber-50 text-[#F59E0B] border border-amber-200" },
               { href: "/admin/reviews", label: `${stats?.pendingReviews || 0} Pending Reviews`, color: "bg-yellow-50 text-yellow-600 border border-yellow-200" },
               { href: "/admin/services", label: "Manage Services", color: "bg-green-50 text-[#10B981] border border-green-200" },
-            ].map(a => (
+              { href: "/admin/gallery", label: "Manage Gallery", color: "bg-purple-50 text-purple-600 border border-purple-200" }, // <-- ADD THIS EXACT LINE
+              ].map(a => (
               <Link key={a.href} to={a.href}
                 className={`${a.color} rounded-2xl p-4 font-body font-semibold text-sm text-center hover:opacity-90 transition-all shadow-sm`}>
                 {a.label}
