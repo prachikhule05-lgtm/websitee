@@ -146,6 +146,5 @@ const AdminServicesPage = () => {
     </AdminLayout>
   );
 };
-};
 
 export default AdminServicesPage;
