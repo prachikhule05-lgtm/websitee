@@ -135,8 +135,26 @@ async def get_me(admin=Depends(get_current_admin)):
 @api_router.get("/services")
 async def get_services():
     services = await db.services.find({"isActive": True}).sort("order", 1).to_list(100)
+    
+    # Process and map backend values to exact frontend tab requirements
     for s in services:
-        s["id"] = str(s["_id"]); del s["_id"]
+        s["id"] = str(s["_id"])
+        del s["_id"]
+        
+        db_category = str(s.get("category", "")).lower().strip()
+        service_name = str(s.get("name", "")).lower().strip()
+        
+        # Determine appropriate frontend display string mapping
+        if db_category == "commercial":
+            s["category"] = "Commercial Post Interior Cleaning Services"
+        elif db_category == "residential":
+            if "home deep" in service_name or "move-in" in service_name or "move-out" in service_name:
+                s["category"] = "Full House Deep Cleaning"
+            else:
+                s["category"] = "Customized Cleaning Package"
+        else:
+            s["category"] = "Customized Cleaning Package" # Fallback banner if missing
+            
     return services
 
 @api_router.get("/services/{service_id}")
@@ -273,7 +291,6 @@ async def delete_review(review_id: str, admin=Depends(get_current_admin)):
 
 @api_router.get("/admin/stats")
 async def get_stats(admin=Depends(get_current_admin)):
-    # Single aggregation per collection — 3 DB calls instead of 8
     booking_stats = await db.bookings.aggregate([
         {"$facet": {
             "total":     [{"$count": "n"}],
