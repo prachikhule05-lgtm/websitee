@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
 import { Search, X, Check, AlertTriangle, ShoppingCart, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import api from "@/utils/api";
-import { SERVICES.searchInput } from "@/constants/testIds";
 
 const categories = ["All", "Full House Deep Cleaning", "Customized Cleaning Package", "Commercial Post Interior Cleaning Services"];
 
-{/* --- Extended Explicit Field Matrix for Categories --- */}
+{/* --- Explicit Field Matrix for Categories --- */}
 const CATEGORY_DATA_MAP = {
   "full house deep cleaning": {
     includes: [
@@ -330,8 +328,6 @@ const ServicesPage = () => {
   const [category, setCategory] = useState("All");
   const [loading, setLoading] = useState(true);
   const [selectedServiceDetails, setSelectedServiceDetails] = useState(null);
-  
-  {/* Multi-selection Cart State hook */}
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
@@ -340,7 +336,7 @@ const ServicesPage = () => {
         setServices(r.data);
       }
     }).catch(() => {
-      // Fallback is automatically handled via the initialized INITIAL_STATIC_SERVICES
+      // Automatic fallback to static definition
     }).finally(() => setLoading(false));
   }, []);
 
@@ -360,7 +356,7 @@ const ServicesPage = () => {
   const handleConfirmAndSendToWhatsApp = () => {
     if (cart.length === 0) return;
 
-    const targetWhatsAppNumber = "919999999999"; // Enter your official operational WhatsApp line here
+    const targetWhatsAppNumber = "919999999999"; 
     let msgText = `*⚡ New Cleaning Service Booking Request* \n\n`;
     msgText += `Hello, I would like to book the following selected cleaning packages:\n\n`;
     
@@ -416,7 +412,6 @@ const ServicesPage = () => {
             <div className="relative mt-1">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
-                data-testid={SERVICES.searchInput}
                 type="text"
                 placeholder="Search for a service package (e.g. 1 BHK, Sofa)..."
                 value={search}
