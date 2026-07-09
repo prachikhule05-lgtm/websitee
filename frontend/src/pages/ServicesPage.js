@@ -1,95 +1,100 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Search, X, ArrowRight } from "lucide-react";
+import { Search, X, Check, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import api from "@/utils/api";
 import { SERVICES_STATIC } from "@/constants/data";
 import { SERVICES } from "@/constants/testIds";
 
-const categories = ["All", "Residential", "Commercial"];
+const categories = ["All", "Full House Deep Cleaning", "Customized Cleaning Package", "Commercial Post Interior Cleaning Services"];
 
 const HorizontalServiceCard = ({ service, index }) => {
-  const category =
-    service.category?.charAt(0).toUpperCase() +
-    service.category?.slice(1);
+  // Simulating Safsafaiwala's structured highlights array from description if strings match
+  const standardIncludes = service.includes || [
+    "Deep scrubbing of floors & tiles",
+    "Stain, grease & heavy dirt removal",
+    "Eco-friendly cleaning agents used"
+  ];
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05 }}
-      className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden max-w-2xl mx-auto w-full"
+      transition={{ delay: index * 0.04 }}
+      className="bg-white border border-gray-100 rounded-2xl p-3 sm:p-4 hover:shadow-md transition-all duration-200 max-w-2xl mx-auto w-full"
     >
-      {/* Main Container: Image on Left, All Content on Right */}
-      <div className="flex p-4 gap-4 sm:gap-5">
-        
-        {/* Left Side: Fixed Image sizing to prevent pulling space */}
-        <div className="flex-shrink-0">
+      <div className="flex gap-3 sm:gap-4 items-start">
+        {/* Left Aspect Image Container */}
+        <div className="flex-shrink-0 relative">
           <img
             src={service.image}
             alt={service.name}
-            className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover"
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover border border-gray-50"
           />
         </div>
 
-        {/* Right Side: content takes full remaining width */}
-        <div className="flex-1 flex flex-col justify-between min-w-0">
-          <div>
-            {/* Top Header: Title & Price Side-by-Side */}
-            <div className="flex justify-between items-start gap-2">
-              <h3 className="text-base sm:text-lg font-bold text-gray-900 leading-snug truncate">
-                {service.name}...
+        {/* Right Info Section */}
+        <div className="flex-1 min-w-0">
+          {/* Header Row: Title and Rating block stacked closely */}
+          <div className="flex justify-between items-start gap-2">
+            <div>
+              <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-tight line-clamp-2">
+                {service.name}
               </h3>
-              <div className="text-right flex-shrink-0">
-                <span className="block text-[9px] uppercase font-bold tracking-wider text-gray-400 leading-none">
-                  FROM
-                </span>
-                <span className="text-lg sm:text-xl font-black text-blue-600 tracking-tight block mt-0.5">
-                  ₹{service.startingPrice?.toLocaleString("en-IN")}
+              
+              {/* Rating and Meta Indicators Row */}
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="text-amber-500 text-xs">★</span>
+                <span className="text-xs font-bold text-gray-700">4.7</span>
+                <span className="text-gray-300 text-[10px]">•</span>
+                <span className="text-[11px] text-blue-600 font-semibold bg-blue-50/70 px-1.5 py-0.5 rounded">
+                  {service.duration || "4-8 Hours"}
                 </span>
               </div>
             </div>
 
-            {/* Badges & Meta Row: Kept tight on a single row */}
-            <div className="flex items-center gap-2 mt-1 flex-wrap">
-              <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wide">
-                {category}
+            {/* Price Segment Alignment */}
+            <div className="text-right flex-shrink-0">
+              <span className="block text-[8px] tracking-wider text-gray-400 font-bold uppercase leading-none">
+                STARTS AT
               </span>
-              <div className="flex items-center text-xs text-gray-500 font-medium">
-                <span className="text-amber-400 mr-0.5">★</span>
-                <span>4.9</span>
-              </div>
-              <span className="text-gray-300 text-xs">•</span>
-              <span className="text-xs text-gray-500 font-medium">
-                {service.duration || "4-8 Hours"}
+              <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5">
+                ₹{service.startingPrice?.toLocaleString("en-IN")}
               </span>
             </div>
-
-            {/* Description: Spans across under the header block to eliminate dead white space */}
-            <p className="mt-2 text-xs text-gray-500 leading-relaxed line-clamp-2">
-              {service.description}
-            </p>
           </div>
 
-          {/* Actions Row: Flat layout positioned cleanly at the baseline */}
-          <div className="flex items-center justify-between mt-3 pt-1 border-t border-gray-50">
+          {/* Safsafaiwala Feature: Compact 'Includes' Checklist instead of raw paragraph blocks */}
+          <div className="mt-2.5 bg-gray-50/60 rounded-xl p-2 border border-gray-100/50">
+            <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1">Includes:</p>
+            <ul className="space-y-0.5">
+              {standardIncludes.slice(0, 3).map((item, idx) => (
+                <li key={idx} className="flex items-start gap-1.5 text-xs text-gray-600 leading-normal">
+                  <Check className="w-3 h-3 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span className="truncate">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Explicit Utility Interactive Actions Bar */}
+          <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-100/70">
             <Link
               to={`/service/${service.slug}`}
-              className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors"
+              className="text-xs font-bold text-blue-600 hover:underline"
             >
-              View Details
+              View details
             </Link>
 
             <Link
               to={`/booking?service=${service.slug}`}
-              className="px-5 py-2 rounded-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-extrabold tracking-wide transition-all duration-200 transform active:scale-95 shadow-sm"
+              className="px-5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold tracking-wide transition-all duration-150 shadow-sm shadow-amber-500/10 active:scale-95"
             >
-              Book Now
+              Add +
             </Link>
           </div>
-
         </div>
       </div>
     </motion.div>
@@ -112,79 +117,72 @@ const ServicesPage = () => {
     const matchSearch = !search ||
       s.name.toLowerCase().includes(search.toLowerCase()) ||
       s.description?.toLowerCase().includes(search.toLowerCase());
-    const matchCat = category === "All" || s.category === category.toLowerCase();
+    
+    // Looser categorization matching similar to safsafaiwala subheaders
+    const matchCat = category === "All" || 
+      (s.category && category.toLowerCase().includes(s.category.toLowerCase()));
     return matchSearch && matchCat;
   });
 
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col">
+    <div className="bg-slate-50/50 min-h-screen flex flex-col font-sans antialiased">
       <Header />
-      <main className="flex-1 pb-24 md:pb-12">
-        {/* Modern Minimalist Header Section */}
-        <div className="bg-white border-b border-gray-100 pt-8 pb-6">
-          <div className="max-w-7xl mx-auto px-4 text-center">
-            <p className="text-xs font-bold text-amber-500 uppercase tracking-widest mb-1">
-              What We Offer
-            </p>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-4">
-              Our Cleaning Services
-            </h1>
+      
+      <main className="flex-1 pb-20 md:pb-12">
+        {/* Flat Minimal Subheader & Filter Section */}
+        <div className="bg-white border-b border-gray-200/60 sticky top-0 z-10 py-3 shadow-xs">
+          <div className="max-w-2xl mx-auto px-4">
+            
+            {/* Horizontal Filter Navigation Row */}
+            <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-none -mx-4 px-4">
+              {categories.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setCategory(cat)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border whitespace-nowrap ${
+                    category === cat
+                      ? "bg-slate-900 text-white border-slate-900"
+                      : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+                  }`}
+                >
+                  {cat === "All" ? "All Services" : cat}
+                </button>
+              ))}
+            </div>
 
-            {/* Clean Input Search Controls */}
-            <div className="max-w-md mx-auto relative mt-2">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            {/* Integrated Dynamic Inline Search Input bar */}
+            <div className="relative mt-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 data-testid={SERVICES.searchInput}
                 type="text"
-                placeholder="Search services..."
+                placeholder="Search for a service..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full bg-gray-50 border border-gray-200 rounded-2xl pl-11 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-gray-800"
+                className="w-full bg-gray-50/80 border border-gray-200 rounded-xl pl-10 pr-9 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-gray-800"
               />
               {search && (
                 <button
                   onClick={() => setSearch("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
+
           </div>
         </div>
 
-        {/* Categories Navbar and Items Panel */}
-        <div className="w-full max-w-2xl mx-auto px-4 py-4">
-          {/* Category Chips container styling */}
-          <div className="flex flex-nowrap overflow-x-auto gap-2 mb-4 pb-1 scrollbar-none">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all border whitespace-nowrap ${
-                  category === cat
-                    ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                    : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+        {/* Service Stack Canvas Wrapper */}
+        <div className="w-full max-w-2xl mx-auto px-3 sm:px-4 mt-4">
+          <div className="mb-3 px-1">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+              {category === "All" ? "Top Booking Packages" : category}
+            </h2>
           </div>
 
-          {/* Metric counter indicators */}
-          <div className="flex items-center justify-between mb-4 px-1">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-              {loading ? "Loading..." : `${filtered.length} services found`}
-            </p>
-            <div className="flex items-center gap-1.5 text-xs text-gray-400">
-              <span>Sorted by:</span>
-              <span className="font-bold text-gray-700">Most Popular</span>
-            </div>
-          </div>
-
-          {/* Cards Vertical Stack Wrapper */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             {filtered.map((service, i) => (
               <HorizontalServiceCard
                 key={service.id || service.slug}
@@ -194,21 +192,20 @@ const ServicesPage = () => {
             ))}
           </div>
 
-          {/* Empty fallback screen standard layout state */}
           {filtered.length === 0 && !loading && (
-            <div className="text-center py-12 bg-white rounded-3xl border border-gray-100 p-8">
-              <p className="text-base font-bold text-gray-800 mb-1">No services found</p>
-              <p className="text-xs text-gray-400 mb-4">Try cleaning up your filters or search keywords</p>
+            <div className="text-center py-16 bg-white border border-gray-100 rounded-2xl mt-4 p-6">
+              <p className="text-sm font-bold text-gray-700">No services found in this category</p>
               <button
                 onClick={() => { setSearch(""); setCategory("All"); }}
-                className="bg-blue-600 text-white px-5 py-2 rounded-full font-bold text-xs hover:bg-blue-700 transition-all"
+                className="mt-3 text-xs font-bold text-blue-600 hover:underline"
               >
-                Reset Search Filters
+                Clear search filters
               </button>
             </div>
           )}
         </div>
       </main>
+
       <Footer />
     </div>
   );
