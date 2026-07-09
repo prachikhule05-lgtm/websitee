@@ -6,6 +6,20 @@ import { AdminLayout } from "./AdminDashboardPage";
 import api, { formatApiError } from "@/utils/api";
 import { ADMIN } from "@/constants/testIds";
 
+// Define the mapping for display names
+const CATEGORY_LABELS = {
+  "full-house-deep-cleaning": "Full House Deep Cleaning",
+  "commercial-post-interior": "Commercial Post Interior Cleaning Services",
+  "customized-package": "Customized Cleaning Package",
+  "residential": "Residential",
+  "commercial": "Commercial",
+  "kitchen": "Kitchen",
+  "bathroom": "Bathroom",
+  "sofa": "Sofa",
+  "carpet": "Carpet",
+  "move-in-out": "Move-In/Out"
+};
+
 const AdminServicesPage = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -88,8 +102,8 @@ const AdminServicesPage = () => {
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="font-body text-xs font-semibold px-2.5 py-1 rounded-full capitalize bg-blue-50 text-[#2563EB]">
-                      {s.category}
+                    <span className="font-body text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-[#2563EB]">
+                      {CATEGORY_LABELS[s.category] || s.category}
                     </span>
                   </td>
                   <td className="px-4 py-3 font-body text-sm text-[#0F172A]">
@@ -103,9 +117,7 @@ const AdminServicesPage = () => {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
-                      <button onClick={() => setEditing({ ...s })} className="p-1.5 hover:bg-blue-50 rounded-lg text-[#2563EB]" title="Edit">
-                        <Edit className="w-4 h-4" />
-                      </button>
+                      <button onClick={() => setEditing({ ...s })} className="p-1.5 hover:bg-blue-50 rounded-lg text-[#2563EB]" title="Edit"><Edit className="w-4 h-4" /></button>
                       <button onClick={() => handleToggle(s)} className={`p-1.5 rounded-lg transition-colors ${s.isActive ? "hover:bg-red-50 text-red-400" : "hover:bg-green-50 text-[#10B981]"}`} title={s.isActive ? "Deactivate" : "Activate"}>
                         {s.isActive ? <X className="w-4 h-4" /> : <Check className="w-4 h-4" />}
                       </button>
@@ -120,41 +132,28 @@ const AdminServicesPage = () => {
         {/* Modal for Add/Edit */}
         {editing && (
           <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto" onClick={() => setEditing(null)}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl my-8"
-              onClick={e => e.stopPropagation()}
-            >
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl my-8" onClick={e => e.stopPropagation()}>
               <div className="flex items-center justify-between mb-5">
                 <h3 className="font-heading font-bold text-[#0F172A] text-lg">{editing.id ? "Edit Service" : "Add Service"}</h3>
                 <button onClick={() => setEditing(null)} className="text-[#94A3B8]"><X className="w-5 h-5" /></button>
               </div>
-              
               <div className="space-y-4">
                 <div>
                   <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Service Name</label>
                   <input type="text" value={editing.name} onChange={e => setEditing(ed => ({ ...ed, name: e.target.value }))} className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#2563EB] outline-none" />
                 </div>
-                
                 <div>
                   <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Category</label>
                   <select value={editing.category} onChange={e => setEditing(ed => ({ ...ed, category: e.target.value }))} className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#2563EB] outline-none bg-white">
-                    <option value="residential">Residential</option>
-                    <option value="commercial">Commercial</option>
-                    <option value="kitchen">Kitchen</option>
-                    <option value="bathroom">Bathroom</option>
-                    <option value="sofa">Sofa</option>
-                    <option value="carpet">Carpet</option>
-                    <option value="move-in-out">Move-In/Out</option>
+                    {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
+                      <option key={key} value={key}>{label}</option>
+                    ))}
                   </select>
                 </div>
-
                 <div>
                   <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Image URL</label>
                   <input type="text" value={editing.image || ""} onChange={e => setEditing(ed => ({ ...ed, image: e.target.value }))} className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#2563EB] outline-none" />
                 </div>
-
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Price (₹)</label>
@@ -166,12 +165,9 @@ const AdminServicesPage = () => {
                   </div>
                 </div>
               </div>
-
               <div className="flex gap-3 mt-6">
                 <button onClick={() => setEditing(null)} className="flex-1 bg-gray-100 py-3 rounded-xl font-bold text-sm">Cancel</button>
-                <button onClick={handleSave} disabled={saving} className="flex-1 bg-[#2563EB] text-white py-3 rounded-xl font-bold text-sm">
-                  {saving ? "Saving..." : "Save Changes"}
-                </button>
+                <button onClick={handleSave} disabled={saving} className="flex-1 bg-[#2563EB] text-white py-3 rounded-xl font-bold text-sm">{saving ? "Saving..." : "Save Changes"}</button>
               </div>
             </motion.div>
           </div>
