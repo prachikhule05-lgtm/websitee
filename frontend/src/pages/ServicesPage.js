@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Search, X, Check, AlertTriangle, Star } from "lucide-react";
+import { Search, X, Check, AlertTriangle, ShoppingCart, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import api from "@/utils/api";
-import { SERVICES_STATIC } from "@/constants/data";
-import { SERVICES } from "@/constants/testIds";
+import { SERVICES.searchInput } from "@/constants/testIds";
 
 const categories = ["All", "Full House Deep Cleaning", "Customized Cleaning Package", "Commercial Post Interior Cleaning Services"];
 
-{/* --- Dynamic Data Fields for Each Category Type --- */}
+{/* --- Extended Explicit Field Matrix for Categories --- */}
 const CATEGORY_DATA_MAP = {
   "full house deep cleaning": {
     includes: [
@@ -25,12 +24,12 @@ const CATEGORY_DATA_MAP = {
   },
   "customized cleaning package": {
     includes: [
-      "Tailored selection of cleaning zones (Living Room, Sofa, or Kitchen)",
-      "Express vacuuming and mechanized floor mopping",
-      "Wiping of easily accessible furniture exterior surfaces"
+      "Tailored selection of specialized standalone cleaning zones",
+      "Express vacuuming and mechanized surface floor mopping",
+      "Wiping of easily accessible exterior furniture layouts"
     ],
     excludes: [
-      "Wall washing or paint mark scraping treatments",
+      "Wall washing or deep post-paint scraping treatments",
       "Deep sanitation of non-selected add-on home zones"
     ]
   },
@@ -58,15 +57,89 @@ const CATEGORY_DATA_MAP = {
   }
 };
 
+{/* --- Dynamic Predefined Local Packages Array Database --- */}
+const INITIAL_STATIC_SERVICES = [
+  {
+    id: "fh-1bhk",
+    slug: "1-bhk-deep-cleaning",
+    name: "1 BHK Full House Deep Cleaning",
+    category: "Full House Deep Cleaning",
+    startingPrice: 2499,
+    duration: "4-5 Hours",
+    rating: "4.8",
+    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=300&q=80",
+    includes: ["Deep scrubbing of 1 Bedroom, 1 Kitchen, 1 Living Room & 1 Washroom", "Mechanized floor scrubbing and tile shine treatments", "Wall dusting & oil stain removal from kitchen tile walls"],
+    excludes: ["Cleaning inside locked closed wardrobes/cabinets", "Terrace wash layout"]
+  },
+  {
+    id: "fh-1bhk-stairs",
+    slug: "1-bhk-cleaning-with-stairs",
+    name: "1 BHK Full House Deep Cleaning (With Stairs)",
+    category: "Full House Deep Cleaning",
+    startingPrice: 2999,
+    duration: "5-6 Hours",
+    rating: "4.7",
+    image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=300&q=80",
+    includes: ["Complete 1 BHK full-suite deep sanitization template", "Sweeping, high-pressure washing, and mopping of internal/external stairs", "Handrail disinfecting & stepping surface border spot scrubbing"],
+    excludes: ["Cleaning of structural overhead residential water tanks"]
+  },
+  {
+    id: "fh-2bhk",
+    slug: "2-bhk-deep-cleaning",
+    name: "2 BHK Full House Deep Cleaning",
+    category: "Full House Deep Cleaning",
+    startingPrice: 3499,
+    duration: "6-7 Hours",
+    rating: "4.9",
+    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=300&q=80",
+    includes: ["Deep cleaning of 2 Bedrooms, Kitchen, Living Room & 2 Washrooms", "Machine-driven floor crystallization & stain removal", "Window pane glass wiping & tracking slide frame dust suction"],
+    excludes: ["Rearranging structural heavy loaded vintage solid wood closets"]
+  },
+  {
+    id: "cust-sofa",
+    slug: "sofa-dry-cleaning",
+    name: "Sofa Dry Cleaning & Shampooing",
+    category: "Customized Cleaning Package",
+    startingPrice: 599,
+    duration: "1-2 Hours",
+    rating: "4.9",
+    image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=300&q=80",
+    includes: ["Vacuum extraction of embedded hidden crumbs & fine dust", "Injection-extraction organic chemical foam shampooing", "Fabric color locking enhancement & fresh scent finish spray"],
+    excludes: ["Genuine leather restorative buffing oils treatment"]
+  },
+  {
+    id: "cust-kitchen",
+    slug: "kitchen-deep-cleaning",
+    name: "Kitchen Deep Chemical Cleaning",
+    category: "Customized Cleaning Package",
+    startingPrice: 1399,
+    duration: "2-3 Hours",
+    rating: "4.8",
+    image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=300&q=80",
+    includes: ["Complete degreasing of chimney grids, gas hobs, and backsplash tiles", "Sink sanitization and high-shine chrome fixture scale scraping", "Exterior washing of all modular drawer panels"],
+    excludes: ["Re-arranging packed spice container jars inside closed cupboards"]
+  },
+  {
+    id: "comm-office",
+    slug: "post-construction-office",
+    name: "Post-Construction Office Deep Cleaning",
+    category: "Commercial Post Interior Cleaning Services",
+    startingPrice: 6499,
+    duration: "8-12 Hours",
+    rating: "4.9",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=300&q=80",
+    includes: ["Fine industrial plaster dust suction using commercial extractors", "Scraping of leftover paint and glue tape residues from internal glass screens", "Full sanitation of conference pods, cabins, and multi-desking configurations"],
+    excludes: ["External high-altitude rope-access glass cradle wash cycles"]
+  }
+];
+
 {/* --- Dynamic Ultra-Compact Bottom Sheet Modal --- */}
-const DetailsModal = ({ service, onClose }) => {
+const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
   if (!service) return null;
 
-  // Determine category key for lookups
   const catKey = service.category?.toLowerCase() || "";
   const fallbackData = CATEGORY_DATA_MAP[catKey] || CATEGORY_DATA_MAP["default"];
 
-  // Prioritize service specific data over category standard text fields
   const includesList = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
   const excludesList = service.excludes && service.excludes.length > 0 ? service.excludes : fallbackData.excludes;
 
@@ -104,7 +177,7 @@ const DetailsModal = ({ service, onClose }) => {
               </div>
             </div>
 
-            {/* Dynamic Includes Fields */}
+            {/* Includes List */}
             <div>
               <h4 className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 mb-1.5 flex items-center gap-1">
                 <Check className="w-3.5 h-3.5 text-emerald-500" /> Includes
@@ -119,7 +192,7 @@ const DetailsModal = ({ service, onClose }) => {
               </ul>
             </div>
 
-            {/* Dynamic Excludes Fields */}
+            {/* Excludes List */}
             <div>
               <h4 className="text-[10px] font-bold uppercase tracking-wider text-rose-600 mb-1.5 flex items-center gap-1">
                 <X className="w-3.5 h-3.5 text-rose-500" /> Excludes
@@ -145,14 +218,18 @@ const DetailsModal = ({ service, onClose }) => {
             </div>
           </div>
 
-          {/* Bottom Call Action */}
+          {/* Action Footer Button */}
           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-3 z-20">
-            <Link
-              to={`/booking?service=${service.slug}`}
-              className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-center block text-xs tracking-wide shadow-xs transition-all active:scale-[0.99]"
+            <button
+              onClick={() => { onAddToCart(service); onClose(); }}
+              className={`w-full py-2.5 font-bold rounded-xl text-center text-xs tracking-wide transition-all ${
+                isInCart 
+                  ? "bg-rose-600 hover:bg-rose-700 text-white" 
+                  : "bg-emerald-700 hover:bg-emerald-800 text-white"
+              }`}
             >
-              Add Package — ₹{service.startingPrice?.toLocaleString("en-IN")}
-            </Link>
+              {isInCart ? "Remove Package Selection" : `Add Package — ₹${service.startingPrice?.toLocaleString("en-IN")}`}
+            </button>
           </div>
         </motion.div>
       </div>
@@ -161,7 +238,7 @@ const DetailsModal = ({ service, onClose }) => {
 };
 
 {/* --- Main Service Card --- */}
-const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
+const HorizontalServiceCard = ({ service, index, onOpenDetails, onAddToCart, isInCart }) => {
   const catKey = service.category?.toLowerCase() || "";
   const fallbackData = CATEGORY_DATA_MAP[catKey] || CATEGORY_DATA_MAP["default"];
   const standardIncludes = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
@@ -210,7 +287,6 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
         </div>
       </div>
 
-      {/* Dynamic Sub-Card Quick View Includes list */}
       <div className="mt-3 bg-gray-50/80 rounded-xl p-3 border border-gray-100/50">
         <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1.5">Includes:</p>
         <ul className="space-y-1">
@@ -232,12 +308,16 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
           View details
         </button>
 
-        <Link
-          to={`/booking?service=${service.slug}`}
-          className="px-6 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold tracking-wide transition-all duration-150 shadow-sm active:scale-95"
+        <button
+          onClick={() => onAddToCart(service)}
+          className={`px-5 py-1.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-150 shadow-sm active:scale-95 ${
+            isInCart 
+              ? "bg-slate-200 text-slate-700 hover:bg-slate-300" 
+              : "bg-amber-500 text-white hover:bg-amber-600"
+          }`}
         >
-          Add +
-        </Link>
+          {isInCart ? "Added ✓" : "Add +"}
+        </button>
       </div>
     </motion.div>
   );
@@ -245,23 +325,62 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
 
 {/* --- Complete Master Layout Page Wrapper --- */}
 const ServicesPage = () => {
-  const [services, setServices] = useState(SERVICES_STATIC);
+  const [services, setServices] = useState(INITIAL_STATIC_SERVICES);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [loading, setLoading] = useState(true);
   const [selectedServiceDetails, setSelectedServiceDetails] = useState(null);
+  
+  {/* Multi-selection Cart State hook */}
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     api.get("/services").then(r => {
-      if (r.data?.length > 0) setServices(r.data);
-    }).catch(() => {}).finally(() => setLoading(false));
+      if (r.data && r.data.length > 0) {
+        setServices(r.data);
+      }
+    }).catch(() => {
+      // Fallback is automatically handled via the initialized INITIAL_STATIC_SERVICES
+    }).finally(() => setLoading(false));
   }, []);
+
+  const handleToggleCart = (service) => {
+    setCart((prev) => {
+      const alreadyInCart = prev.some(item => item.id === service.id);
+      if (alreadyInCart) {
+        return prev.filter(item => item.id !== service.id);
+      } else {
+        return [...prev, service];
+      }
+    });
+  };
+
+  const cartTotal = cart.reduce((acc, current) => acc + (current.startingPrice || 0), 0);
+
+  const handleConfirmAndSendToWhatsApp = () => {
+    if (cart.length === 0) return;
+
+    const targetWhatsAppNumber = "919999999999"; // Enter your official operational WhatsApp line here
+    let msgText = `*⚡ New Cleaning Service Booking Request* \n\n`;
+    msgText += `Hello, I would like to book the following selected cleaning packages:\n\n`;
+    
+    cart.forEach((item, i) => {
+      msgText += `${i + 1}. *${item.name}* — ₹${item.startingPrice} (${item.duration || 'N/A'})\n`;
+    });
+
+    msgText += `\n━━━━━━━━━━━━━━━━━━━━━\n`;
+    msgText += `💰 *Total Estimated Value:* ₹${cartTotal.toLocaleString("en-IN")}\n\n`;
+    msgText += `Please confirm availability and schedule my booking time slot. Thank you!`;
+
+    const cleanUri = `https://api.whatsapp.com/send?phone=${targetWhatsAppNumber}&text=${encodeURIComponent(msgText)}`;
+    window.open(cleanUri, "_blank");
+  };
 
   const filtered = services.filter(s => {
     const matchSearch = !search ||
       s.name.toLowerCase().includes(search.toLowerCase()) ||
       (s.description && s.description.toLowerCase().includes(search.toLowerCase()));
-    const matchCat = category === "All" || (s.category && category.toLowerCase().includes(s.category.toLowerCase()));
+    const matchCat = category === "All" || (s.category && s.category.toLowerCase() === category.toLowerCase());
     return matchSearch && matchCat;
   });
 
@@ -271,7 +390,7 @@ const ServicesPage = () => {
         <Header />
       </div>
       
-      <main className="flex-1 pb-24">
+      <main className="flex-1 pb-32">
         {/* Navigation Sticky Controls */}
         <div className="bg-white border-b border-gray-200/60 sticky top-[60px] md:top-[70px] z-20 py-3 shadow-sm">
           <div className="max-w-2xl mx-auto px-4">
@@ -299,7 +418,7 @@ const ServicesPage = () => {
               <input
                 data-testid={SERVICES.searchInput}
                 type="text"
-                placeholder="Search for a service..."
+                placeholder="Search for a service package (e.g. 1 BHK, Sofa)..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 className="w-full bg-gray-50/80 border border-gray-200 rounded-xl pl-10 pr-9 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-gray-800"
@@ -308,7 +427,7 @@ const ServicesPage = () => {
           </div>
         </div>
 
-        {/* Master Output Grid list container */}
+        {/* Master Output List Container */}
         <div className="w-full max-w-2xl mx-auto px-3 mt-4">
           <div className="mb-3 px-1">
             <h2 className="text-xs font-bold uppercase tracking-wider text-gray-400">
@@ -322,24 +441,63 @@ const ServicesPage = () => {
                 key={service.id || service.slug}
                 service={service}
                 index={i}
+                isInCart={cart.some(item => item.id === service.id)}
                 onOpenDetails={(srv) => setSelectedServiceDetails(srv)}
+                onAddToCart={handleToggleCart}
               />
             ))}
           </div>
 
-          {filtered.length === 0 && !loading && (
+          {filtered.length === 0 && (
             <div className="text-center py-16 bg-white border border-gray-100 rounded-2xl mt-4 p-6">
-              <p className="text-sm font-bold text-gray-700">No services found</p>
+              <p className="text-sm font-bold text-gray-700">No services found match criteria</p>
             </div>
           )}
         </div>
       </main>
 
-      {/* Floating Dynamic Details Overlay Sheet */}
+      {/* --- Sticky Bottom Booking Drawer Cart Panel Component --- */}
+      <AnimatePresence>
+        {cart.length > 0 && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-2xl z-40 p-4 pb-6 md:pb-4 max-w-2xl mx-auto rounded-t-2xl"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2.5">
+                <div className="bg-amber-100 p-2 rounded-xl relative">
+                  <ShoppingCart className="w-5 h-5 text-amber-600" />
+                  <span className="absolute -top-1.5 -right-1.5 bg-slate-900 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                    {cart.length}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 font-medium">Selected Services</p>
+                  <p className="text-sm font-black text-slate-900">₹{cartTotal.toLocaleString("en-IN")}</p>
+                </div>
+              </div>
+
+              <button
+                onClick={handleConfirmAndSendToWhatsApp}
+                className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-5 rounded-xl transition-all shadow-md active:scale-98"
+              >
+                <span>Confirm Booking & Send to WP</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Details Overlay Sheet */}
       {selectedServiceDetails && (
         <DetailsModal 
           service={selectedServiceDetails} 
+          isInCart={cart.some(item => item.id === selectedServiceDetails.id)}
           onClose={() => setSelectedServiceDetails(null)} 
+          onAddToCart={handleToggleCart}
         />
       )}
 
