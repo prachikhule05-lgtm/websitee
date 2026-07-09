@@ -10,74 +10,257 @@ import { SERVICES } from "@/constants/testIds";
 
 const categories = ["All", "Full House Deep Cleaning", "Customized Cleaning Package", "Commercial Post Interior Cleaning Services"];
 
-{/* --- Map Data Using Exact Service Names From Your Screenshots --- */}
+{/* --- Map Data Using Exact Service Names From All Screenshots --- */}
 const SERVICE_DATA_MAP = {
-  "home deep cleaning": {
+  // === Full House Deep Cleaning ===
+  "furnished": {
     includes: [
-      "Deep scrubbing of all floors, tiles, and bathroom walls",
-      "Stain, grease, and heavy dirt removal from kitchens",
-      "Dusting and wiping of fans, tubes, switchboards & balconies"
+      "Kitchen deep cleaning (platforms, tiles, sink & cabinet exteriors)",
+      "Bathroom cleaning & sanitization (WC, tiles, fittings & floors)",
+      "Dusting and wiping of living room furniture, fans, and electronics"
     ],
     excludes: [
-      "Cleaning of inside kitchen storage cabinets / wardrobes",
-      "Chandelier cleaning and removal of heavy trash/debris"
+      "Cleaning inside closed storage units or deep wardrobe interiors",
+      "Chandelier cleaning or structural wall scraping"
+    ]
+  },
+  "vacant home deep cleaning": {
+    includes: [
+      "Complete vacuuming & fine dust extraction from empty rooms",
+      "Thorough scrubbing of all window frames, tracks, and floor panels",
+      "Sanitization of kitchen sinks, countertops, and floor grouting"
+    ],
+    excludes: [
+      "Furniture cleaning or upholstery conditioning (since vacant)",
+      "Removal of hard paint marks left by active construction crews"
+    ]
+  },
+  "bungalow/villa": {
+    includes: [
+      "Deep cleaning tailored for multi-floor 5+ BHK bungalows",
+      "Thorough kitchen scrubbing and extensive bathroom descaling",
+      "Wiping down balcony railings, terrace borders, and main entrances"
+    ],
+    excludes: [
+      "High-rise rope-dropping operations for exterior glass facades",
+      "Clearing heavy garden waste or construction rubble accumulation"
+    ]
+  },
+
+  // === Customized Cleaning Package ===
+  "living room deep cleaning (only for flats)": {
+    includes: [
+      "Sofa dry vacuuming, window pane wiping, and wall dusting",
+      "Floor scrubbing, mopping, and electrical switchboard wiping",
+      "Dusting of TV cabinets, display shelves, and decor frames"
+    ],
+    excludes: [
+      "Shampooing of carpets or sofa upholstery treatment",
+      "Washing or scrubbing down living room painted walls"
+    ]
+  },
+  "kitchen deep cleaning service": {
+    includes: [
+      "Countertop & slab cleaning along with exhaust tile scrubbing",
+      "Sink, tap & tiles area cleaning to remove grease stains",
+      "Exterior surface wipe-down of refrigerators and microwave ovens"
+    ],
+    excludes: [
+      "Internal dynamic sorting of pantry items or container cleaning",
+      "Deep motor internal cleaning of heavy chimney units"
+    ]
+  },
+  "bathroom deep cleaning service": {
+    includes: [
+      "Floor & wall tile scrubbing to tackle soap scum build-up",
+      "Toilet, wash basin & fittings cleaning with descaling formulas",
+      "Mirror polishing and window exhaust vent screen dusting"
+    ],
+    excludes: [
+      "Underlying tile grouting repair or professional plumbing fixes",
+      "Cleaning personal medicine drawers or deep cosmetics vanities"
+    ]
+  },
+  "bedroom deep cleaning (only for flats)": {
+    includes: [
+      "Floor cleaning (comprehensive sweeping & mopping configurations)",
+      "Dusting of furniture items (exterior cabinet & frame surfaces only)",
+      "Dry vacuuming of mattresses, window panes, and curtain tracks"
+    ],
+    excludes: [
+      "Internal deep organization of clothing inside closets",
+      "Wall washing or ceiling spot paint mark treatment"
+    ]
+  },
+  "balcony cleaning service": {
+    includes: [
+      "Floor deep cleaning (wet scrubbing & hard stain removal treatments)",
+      "Wiping balcony glass dividers, railings, and outer mesh screens",
+      "Dusting and clearing floor dust traps from corner areas"
+    ],
+    excludes: [
+      "Waterproofing treatments for leaky structural joints",
+      "Pruning, repotting, or moving heavy decorative plant collections"
+    ]
+  },
+  "terrace cleaning service": {
+    includes: [
+      "Deep pressure wash cleaning of open terrace surfaces to clear dust & mud",
+      "Targeted bird droppings and tough weather algae stain scrubbing",
+      "Clearing leaves and clearing entry meshes of structural rainwater drains"
+    ],
+    excludes: [
+      "Applying anti-leak sealants or roof painting modifications",
+      "Disposal of heavy junk furniture items left out on decks"
+    ]
+  },
+  "sofa shampooing & upholstery cleaning": {
+    includes: [
+      "Pre-vacuuming to remove loose dust, crumbs, and hidden debris",
+      "Shampoo & foam injection application for embedded stain treatment",
+      "Extraction vacuuming to remove dirty liquid and expedite drying"
+    ],
+    excludes: [
+      "Leather structural re-waxing or crack restoration treatments",
+      "Removal of deep permanent chemical markers or burn defects"
+    ]
+  },
+  "carpet cleaning service": {
+    includes: [
+      "Dust & stains removal utilizing specialized vacuum treatments",
+      "Shampoo-based wash processing targeting embedded odors",
+      "Gentle pile brushing to revitalize underlying texture qualities"
+    ],
+    excludes: [
+      "Repairing torn or frayed edge strings on antique rugs",
+      "Treating severe base dye bleeding caused by old spills"
+    ]
+  },
+  "chimney cleaning service": {
+    includes: [
+      "Removal of heavy internal oil filters and grease-dissolving soak",
+      "Scrubbing outer hood surfaces, buttons, and collection trays",
+      "Wiping surrounding kitchen tiles affected by soot exhaust"
+    ],
+    excludes: [
+      "Repairing electronic circuit failure chips or duct replacements",
+      "Duct cleaning lines running beyond internal room limits"
+    ]
+  },
+  "fridge cleaning service": {
+    includes: [
+      "Complete inside cleaning of fridge compartments and side walls",
+      "Shelves, trays & drawers removal, soaking, and washing",
+      "Exterior door wipe-down and rubber magnetic gasket disinfection"
+    ],
+    excludes: [
+      "Rear gas coil maintenance or compressor technical testing",
+      "Fixing broken plastic internal freezer compartment shelves"
+    ]
+  },
+  "mini services": {
+    includes: [
+      "Combo quick dust wipe for appliances like exhaust and ceiling fans",
+      "Exterior cleaning check adjustments for small house fixtures",
+      "Quick spot check surface vacuum treatments on priority items"
+    ],
+    excludes: [
+      "Deep chemical dismantling of complex machinery layouts",
+      "Extended service hours expanding past basic light touch-ups"
+    ]
+  },
+  "mattress shampooing service": {
+    includes: [
+      "High-power vacuuming to remove dust, hair, and microscopic flakes",
+      "Foam / shampoo-based deep cleaning to fade surface sweat stains",
+      "Anti-bacterial sanitization spray to remove underlying musty odors"
+    ],
+    excludes: [
+      "Complete spring or structural frame restoration inside mattresses",
+      "Removing old deep-set chemical dye transfers or bodily stains"
+    ]
+  },
+  "dining table & chairs cleaning": {
+    includes: [
+      "Dining table surface cleaning to clear sticky grease residue",
+      "Chair seat & backrest cleaning matching structural design needs",
+      "Polishing outer frames of table legs and structural border lines"
+    ],
+    excludes: [
+      "Deep wood scratch filling or professional varnish recoating",
+      "Washing complex silk accent cushions attached to frames"
+    ]
+  },
+
+  // === Commercial Post Interior Cleaning Services ===
+  "hotel cleaning": {
+    includes: [
+      "Deep cleaning for hotel rooms, lobbies, kitchens, and common zones",
+      "Sanitizing public restrooms, counter setups, and waiting lounge sofas",
+      "Polishing interior glass doorways and check-in desk panel counters"
+    ],
+    excludes: [
+      "Room laundry washing services or making up bed linens",
+      "Kitchen cold storage deep inventory defrost organization"
     ]
   },
   "office cleaning": {
     includes: [
-      "Post-construction fine dust extraction from workstation spaces",
-      "Glass facade internal pane cleaning and adhesive scraping",
-      "Deep pressure wash and sanitization of office cafeteria/restrooms"
+      "Workstation desks, floor areas, glass panels, and washroom cleaning",
+      "Vacuuming carpeted floor tiles and high-traffic aisleways",
+      "Sanitizing conference room tables and shared office pantry setups"
     ],
     excludes: [
-      "High-rise exterior glass drop-rope cleaning operations",
-      "Handling or organization of live server systems / office wiring"
+      "Handling active server system terminal wires or data racks",
+      "High-rise outer window panel maintenance using suspended cradles"
     ]
   },
-  "sofa cleaning": {
+  "post-construction / interior cleaning": {
     includes: [
-      "Deep dry vacuuming to extract loose dust and crumbs",
-      "Shampoo treatment and mechanized wet-extraction of stains",
-      "Fabric conditioning and complete fabric sanitization"
+      "Heavy-duty cleaning after renovations including fine white dust extraction",
+      "Scraping paint marks, adhesive residues, and cement splashes off floors",
+      "Deep vacuuming inside open wall tracks, sockets, and window crevices"
     ],
     excludes: [
-      "Leather polishing or deep leather crack restoration repair",
-      "Removal of permanent chemical oil paint or ink marks"
+      "Moving major construction equipment or hauling structural steel/rubble",
+      "Repairing damaged drywall trims or chipped glass edges"
     ]
   },
-  "carpet cleaning": {
+  "restaurant cleaning": {
     includes: [
-      "Heavy-duty industrial vacuuming of embedded dirt grit",
-      "Anti-bacterial foam cleaning for deep fiber sanitation",
-      "Deodorizing treatment to remove pet or moisture odors"
+      "Complete kitchen degreasing, exhaust hood scrub, and floor washing",
+      "Dining area sanitization for FSSAI-level hygiene guidelines",
+      "Scrubbing high-traffic tile floors and sanitizing customer washrooms"
     ],
     excludes: [
-      "Hand-weaving maintenance or thread fringe reconstruction",
-      "Complete drying guarantees on deep high-pile shag carpets"
+      "Deep servicing of complex commercial walk-in freezer motors",
+      "Pest control bait setups (unless booked as an addon package)"
     ]
   },
-  "kitchen deep cleaning": {
+  "shop / showroom cleaning": {
     includes: [
-      "Removal of heavy oil and chimney surface grease layers",
-      "Scrubbing of modular counter slabs, sinks, and tiled backsplashes",
-      "External wipe-down of all electronic appliances & hobs"
+      "Floor polishing, glass display case cleaning, and fine dust removal",
+      "Polishing retail display counter frames and storefront main windows",
+      "Dusting clothing storage racks, clothing displays, and trail rooms"
     ],
     excludes: [
-      "Internal organization or cleaning inside closed grocery drawers",
-      "Disassembling exhaust fans or deep internal motor servicing"
+      "Inventory product scanning, restocking, or handling point-of-sale systems",
+      "Repairing spot lighting tracking installations on high ceilings"
     ]
   },
-  "bathroom deep cleaning": {
+  "warehouse / industrial cleaning": {
     includes: [
-      "Descaling of hard-water stains from taps, showers, and glass",
-      "Deep chemical scrubbing of floor tiles, grouting, and commodes",
-      "Mirror polishing and exhaust vent screen dust clearing"
+      "Large-area floor cleaning using specialized automated floor machines",
+      "Dusting heavy storage pallet racks and loading bay areas",
+      "Sweeping and vacuuming concrete lanes and warehouse office spaces"
     ],
     excludes: [
-      "Fixing underlying plumbing leaks or broken tile replacements",
-      "Cleaning inside private bathroom vanity medicine cabinets"
+      "Moving hazardous chemical barrels or active forklift machinery operation",
+      "Clearing high roof ceiling structural truss framing dust bands"
     ]
   },
+
+  // === Default Fallback ===
   "default": {
     includes: [
       "Standard deep cleaning & scrubbing of target surfaces",
@@ -95,8 +278,8 @@ const SERVICE_DATA_MAP = {
 const DetailsModal = ({ service, onClose }) => {
   if (!service) return null;
 
-  // Safe fallback normalization string check
-  const serviceKey = service.name?.toLowerCase().trim() || service.slug?.toLowerCase().trim() || "";
+  // Use normalized service name for dictionary lookup
+  const serviceKey = service.name?.toLowerCase().trim() || "";
   const fallbackData = SERVICE_DATA_MAP[serviceKey] || SERVICE_DATA_MAP["default"];
 
   const includesList = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
@@ -194,7 +377,7 @@ const DetailsModal = ({ service, onClose }) => {
 
 {/* --- Main Service Card --- */}
 const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
-  const serviceKey = service.name?.toLowerCase().trim() || service.slug?.toLowerCase().trim() || "";
+  const serviceKey = service.name?.toLowerCase().trim() || "";
   const fallbackData = SERVICE_DATA_MAP[serviceKey] || SERVICE_DATA_MAP["default"];
   const standardIncludes = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
 
@@ -235,7 +418,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
                 STARTS AT
               </span>
               <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5 whitespace-nowrap">
-                ₹{service.startingPrice?.toLocaleString("en-IN")}
+                {service.startingPrice ? `₹${service.startingPrice.toLocaleString("en-IN")}` : "Custom Price"}
               </span>
             </div>
           </div>
@@ -293,7 +476,7 @@ const ServicesPage = () => {
     const matchSearch = !search ||
       s.name.toLowerCase().includes(search.toLowerCase()) ||
       (s.description && s.description.toLowerCase().includes(search.toLowerCase()));
-    const matchCat = category === "All" || (s.category && category.toLowerCase().includes(s.category.toLowerCase()));
+    const matchCat = category === "All" || (s.category && category.toLowerCase().trim() === s.category.toLowerCase().trim());
     return matchSearch && matchCat;
   });
 
