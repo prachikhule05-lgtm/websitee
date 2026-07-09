@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Search, X, Check, AlertTriangle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Search, X, Check, ShoppingBag } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import api from "@/utils/api";
@@ -14,7 +14,6 @@ const categories = [
   "Commercial Post Interior Cleaning Services"
 ];
 
-{/* --- Fallback Static Service Data directly from your screenshots --- */}
 const SERVICES_STATIC = [
   // Category: Full House Deep Cleaning
   {
@@ -338,7 +337,7 @@ const SERVICE_DATA_MAP = {
   }
 };
 
-const DetailsModal = ({ service, onClose }) => {
+const DetailsModal = ({ service, onClose, onAdd, isAdded }) => {
   if (!service) return null;
 
   const serviceKey = service.name?.toLowerCase().trim() || "";
@@ -367,7 +366,7 @@ const DetailsModal = ({ service, onClose }) => {
             </button>
           </div>
 
-          <div className="p-4 space-y-4 pb-20 overflow-y-auto custom-scrollbar">
+          <div className="p-4 space-y-4 pb-24 overflow-y-auto custom-scrollbar">
             <div className="grid grid-cols-2 gap-2 text-xs font-bold text-gray-600 bg-gray-50 p-2.5 rounded-xl text-center">
               <div className="flex items-center justify-center gap-1">
                 <span className="text-amber-500 text-sm">★</span>
@@ -408,12 +407,19 @@ const DetailsModal = ({ service, onClose }) => {
           </div>
 
           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-3 z-20">
-            <Link
-              to={`/booking?service=${service.slug}`}
-              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-center block text-xs tracking-wide shadow-xs transition-all"
+            <button
+              onClick={() => {
+                onAdd(service);
+                onClose();
+              }}
+              className={`w-full py-2.5 font-bold rounded-xl text-center block text-xs tracking-wide shadow-xs transition-all ${
+                isAdded 
+                  ? "bg-rose-500 hover:bg-rose-600 text-white" 
+                  : "bg-emerald-600 hover:bg-emerald-700 text-white"
+              }`}
             >
-              Book Now {service.startingPrice ? `— ₹${service.startingPrice.toLocaleString("en-IN")}` : ""}
-            </Link>
+              {isAdded ? "Remove from Package" : `Add to Package ${service.startingPrice ? `— ₹${service.startingPrice.toLocaleString("en-IN")}` : ""}`}
+            </button>
           </div>
         </motion.div>
       </div>
@@ -421,7 +427,7 @@ const DetailsModal = ({ service, onClose }) => {
   );
 };
 
-const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
+const HorizontalServiceCard = ({ service, index, onOpenDetails, onAdd, isAdded }) => {
   const serviceKey = service.name?.toLowerCase().trim() || "";
   const fallbackData = SERVICE_DATA_MAP[serviceKey] || SERVICE_DATA_MAP["default"];
   const standardIncludes = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
@@ -431,7 +437,9 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
-      className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-all duration-200 max-w-2xl mx-auto w-full"
+      className={`bg-white border rounded-2xl p-4 hover:shadow-md transition-all duration-200 max-w-2xl mx-auto w-full ${
+        isAdded ? "border-emerald-500 bg-emerald-50/10" : "border-gray-100"
+      }`}
     >
       <div className="flex gap-4 items-center">
         <div className="flex-shrink-0">
@@ -491,23 +499,32 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
           View details
         </button>
 
-        <Link
-          to={`/booking?service=${service.slug}`}
-          className="px-6 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold tracking-wide transition-all"
+        <button
+          type="button"
+          onClick={() => onAdd(service)}
+          className={`px-5 py-2 rounded-xl text-xs font-bold tracking-wide transition-all ${
+            isAdded 
+              ? "bg-rose-500 hover:bg-rose-600 text-white" 
+              : "bg-emerald-600 hover:bg-emerald-700 text-white"
+          }`}
         >
-          Add +
-        </Link>
+          {isAdded ? "Remove" : "Add +"}
+        </button>
       </div>
     </motion.div>
   );
 };
 
 const ServicesPage = () => {
+  const navigate = useNavigate();
   const [apiServices, setApiServices] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [loading, setLoading] = useState(true);
   const [selectedServiceDetails, setSelectedServiceDetails] = useState(null);
+  
+  // Cart state to handle multi-service selections
+  const [selectedServices, setSelectedServices] = useState([]);
 
   useEffect(() => {
     api.get("/services")
@@ -520,16 +537,37 @@ const ServicesPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  // Handlers to add or remove services from the cart list
+  const handleCartToggle = (service) => {
+    setSelectedServices((prev) => {
+      const exists = prev.find((s) => s.id === service.id);
+      if (exists) {
+        return prev.filter((s) => s.id !== service.id);
+      } else {
+        return [...prev, service];
+      }
+    });
+  };
+
+  const calculateTotal = () => {
+    return selectedServices.reduce((sum, s) => sum + (s.startingPrice || 0), 0);
+  };
+
+  const handleProceedToBooking = () => {
+    // Navigate with complete list attached to location state object
+    navigate("/booking", {
+      state: { selectedServices }
+    });
+  };
+
   // --- FAILSafe Smart Filter Engine ---
   const getFilteredServices = () => {
-    // 1. First find matching items inside what the API returned
     let results = apiServices.filter(s => {
       const matchSearch = !search || s.name.toLowerCase().includes(search.toLowerCase());
       const matchCat = category === "All" || (s.category && s.category.toLowerCase().trim().includes(category.toLowerCase().trim().substring(0, 10)));
       return matchSearch && matchCat;
     });
 
-    // 2. If the API returned zero results for this category tab, load the static data items instead!
     if (results.length === 0) {
       results = SERVICES_STATIC.filter(s => {
         const matchSearch = !search || s.name.toLowerCase().includes(search.toLowerCase());
@@ -549,7 +587,7 @@ const ServicesPage = () => {
         <Header />
       </div>
       
-      <main className="flex-1 pb-24">
+      <main className="flex-1 pb-32">
         <div className="bg-white border-b border-gray-200/60 sticky top-[60px] md:top-[70px] z-20 py-3 shadow-sm">
           <div className="max-w-2xl mx-auto px-4">
             <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-none -mx-4 px-4">
@@ -596,6 +634,8 @@ const ServicesPage = () => {
                 service={service}
                 index={i}
                 onOpenDetails={(srv) => setSelectedServiceDetails(srv)}
+                onAdd={handleCartToggle}
+                isAdded={!!selectedServices.find(s => s.id === service.id)}
               />
             ))}
           </div>
@@ -608,10 +648,46 @@ const ServicesPage = () => {
         </div>
       </main>
 
+      {/* Persistent Bottom Drawer / Floating Cart UI CTA */}
+      <AnimatePresence>
+        {selectedServices.length > 0 && (
+          <motion.div 
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 shadow-xl z-40 p-4 pb-6"
+          >
+            <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 bg-emerald-100 text-emerald-700 rounded-xl hidden sm:block">
+                  <ShoppingBag className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs sm:text-sm font-bold text-slate-900">
+                    {selectedServices.length} {selectedServices.length === 1 ? 'Service' : 'Services'} Selected
+                  </p>
+                  <p className="text-xs font-semibold text-slate-500">
+                    Total: <span className="text-emerald-600 font-bold">₹{calculateTotal().toLocaleString("en-IN")}</span>
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleProceedToBooking}
+                className="flex-1 sm:flex-initial px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold tracking-wide rounded-xl shadow-md transition-all text-center"
+              >
+                Continue Booking
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {selectedServiceDetails && (
         <DetailsModal 
           service={selectedServiceDetails} 
           onClose={() => setSelectedServiceDetails(null)} 
+          onAdd={handleCartToggle}
+          isAdded={!!selectedServices.find(s => s.id === selectedServiceDetails.id)}
         />
       )}
 
