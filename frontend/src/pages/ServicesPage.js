@@ -18,92 +18,115 @@ const HorizontalServiceCard = ({ service, index }) => {
       data-testid={SERVICES.serviceCard}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.06 }}
-      className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-card hover:shadow-card-hover transition-all group card-hover flex"
+      transition={{ duration: 0.35, delay: index * 0.05 }}
+      className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col md:flex-row"
     >
-      {/* Image - left side */}
-      <div className="relative w-44 sm:w-52 flex-shrink-0 overflow-hidden">
+      {/* Image */}
+      <div className="relative md:w-72 h-56 md:h-auto overflow-hidden">
         <img
           src={service.image}
           alt={service.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10" />
+
         {service.isMostPopular && (
-          <div className="absolute top-3 left-3 badge-popular">Popular</div>
+          <div className="absolute top-4 left-4 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+            ⭐ Most Popular
+          </div>
         )}
-        <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm rounded-xl px-2 py-1 flex items-center gap-1">
-          <Clock className="w-3 h-3 text-[#1E293B]" />
-          <span className="font-body text-[10px] font-medium text-[#1E293B]">{service.duration}</span>
+
+        <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur rounded-full px-3 py-1 flex items-center gap-2 shadow">
+          <Clock className="w-4 h-4 text-slate-700" />
+          <span className="text-sm font-semibold text-slate-700">
+            {service.duration}
+          </span>
         </div>
       </div>
 
-      {/* Content - right side */}
-      <div className="flex-1 p-5 flex flex-col justify-between min-w-0">
+      {/* Content */}
+      <div className="flex-1 p-6 flex flex-col justify-between">
         <div>
-          {/* Header row */}
-          <div className="flex items-start justify-between gap-2 mb-2">
+          {/* Top */}
+          <div className="flex justify-between items-start gap-4">
             <div>
-              <h3 className="font-heading font-bold text-[#0F172A] text-base leading-tight">{service.name}</h3>
-              <span className={`inline-flex text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 ${
-                service.category === "commercial" ? "bg-purple-50 text-purple-600" : "bg-blue-50 text-[#2563EB]"
-              }`}>
-                {service.category === "commercial" ? "Commercial" : "Residential"}
-              </span>
-            </div>
-            <div className="text-right flex-shrink-0">
-              <div className="font-body text-[10px] text-[#94A3B8] uppercase tracking-wide">Starting</div>
-              <div className="font-heading font-extrabold text-lg text-[#2563EB] leading-tight">
-                {isCustom ? "Custom" : `₹${service.startingPrice?.toLocaleString("en-IN")}`}
+              <h3 className="text-2xl font-bold text-slate-900">
+                {service.name}
+              </h3>
+
+              <div className="flex items-center gap-2 mt-2">
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    service.category === "commercial"
+                      ? "bg-purple-100 text-purple-700"
+                      : "bg-blue-100 text-blue-700"
+                  }`}
+                >
+                  {service.category === "commercial"
+                    ? "Commercial"
+                    : "Residential"}
+                </span>
+
+                <div className="flex items-center gap-1">
+                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <span className="text-sm font-semibold">4.9</span>
+                  <span className="text-sm text-slate-500">
+                    (100+ reviews)
+                  </span>
+                </div>
               </div>
-              {service.priceType === "per_seat" && (
-                <span className="font-body text-[10px] text-[#94A3B8]">/seat</span>
-              )}
-              {service.priceType === "per_bathroom" && (
-                <span className="font-body text-[10px] text-[#94A3B8]">/bathroom</span>
-              )}
+            </div>
+
+            <div className="text-right">
+              <p className="text-xs uppercase tracking-wider text-slate-400">
+                Starting From
+              </p>
+
+              <h2 className="text-3xl font-black text-blue-600">
+                {isCustom
+                  ? "Custom Quote"
+                  : `₹${service.startingPrice.toLocaleString("en-IN")}`}
+              </h2>
             </div>
           </div>
 
           {/* Description */}
-          <p className="font-body text-xs text-[#1E293B] leading-relaxed mb-3 line-clamp-2">
+          <p className="text-slate-600 mt-4 leading-7">
             {service.description}
           </p>
 
-          {/* Features - horizontal chips */}
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {Array.isArray(service.features) && service.features.slice(0, 3).map((f, fi) => (
-              <div key={fi} className="flex items-center gap-1 bg-[#F8FAFC] rounded-full px-2.5 py-1 border border-gray-100">
-                 <Check className="w-2.5 h-2.5 text-[#10B981] flex-shrink-0" />
-                 <span className="font-body text-[10px] text-[#1E293B]">{f}</span>
-             </div>
-           ))}
-           {Array.isArray(service.features) && service.features.length > 3 && (
-             <div className="bg-[#F8FAFC] rounded-full px-2.5 py-1 border border-gray-100">
-               <span className="font-body text-[10px] text-[#94A3B8]">+{service.features.length - 3} more</span>
-            </div>
-          )}
-        </div>
+          {/* Features */}
+          <div className="grid grid-cols-2 gap-3 mt-5">
+            {service.features?.slice(0, 4).map((feature, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 bg-slate-50 rounded-xl px-3 py-2"
+              >
+                <Check className="w-4 h-4 text-green-600" />
+                <span className="text-sm text-slate-700">
+                  {feature}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Bottom row - rating + book button */}
-        <div className="flex items-center justify-between pt-3 border-t border-gray-50">
-          <div className="flex items-center gap-1.5">
-            <div className="flex">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-              ))}
-            </div>
-            <span className="font-body text-[11px] text-[#1E293B] font-semibold">4.9</span>
-            <span className="font-body text-[11px] text-[#94A3B8]">(100+ reviews)</span>
+        {/* Bottom */}
+        <div className="flex justify-between items-center mt-6 pt-5 border-t">
+          <div>
+            <p className="text-sm text-slate-500">
+              ✔ Professional Equipment
+            </p>
+            <p className="text-sm text-slate-500">
+              ✔ Verified Experts
+            </p>
           </div>
+
           <Link
             to={`/booking?service=${service.slug}`}
             data-testid={SERVICES.bookBtn}
-            className="btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-5 py-2.5 rounded-xl font-body font-bold text-xs flex items-center gap-1.5 transition-all"
+            className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-2xl font-bold transition-all hover:scale-105 shadow-lg"
           >
-            Book Now <ChevronRight className="w-3.5 h-3.5" />
+            Book Now →
           </Link>
         </div>
       </div>
@@ -137,7 +160,7 @@ const ServicesPage = () => {
       <main className="pb-16 md:pb-0">
         {/* Hero */}
         <div className="bg-gradient-to-r from-[#0F172A] to-[#1E3A5F] pt-28 pb-14">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -226,7 +249,7 @@ const ServicesPage = () => {
           </div>
 
           {/* Horizontal service cards */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5">
             {filtered.map((service, i) => (
               <HorizontalServiceCard
                 key={service.id || service.slug}
