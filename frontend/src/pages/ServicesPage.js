@@ -10,51 +10,72 @@ import { SERVICES } from "@/constants/testIds";
 
 const categories = ["All", "Full House Deep Cleaning", "Customized Cleaning Package", "Commercial Post Interior Cleaning Services"];
 
-{/* --- Dynamic Data Fields Indexed by Unique Service Name/Slug --- */}
+{/* --- Map Data Using Exact Service Names From Your Screenshots --- */}
 const SERVICE_DATA_MAP = {
-  // Use lowercase service names (or service slugs) for granular mapping
-  "1 bhk deep cleaning": {
+  "home deep cleaning": {
     includes: [
-      "Deep scrubbing of 1 bedroom, 1 hall, and 1 kitchen floors & tiles",
-      "Full sanitation of 1 bathroom walls, fittings, and mirrors",
-      "Dusting and cleaning of fans, balconies, and switchboards"
+      "Deep scrubbing of all floors, tiles, and bathroom walls",
+      "Stain, grease, and heavy dirt removal from kitchens",
+      "Dusting and wiping of fans, tubes, switchboards & balconies"
     ],
     excludes: [
-      "Cleaning inside kitchen cabinets or bedroom wardrobes",
-      "Chandelier cleaning and heavy debris disposal"
+      "Cleaning of inside kitchen storage cabinets / wardrobes",
+      "Chandelier cleaning and removal of heavy trash/debris"
     ]
   },
-  "2 bhk deep cleaning": {
+  "office cleaning": {
     includes: [
-      "Deep scrubbing of 2 bedrooms, 1 hall, and 1 kitchen floors & tiles",
-      "Full sanitation of up to 2 bathrooms and balconies",
-      "Dusting of windows, switchboards, and primary ceiling fans"
+      "Post-construction fine dust extraction from workstation spaces",
+      "Glass facade internal pane cleaning and adhesive scraping",
+      "Deep pressure wash and sanitization of office cafeteria/restrooms"
     ],
     excludes: [
-      "Internal wardrobe or kitchen storage cabinet deep wiping",
-      "Wall stain scraping treatments"
+      "High-rise exterior glass drop-rope cleaning operations",
+      "Handling or organization of live server systems / office wiring"
     ]
   },
-  "sofa and upholstery cleaning": {
+  "sofa cleaning": {
     includes: [
-      "Mechanized vacuuming of loose dry dirt from sofa crevices",
-      "Injection-extraction wet shampooing treatment for fabric spot removal",
-      "Eco-friendly fabric conditioning and deodorizing treatment"
+      "Deep dry vacuuming to extract loose dust and crumbs",
+      "Shampoo treatment and mechanized wet-extraction of stains",
+      "Fabric conditioning and complete fabric sanitization"
     ],
     excludes: [
-      "Leather sofa polishing or wax treatment (unless requested)",
-      "Removal of deep chemical ink stains or permanent burn marks"
+      "Leather polishing or deep leather crack restoration repair",
+      "Removal of permanent chemical oil paint or ink marks"
     ]
   },
-  "office deep dusting": {
+  "carpet cleaning": {
     includes: [
-      "Fine dust extraction from client workstation tables and shared desk panels",
-      "Internal window pane wiping and surface cleaning of glass partitions",
-      "Vacuum cleaning of primary carpets and floor wet-mopping"
+      "Heavy-duty industrial vacuuming of embedded dirt grit",
+      "Anti-bacterial foam cleaning for deep fiber sanitation",
+      "Deodorizing treatment to remove pet or moisture odors"
     ],
     excludes: [
-      "High-rise exterior glass operations requiring ropes/cradles",
-      "Handling or disconnect routines of live server room systems/wiring"
+      "Hand-weaving maintenance or thread fringe reconstruction",
+      "Complete drying guarantees on deep high-pile shag carpets"
+    ]
+  },
+  "kitchen deep cleaning": {
+    includes: [
+      "Removal of heavy oil and chimney surface grease layers",
+      "Scrubbing of modular counter slabs, sinks, and tiled backsplashes",
+      "External wipe-down of all electronic appliances & hobs"
+    ],
+    excludes: [
+      "Internal organization or cleaning inside closed grocery drawers",
+      "Disassembling exhaust fans or deep internal motor servicing"
+    ]
+  },
+  "bathroom deep cleaning": {
+    includes: [
+      "Descaling of hard-water stains from taps, showers, and glass",
+      "Deep chemical scrubbing of floor tiles, grouting, and commodes",
+      "Mirror polishing and exhaust vent screen dust clearing"
+    ],
+    excludes: [
+      "Fixing underlying plumbing leaks or broken tile replacements",
+      "Cleaning inside private bathroom vanity medicine cabinets"
     ]
   },
   "default": {
@@ -74,11 +95,10 @@ const SERVICE_DATA_MAP = {
 const DetailsModal = ({ service, onClose }) => {
   if (!service) return null;
 
-  // Determine lookup key prioritizing unique slug, then fallback to normalized name
-  const serviceKey = service.slug?.toLowerCase() || service.name?.toLowerCase() || "";
+  // Safe fallback normalization string check
+  const serviceKey = service.name?.toLowerCase().trim() || service.slug?.toLowerCase().trim() || "";
   const fallbackData = SERVICE_DATA_MAP[serviceKey] || SERVICE_DATA_MAP["default"];
 
-  // Prioritize service-specific data directly from backend over local file text
   const includesList = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
   const excludesList = service.excludes && service.excludes.length > 0 ? service.excludes : fallbackData.excludes;
 
@@ -174,8 +194,7 @@ const DetailsModal = ({ service, onClose }) => {
 
 {/* --- Main Service Card --- */}
 const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
-  // Use unique service matching logic here as well
-  const serviceKey = service.slug?.toLowerCase() || service.name?.toLowerCase() || "";
+  const serviceKey = service.name?.toLowerCase().trim() || service.slug?.toLowerCase().trim() || "";
   const fallbackData = SERVICE_DATA_MAP[serviceKey] || SERVICE_DATA_MAP["default"];
   const standardIncludes = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
 
@@ -273,7 +292,7 @@ const ServicesPage = () => {
   const filtered = services.filter(s => {
     const matchSearch = !search ||
       s.name.toLowerCase().includes(search.toLowerCase()) ||
-      s.description?.toLowerCase().includes(search.toLowerCase());
+      (s.description && s.description.toLowerCase().includes(search.toLowerCase()));
     const matchCat = category === "All" || (s.category && category.toLowerCase().includes(s.category.toLowerCase()));
     return matchSearch && matchCat;
   });
