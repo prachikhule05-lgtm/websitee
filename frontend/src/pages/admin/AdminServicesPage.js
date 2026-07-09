@@ -57,7 +57,7 @@ const AdminServicesPage = () => {
         <div className="flex items-center justify-between">
           <p className="font-body text-sm text-[#94A3B8]">{services.length} services</p>
           <button
-            onClick={() => setEditing({ name: "", description: "", startingPrice: 0, duration: "", isActive: true })}
+            onClick={() => setEditing({ name: "", description: "", startingPrice: 0, duration: "", image: "", category: "residential", isActive: true })}
             className="flex items-center gap-2 bg-[#2563EB] text-white px-4 py-2.5 rounded-xl font-body font-bold text-sm btn-blue-glow"
           >
             <Plus className="w-4 h-4" /> Add Service
@@ -80,12 +80,12 @@ const AdminServicesPage = () => {
                 <tr key={s.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <img src={s.image} alt={s.name} className="w-10 h-10 rounded-xl object-cover" />
+                      <img src={s.image || "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=100&q=80"} alt={s.name} className="w-10 h-10 rounded-xl object-cover bg-gray-100" />
                       <span className="font-body text-sm font-semibold text-[#0F172A]">{s.name}</span>
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`font-body text-xs font-semibold px-2.5 py-1 rounded-full capitalize ${s.category === "commercial" ? "bg-purple-50 text-purple-600" : "bg-blue-50 text-[#2563EB]"}`}>
+                    <span className={`font-body text-xs font-semibold px-2.5 py-1 rounded-full capitalize ${s.category?.toLowerCase().includes("commercial") ? "bg-purple-50 text-purple-600" : "bg-blue-50 text-[#2563EB]"}`}>
                       {s.category}
                     </span>
                   </td>
@@ -116,11 +116,11 @@ const AdminServicesPage = () => {
 
         {/* Edit/Create Modal */}
         {editing && (
-          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setEditing(null)}>
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 max-h-screen overflow-y-auto" onClick={() => setEditing(null)}>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl"
+              className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl my-8"
               onClick={e => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-5">
@@ -139,6 +139,27 @@ const AdminServicesPage = () => {
                       className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
                   </div>
                 ))}
+
+                {/* Category Field Selection Setup */}
+                <div>
+                  <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Category Group</label>
+                  <select 
+                    value={editing.category || "residential"} 
+                    onChange={e => setEditing(ed => ({ ...ed, category: e.target.value }))}
+                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm bg-white focus:outline-none focus:border-[#2563EB]"
+                  >
+                    <option value="residential">Residential</option>
+                    <option value="commercial">Commercial</option>
+                  </select>
+                </div>
+
+                {/* Image URL Field Integration */}
+                <div>
+                  <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Image URL</label>
+                  <input type="text" placeholder="https://images.unsplash.com/..." value={editing.image || ""} onChange={e => setEditing(ed => ({ ...ed, image: e.target.value }))}
+                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:border-[#2563EB]" />
+                </div>
+
                 <div>
                   <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Description</label>
                   <textarea rows={3} value={editing.description || ""} onChange={e => setEditing(ed => ({ ...ed, description: e.target.value }))}
