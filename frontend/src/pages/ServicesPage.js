@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, Check, AlertTriangle, ShoppingCart, ArrowRight } from "lucide-react";
+import { Search, X, Check, AlertTriangle, ShoppingCart, ArrowRight, Star, Clock } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import api from "@/utils/api";
 
-const categories = ["All", "Full House Deep Cleaning", "Customized Cleaning Package", "Commercial Post Interior Cleaning Services"];
+// Exact string literal definitions matching your requested filter layout
+const categories = [
+  "All Services", 
+  "Full House Deep Cleaning", 
+  "Customized Cleaning Package", 
+  "Commercial Post Interior Cleaning Services"
+];
 
-{/* --- Explicit Field Matrix for Categories --- */}
+{/* --- Map Configuration Structure --- */}
 const CATEGORY_DATA_MAP = {
   "full house deep cleaning": {
+    tags: ["residential", "full house deep cleaning", "home deep cleaning"],
     includes: [
       "Deep scrubbing of all floors, tiles, and bathroom walls",
       "Stain, grease, and heavy dirt removal from kitchens",
@@ -21,6 +28,7 @@ const CATEGORY_DATA_MAP = {
     ]
   },
   "customized cleaning package": {
+    tags: ["residential", "customized cleaning package", "sofa cleaning", "kitchen cleaning"],
     includes: [
       "Tailored selection of specialized standalone cleaning zones",
       "Express vacuuming and mechanized surface floor mopping",
@@ -32,6 +40,7 @@ const CATEGORY_DATA_MAP = {
     ]
   },
   "commercial post interior cleaning services": {
+    tags: ["commercial", "commercial post interior cleaning services", "office cleaning"],
     includes: [
       "Post-construction fine dust extraction from workstation spaces",
       "Glass facade internal pane cleaning and adhesive scraping",
@@ -43,6 +52,7 @@ const CATEGORY_DATA_MAP = {
     ]
   },
   "default": {
+    tags: [],
     includes: [
       "Standard deep cleaning & scrubbing of target surfaces",
       "Eco-friendly cleaning agents application for spot treatment",
@@ -55,7 +65,7 @@ const CATEGORY_DATA_MAP = {
   }
 };
 
-{/* --- Dynamic Predefined Local Packages Array Database --- */}
+{/* --- Predefined Mock Data Array Database --- */}
 const INITIAL_STATIC_SERVICES = [
   {
     id: "fh-1bhk",
@@ -131,19 +141,21 @@ const INITIAL_STATIC_SERVICES = [
   }
 ];
 
-{/* --- Dynamic Ultra-Compact Bottom Sheet Modal --- */}
+{/* --- Ultra-Compact Details Modal Component --- */}
 const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
   if (!service) return null;
 
   const catKey = service.category?.toLowerCase() || "";
-  const fallbackData = CATEGORY_DATA_MAP[catKey] || CATEGORY_DATA_MAP["default"];
+  const fallbackData = CATEGORY_DATA_MAP[catKey] || 
+    Object.values(CATEGORY_DATA_MAP).find(c => c.tags.includes(catKey)) || 
+    CATEGORY_DATA_MAP["default"];
 
   const includesList = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
   const excludesList = service.excludes && service.excludes.length > 0 ? service.excludes : fallbackData.excludes;
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-xs px-2 sm:px-0">
+      <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-xs px-2 sm:px-0">
         <div className="absolute inset-0" onClick={onClose} />
 
         <motion.div
@@ -151,79 +163,74 @@ const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ type: "spring", damping: 25, stiffness: 240 }}
-          className="relative bg-white w-full max-w-md rounded-t-2xl max-h-[70vh] shadow-2xl flex flex-col z-10 overflow-hidden mb-16 md:mb-0"
+          className="relative bg-white w-full max-w-md rounded-t-2xl max-h-[75vh] shadow-2xl flex flex-col z-10 overflow-hidden mb-16 md:mb-0"
         >
-          {/* Header */}
           <div className="sticky top-0 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between z-20">
             <h2 className="font-extrabold text-gray-900 text-sm tracking-tight truncate pr-4">
               {service.name} Info
             </h2>
-            <button onClick={onClose} className="p-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
-              <X className="w-3.5 h-3.5 text-gray-500" />
+            <button onClick={onClose} className="p-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors cursor-pointer">
+              <X className="w-4 h-4 text-gray-500" />
             </button>
           </div>
 
-          {/* Scrollable Data Body */}
-          <div className="p-4 space-y-4 pb-20 overflow-y-auto custom-scrollbar">
+          <div className="p-4 space-y-4 pb-24 overflow-y-auto custom-scrollbar">
             <div className="grid grid-cols-2 gap-2 text-xs font-bold text-gray-600 bg-gray-50 p-2.5 rounded-xl text-center">
               <div className="flex items-center justify-center gap-1">
-                <span className="text-amber-500 text-sm">★</span>
-                <span>{service.rating || "4.7"} Rating</span>
+                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                <span>{service.rating || "4.8"} Rating</span>
               </div>
-              <div className="border-l border-gray-200 flex items-center justify-center">
-                {service.duration || "2 Hours"} Duration
+              <div className="border-l border-gray-200 flex items-center justify-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-blue-500" />
+                <span>{service.duration || "2 Hours"}</span>
               </div>
             </div>
 
-            {/* Includes List */}
             <div>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 mb-1.5 flex items-center gap-1">
-                <Check className="w-3.5 h-3.5 text-emerald-500" /> Includes
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 mb-1.5 flex items-center gap-1">
+                <Check className="w-4 h-4 text-emerald-500" /> Includes
               </h4>
               <ul className="space-y-1.5 pl-0.5">
                 {includesList.map((item, idx) => (
                   <li key={idx} className="text-xs text-gray-600 flex items-start gap-2 leading-relaxed">
-                    <span className="w-1 h-1 bg-emerald-500 rounded-full mt-1.5 flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-1.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Excludes List */}
             <div>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider text-rose-600 mb-1.5 flex items-center gap-1">
-                <X className="w-3.5 h-3.5 text-rose-500" /> Excludes
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-rose-600 mb-1.5 flex items-center gap-1">
+                <X className="w-4 h-4 text-rose-500" /> Excludes
               </h4>
               <ul className="space-y-1.5 pl-0.5">
                 {excludesList.map((item, idx) => (
                   <li key={idx} className="text-xs text-gray-600 flex items-start gap-2 leading-relaxed">
-                    <span className="w-1 h-1 bg-rose-400 rounded-full mt-1.5 flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 bg-rose-400 rounded-full mt-1.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Disclaimer */}
-            <div className="bg-amber-50/60 border border-amber-100 rounded-xl p-2.5">
-              <p className="text-[10px] font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1 mb-0.5">
-                <AlertTriangle className="w-3 h-3 text-amber-600" /> Disclaimer
+            <div className="bg-amber-50/80 border border-amber-100 rounded-xl p-3">
+              <p className="text-[10px] font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1 mb-1">
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-600" /> Disclaimer
               </p>
-              <p className="text-[11px] text-amber-700 leading-normal font-medium">
-                Please ensure valuables are securely stored. The team is not responsible for unsupervised items.
+              <p className="text-xs text-amber-700 leading-normal font-medium">
+                Please ensure valuables are securely stored. Our service teams cannot assume structural liabilities for unsupervised belongings.
               </p>
             </div>
           </div>
 
-          {/* Action Footer Button */}
           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-3 z-20">
             <button
               onClick={() => { onAddToCart(service); onClose(); }}
-              className={`w-full py-2.5 font-bold rounded-xl text-center text-xs tracking-wide transition-all ${
+              className={`w-full py-2.5 font-bold rounded-xl text-center text-xs tracking-wide transition-all cursor-pointer ${
                 isInCart 
                   ? "bg-rose-600 hover:bg-rose-700 text-white" 
-                  : "bg-emerald-700 hover:bg-emerald-800 text-white"
+                  : "bg-amber-500 hover:bg-amber-600 text-white"
               }`}
             >
               {isInCart ? "Remove Package Selection" : `Add Package — ₹${service.startingPrice?.toLocaleString("en-IN")}`}
@@ -235,10 +242,12 @@ const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
   );
 };
 
-{/* --- Main Service Card --- */}
+{/* --- Horizontal Service Card Item Component --- */}
 const HorizontalServiceCard = ({ service, index, onOpenDetails, onAddToCart, isInCart }) => {
   const catKey = service.category?.toLowerCase() || "";
-  const fallbackData = CATEGORY_DATA_MAP[catKey] || CATEGORY_DATA_MAP["default"];
+  const fallbackData = CATEGORY_DATA_MAP[catKey] || 
+    Object.values(CATEGORY_DATA_MAP).find(c => c.tags.includes(catKey)) || 
+    CATEGORY_DATA_MAP["default"];
   const standardIncludes = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
 
   return (
@@ -246,29 +255,31 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAddToCart, isI
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
-      className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-all duration-200 max-w-2xl mx-auto w-full"
+      className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-sm transition-all duration-200 max-w-2xl mx-auto w-full"
     >
       <div className="flex gap-4 items-center">
         <div className="flex-shrink-0">
           <img
             src={service.image}
             alt={service.name}
-            className="w-20 h-20 rounded-xl object-cover border border-gray-50"
+            className="w-20 h-20 rounded-xl object-cover border border-gray-100"
           />
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex justify-between items-start gap-2">
             <div>
-              <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-tight">
+              <h3 className="text-sm sm:text-base font-extrabold text-gray-900 leading-tight">
                 {service.name}
               </h3>
-              <div className="flex items-center gap-1.5 mt-1">
-                <span className="text-amber-500 text-xs">★</span>
-                <span className="text-xs font-bold text-gray-700">{service.rating || "4.7"}</span>
+              <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                <span className="flex items-center gap-0.5 text-xs font-bold text-gray-700">
+                  <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                  {service.rating || "4.8"}
+                </span>
                 <span className="text-gray-300 text-[10px]">•</span>
                 <span className="text-[11px] text-blue-600 font-semibold bg-blue-50/70 px-1.5 py-0.5 rounded">
-                  {service.duration || "4-8 Hours"}
+                  {service.duration || "4 Hours"}
                 </span>
               </div>
             </div>
@@ -308,7 +319,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAddToCart, isI
 
         <button
           onClick={() => onAddToCart(service)}
-          className={`px-5 py-1.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-150 shadow-sm active:scale-95 ${
+          className={`px-5 py-1.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-150 cursor-pointer active:scale-95 ${
             isInCart 
               ? "bg-slate-200 text-slate-700 hover:bg-slate-300" 
               : "bg-amber-500 text-white hover:bg-amber-600"
@@ -321,22 +332,22 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAddToCart, isI
   );
 };
 
-{/* --- Complete Master Layout Page Wrapper --- */}
+{/* --- Main Dashboard View Section Wrapper --- */}
 const ServicesPage = () => {
   const [services, setServices] = useState(INITIAL_STATIC_SERVICES);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("All Services");
   const [loading, setLoading] = useState(true);
   const [selectedServiceDetails, setSelectedServiceDetails] = useState(null);
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
     api.get("/services").then(r => {
-      if (r.data && r.data.length > 0) {
+      if (r.data && Array.isArray(r.data) && r.data.length > 0) {
         setServices(r.data);
       }
     }).catch(() => {
-      // Automatic fallback to static definition
+      // Automatic fallback default handling
     }).finally(() => setLoading(false));
   }, []);
 
@@ -368,72 +379,86 @@ const ServicesPage = () => {
     msgText += `💰 *Total Estimated Value:* ₹${cartTotal.toLocaleString("en-IN")}\n\n`;
     msgText += `Please confirm availability and schedule my booking time slot. Thank you!`;
 
-    const cleanUri = `https://api.whatsapp.com/send?phone=${targetWhatsAppNumber}&text=${encodeURIComponent(msgText)}`;
-    window.open(cleanUri, "_blank");
+    window.open(`https://api.whatsapp.com/send?phone=${targetWhatsAppNumber}&text=${encodeURIComponent(msgText)}`, "_blank");
   };
 
+  {/* --- Complete Exact-Match Filter Engine Logic --- */}
   const filtered = services.filter(s => {
+    // 1. Evaluate Search Query Match
     const matchSearch = !search ||
       s.name.toLowerCase().includes(search.toLowerCase()) ||
       (s.description && s.description.toLowerCase().includes(search.toLowerCase()));
-    const matchCat = category === "All" || (s.category && s.category.toLowerCase() === category.toLowerCase());
+
+    // 2. Evaluate Category Match Selection
+    if (category === "All Services") return matchSearch;
+
+    const dbCategoryRaw = s.category?.toLowerCase() || "";
+    const activeUIPillName = category.toLowerCase();
+    
+    // Cross-reference data config matrix map list definitions
+    const mappedConfig = CATEGORY_DATA_MAP[activeUIPillName];
+
+    const matchCat = mappedConfig 
+      ? mappedConfig.tags.includes(dbCategoryRaw) || dbCategoryRaw === activeUIPillName
+      : dbCategoryRaw === activeUIPillName;
+
     return matchSearch && matchCat;
   });
 
   return (
-    <div className="bg-slate-50/50 min-h-screen flex flex-col font-sans antialiased">
-      <div className="relative z-30 bg-white">
+    <div className="bg-slate-50 min-h-screen flex flex-col font-sans antialiased">
+      <div className="relative w-full block bg-white z-40 border-b border-gray-100">
         <Header />
       </div>
       
-      <main className="flex-1 pb-32">
-        {/* Navigation Sticky Controls */}
-        <div className="bg-white border-b border-gray-200/60 sticky top-[60px] md:top-[70px] z-20 py-3 shadow-sm">
+      <main className="flex-1 pb-36">
+        {/* Navigation Sticky Controls Tray */}
+        <div className="bg-white border-b border-gray-200 sticky top-0 z-30 py-3 shadow-xs">
           <div className="max-w-2xl mx-auto px-4">
             
-            {/* Sliding Categories Navigation */}
-            <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-none -mx-4 px-4">
+            {/* Category Ribbon Layout Menu */}
+            <div className="flex overflow-x-auto gap-2 pb-2.5 scrollbar-none -mx-4 px-4">
               {categories.map(cat => (
                 <button
                   key={cat}
                   onClick={() => setCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border whitespace-nowrap ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border whitespace-nowrap cursor-pointer ${
                     category === cat
-                      ? "bg-slate-900 text-white border-slate-900"
+                      ? "bg-slate-900 text-white border-slate-900 shadow-xs"
                       : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
                   }`}
                 >
-                  {cat === "All" ? "All Services" : cat}
+                  {cat}
                 </button>
               ))}
             </div>
 
-            {/* Input Filter Bar */}
+            {/* Input Filter Field Bar Layout */}
             <div className="relative mt-1">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search for a service package (e.g. 1 BHK, Sofa)..."
+                placeholder="Search for a service package..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full bg-gray-50/80 border border-gray-200 rounded-xl pl-10 pr-9 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-gray-800"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-9 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-gray-800"
               />
             </div>
           </div>
         </div>
 
-        {/* Master Output List Container */}
-        <div className="w-full max-w-2xl mx-auto px-3 mt-4">
-          <div className="mb-3 px-1">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-gray-400">
-              {category === "All" ? "Top Booking Packages" : category}
+        {/* Content Render Interface Layout Output list panel */}
+        <div className="w-full max-w-2xl mx-auto px-3 mt-5">
+          <div className="mb-3 px-1 flex items-center justify-between">
+            <h2 className="text-xs font-extrabold uppercase tracking-wider text-gray-400">
+              {category} ({filtered.length})
             </h2>
           </div>
 
           <div className="flex flex-col gap-3">
             {filtered.map((service, i) => (
               <HorizontalServiceCard
-                key={service.id || service.slug}
+                key={service.id || service.slug || i}
                 service={service}
                 index={i}
                 isInCart={cart.some(item => item.id === service.id)}
@@ -444,14 +469,14 @@ const ServicesPage = () => {
           </div>
 
           {filtered.length === 0 && (
-            <div className="text-center py-16 bg-white border border-gray-100 rounded-2xl mt-4 p-6">
-              <p className="text-sm font-bold text-gray-700">No services found match criteria</p>
+            <div className="text-center py-16 bg-white border border-gray-100 rounded-2xl mt-2 p-6 shadow-xs">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">No packages found under this selection</p>
             </div>
           )}
         </div>
       </main>
 
-      {/* --- Sticky Bottom Booking Drawer Cart Panel Component --- */}
+      {/* --- Cart Drawer Panel Action Layout --- */}
       <AnimatePresence>
         {cart.length > 0 && (
           <motion.div
@@ -469,16 +494,16 @@ const ServicesPage = () => {
                   </span>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 font-medium">Selected Services</p>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Selected Packages</p>
                   <p className="text-sm font-black text-slate-900">₹{cartTotal.toLocaleString("en-IN")}</p>
                 </div>
               </div>
 
               <button
                 onClick={handleConfirmAndSendToWhatsApp}
-                className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-5 rounded-xl transition-all shadow-md active:scale-98"
+                className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition-all shadow-md cursor-pointer active:scale-98"
               >
-                <span>Confirm Booking & Send to WP</span>
+                <span>Book via WhatsApp</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -486,7 +511,7 @@ const ServicesPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Floating Details Overlay Sheet */}
+      {/* Info Details Floating Modal Sheet */}
       {selectedServiceDetails && (
         <DetailsModal 
           service={selectedServiceDetails} 
