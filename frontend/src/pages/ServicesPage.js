@@ -11,124 +11,93 @@ import { SERVICES } from "@/constants/testIds";
 const categories = ["All", "Residential", "Commercial"];
 
 const HorizontalServiceCard = ({ service, index }) => {
-  const isCustom = service.priceType === "custom";
-
   return (
     <motion.div
-      data-testid={SERVICES.serviceCard}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay: index * 0.05 }}
-      className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col md:flex-row"
+      transition={{ delay: index * 0.05 }}
+      className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all overflow-hidden"
     >
-      {/* Image */}
-      <div className="relative md:w-72 h-56 md:h-auto overflow-hidden">
+      <div className="flex p-3 gap-3">
+
+        {/* Image */}
         <img
           src={service.image}
           alt={service.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-28 h-28 rounded-xl object-cover flex-shrink-0"
         />
 
-        {service.isMostPopular && (
-          <div className="absolute top-4 left-4 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-            ⭐ Most Popular
-          </div>
-        )}
+        {/* Content */}
+        <div className="flex-1 flex flex-col justify-between min-w-0">
 
-        <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur rounded-full px-3 py-1 flex items-center gap-2 shadow">
-          <Clock className="w-4 h-4 text-slate-700" />
-          <span className="text-sm font-semibold text-slate-700">
-            {service.duration}
-          </span>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="flex-1 p-6 flex flex-col justify-between">
-        <div>
-          {/* Top */}
-          <div className="flex justify-between items-start gap-4">
-            <div>
-              <h3 className="text-2xl font-bold text-slate-900">
-                {service.name}
-              </h3>
-
-              <div className="flex items-center gap-2 mt-2">
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    service.category === "commercial"
-                      ? "bg-purple-100 text-purple-700"
-                      : "bg-blue-100 text-blue-700"
-                  }`}
-                >
-                  {service.category === "commercial"
-                    ? "Commercial"
-                    : "Residential"}
-                </span>
-
-                <div className="flex items-center gap-1">
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <span className="text-sm font-semibold">4.9</span>
-                  <span className="text-sm text-slate-500">
-                    (100+ reviews)
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-right">
-              <p className="text-xs uppercase tracking-wider text-slate-400">
-                Starting From
-              </p>
-
-              <h2 className="text-3xl font-black text-blue-600">
-                {isCustom
-                  ? "Custom Quote"
-                  : `₹${service.startingPrice.toLocaleString("en-IN")}`}
-              </h2>
-            </div>
-          </div>
-
-          {/* Description */}
-          <p className="text-slate-600 mt-4 leading-7">
-            {service.description}
-          </p>
-
-          {/* Features */}
-          <div className="grid grid-cols-2 gap-3 mt-5">
-            {service.features?.slice(0, 4).map((feature, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-2 bg-slate-50 rounded-xl px-3 py-2"
-              >
-                <Check className="w-4 h-4 text-green-600" />
-                <span className="text-sm text-slate-700">
-                  {feature}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom */}
-        <div className="flex justify-between items-center mt-6 pt-5 border-t">
           <div>
-            <p className="text-sm text-slate-500">
-              ✔ Professional Equipment
+
+            <div className="flex justify-between gap-3">
+
+              <div className="min-w-0">
+
+                <h3 className="font-bold text-lg text-slate-900 truncate">
+                  {service.name}
+                </h3>
+
+                <div className="flex items-center gap-2 mt-1">
+
+                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                    {service.category}
+                  </span>
+
+                  <span className="text-xs text-slate-500">
+                    ⭐ 4.9
+                  </span>
+
+                  <span className="text-xs text-slate-500">
+                    • {service.duration}
+                  </span>
+
+                </div>
+
+              </div>
+
+              <div className="text-right">
+
+                <p className="text-[10px] uppercase text-slate-400">
+                  From
+                </p>
+
+                <div className="font-black text-blue-600 text-xl">
+                  ₹{service.startingPrice}
+                </div>
+
+              </div>
+
+            </div>
+
+            <p className="text-sm text-slate-500 mt-2 line-clamp-2">
+              {service.description}
             </p>
-            <p className="text-sm text-slate-500">
-              ✔ Verified Experts
-            </p>
+
           </div>
 
-          <Link
-            to={`/booking?service=${service.slug}`}
-            data-testid={SERVICES.bookBtn}
-            className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-2xl font-bold transition-all hover:scale-105 shadow-lg"
-          >
-            Book Now →
-          </Link>
+          <div className="flex justify-between items-center mt-3">
+
+            <Link
+              to={`/service/${service.slug}`}
+              className="text-blue-600 text-sm font-semibold"
+            >
+              View Details
+            </Link>
+
+            <Link
+              to={`/booking?service=${service.slug}`}
+              className="bg-amber-500 text-white rounded-xl px-5 py-2 text-sm font-bold"
+            >
+              Book Now
+            </Link>
+
+          </div>
+
         </div>
+
       </div>
     </motion.div>
   );
@@ -211,7 +180,7 @@ const ServicesPage = () => {
         </div>
 
         {/* Filter + Cards */}
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="w-full max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-6">
           {/* Category filters */}
           <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-3 mb-6 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
             {categories.map(cat => (
@@ -249,7 +218,7 @@ const ServicesPage = () => {
           </div>
 
           {/* Horizontal service cards */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-3">
             {filtered.map((service, i) => (
               <HorizontalServiceCard
                 key={service.id || service.slug}
