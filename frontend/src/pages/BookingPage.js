@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { Check, ChevronRight, ChevronLeft, MapPin, Calendar, Clock, User, Home, FileText, Search, Plus, Minus, Sofa } from "lucide-react";
 import { toast } from "sonner";
 import Header from "@/components/Header";
@@ -30,6 +30,7 @@ const stepVariants = {
 
 const BookingPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const [step, setStep] = useState(1);
   const [dir, setDir] = useState(1);
@@ -38,8 +39,14 @@ const BookingPage = () => {
   const [areaSearch, setAreaSearch] = useState("");
   const [showAreaList, setShowAreaList] = useState(false);
 
+  // Read customized package parameters passed through React Router state
+  const selectedServices = location.state?.selectedServices || [];
+  const totalPrice = location.state?.totalPrice || 0;
+  const isPackageBooking = selectedServices.length > 0;
+
   const [booking, setBooking] = useState({
     service: "", serviceId: "", serviceObj: null,
+    services: [], packagePrice: 0,
     hasSofa: null, sofaCleaningType: "none", sofaSeats: 1, chairCount: 0,
     propertyType: "", location: "", date: "", time: "",
     customerName: "", mobile: "", email: "",
@@ -48,19 +55,38 @@ const BookingPage = () => {
 
   useEffect(() => {
     api.get("/services").then(r => { if (r.data?.length) setServices(r.data); }).catch(() => {});
-    const slug = searchParams.get("service");
-    if (slug) {
-      const found = SERVICES_STATIC.find(s => s.slug === slug);
-      if (found) setBooking(b => ({ ...b, service: found.name, serviceId: found.id || found.slug, serviceObj: found }));
+    
+    if (isPackageBooking) {
+      setBooking(prev => ({
+        ...prev,
+        services: selectedServices,
+        packagePrice: totalPrice,
+        service: "Customized Cleaning Package",
+        serviceId: "custom-package"
+      }));
+    } else {
+      const slug = searchParams.get("service");
+      if (slug) {
+        const found = SERVICES_STATIC.find(s => s.slug === slug);
+        if (found) setBooking(b => ({ ...b, service: found.name, serviceId: found.id || found.slug, serviceObj: found }));
+      }
     }
-  }, []);
+  }, [isPackageBooking, selectedServices, totalPrice, searchParams]);
 
   const SOFA_WET_PRICE = 499;
   const CHAIR_PRICE = 150;
 
-  const pricing = booking.serviceObj && booking.propertyType
-    ? calculatePrice(booking.serviceObj, booking.propertyType)
-    : { base: 0, gst: 0, total: 0, isCustom: false };
+  // Pricing calculations altered to evaluate packages versus standard structures
+  const pricing = isPackageBooking
+    ? {
+        base: totalPrice,
+        gst: Math.round(totalPrice * 0.18),
+        total: totalPrice + Math.round(totalPrice * 0.18),
+        isCustom: false
+      }
+    : (booking.serviceObj && booking.propertyType
+        ? calculatePrice(booking.serviceObj, booking.propertyType)
+        : { base: 0, gst: 0, total: 0, isCustom: false });
 
   const addonBase =
     (booking.sofaCleaningType === "wet" ? booking.sofaSeats * SOFA_WET_PRICE : 0) +
@@ -79,7 +105,7 @@ const BookingPage = () => {
   const canNext = () => {
     if (step === 1) return !!booking.service;
     if (step === 2) return booking.hasSofa !== null;
-    if (step === 3) return !!booking.propertyType;
+    if (step === 3) return isPackageBooking ? true : !!booking.propertyType; // Property type optional for predefined arrays
     if (step === 4) return !!booking.location;
     if (step === 5) return !!booking.date;
     if (step === 6) return !!booking.time;
@@ -93,6 +119,7 @@ const BookingPage = () => {
     try {
       const payload = {
         service: booking.service, serviceId: booking.serviceId || "",
+        services: booking.services,
         propertyType: booking.propertyType, location: booking.location,
         date: booking.date, time: booking.time,
         customerName: booking.customerName, mobile: booking.mobile, email: booking.email,
@@ -109,7 +136,7 @@ const BookingPage = () => {
       const r = await api.post("/bookings", payload);
       toast.success("Booking confirmed!");
       const successBooking = { ...payload, bookingId: r.data.bookingId, ...r.data };
-      // Auto-open WhatsApp with full booking details
+      
       const waMsg = getBookingWhatsAppMessage(successBooking);
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`, "_blank");
       navigate("/booking/success", { state: { booking: successBooking } });
@@ -136,7 +163,6 @@ const BookingPage = () => {
 
         {/* Progress */}
         <div className="max-w-3xl mx-auto px-4 py-5">
-          {/* Mobile: compact "Step X of 9 — Label" + dot track */}
           <div className="flex sm:hidden items-center justify-between mb-3">
             <div>
               <span className="font-body text-[11px] text-[#94A3B8] font-semibold uppercase tracking-wider">
@@ -159,7 +185,6 @@ const BookingPage = () => {
             </div>
           </div>
 
-          {/* Desktop: Full step bubbles with labels */}
           <div data-testid={BOOKING.stepIndicator} className="hidden sm:flex items-center gap-1 overflow-x-auto pb-2 scrollbar-hide">
             {STEPS.map((s, i) => (
               <React.Fragment key={s.id}>
@@ -180,7 +205,6 @@ const BookingPage = () => {
             ))}
           </div>
 
-          {/* Progress bar */}
           <div className="h-1 bg-gray-200 rounded-full mt-2 sm:mt-3">
             <div className="h-full bg-gradient-to-r from-[#2563EB] to-[#F59E0B] rounded-full transition-all duration-500"
               style={{ width: `${((step - 1) / (STEPS.length - 1)) * 100}%` }} />
@@ -200,8 +224,8 @@ const BookingPage = () => {
                 exit="exit"
                 transition={{ duration: 0.3 }}
               >
-                {/* Step 1: Service */}
-                {step === 1 && (
+                {/* Step 1: Service Selection (Standard Flow) */}
+                {step === 1 && !isPackageBooking && (
                   <div>
                     <h2 className="font-heading text-xl font-bold text-[#0F172A] mb-1">Select Service</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-4">Choose the cleaning service you need</p>
@@ -217,7 +241,6 @@ const BookingPage = () => {
                               : "border-gray-100 bg-white hover:border-[#2563EB] hover:bg-blue-50"
                           }`}
                         >
-                          {/* Thumbnail */}
                           <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
                             <img src={s.image} alt={s.name} className="w-full h-full object-cover" loading="lazy" />
                             {booking.service === s.name && (
@@ -228,7 +251,6 @@ const BookingPage = () => {
                               </div>
                             )}
                           </div>
-                          {/* Info */}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
                               <span className="font-heading font-bold text-sm text-[#0F172A] leading-tight">{s.name}</span>
@@ -239,7 +261,6 @@ const BookingPage = () => {
                               {s.priceType === "custom" ? "Custom Quote" : `From ₹${s.startingPrice?.toLocaleString("en-IN")}`}
                             </p>
                           </div>
-                          {/* Arrow indicator */}
                           <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
                             booking.service === s.name ? "bg-[#2563EB]" : "bg-gray-100"
                           }`}>
@@ -251,13 +272,33 @@ const BookingPage = () => {
                   </div>
                 )}
 
+                {/* Step 1: Service Selection (Package View) */}
+                {step === 1 && isPackageBooking && (
+                  <div>
+                    <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Customized Cleaning Package</h2>
+                    <p className="font-body text-sm text-[#1E293B] mb-6">These services were selected from the Services page.</p>
+                    <div className="space-y-3">
+                      {booking.services.map(service => (
+                        <div key={service.id} className="border border-gray-200 bg-slate-50/50 rounded-2xl p-4 flex justify-between items-center">
+                          <div>
+                            <h4 className="font-heading font-bold text-sm text-[#0F172A]">{service.name}</h4>
+                            <p className="font-body text-xs text-[#2563EB] font-bold mt-0.5">₹{service.startingPrice?.toLocaleString("en-IN")}</p>
+                          </div>
+                          <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                            <Check className="w-3.5 h-3.5 text-green-600" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Step 2: Add-on Services */}
                 {step === 2 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Add-on Services</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">Enhance your booking with optional extras</p>
 
-                    {/* Sofa Question */}
                     <div className="mb-6 p-5 bg-[#F8FAFC] rounded-2xl border border-gray-100">
                       <div className="flex items-center gap-2 mb-3">
                         <div className="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center">
@@ -317,7 +358,6 @@ const BookingPage = () => {
                       )}
                     </div>
 
-                    {/* Chair Cleaning */}
                     <div className="p-5 bg-[#F8FAFC] rounded-2xl border border-gray-100 mb-4">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
@@ -349,7 +389,6 @@ const BookingPage = () => {
                       )}
                     </div>
 
-                    {/* Addon Total */}
                     {addonBase > 0 && (
                       <div className="bg-green-50 border border-green-200 rounded-2xl p-4 flex justify-between items-center">
                         <div>
@@ -368,31 +407,40 @@ const BookingPage = () => {
                 {step === 3 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Property Type</h2>
-                    <p className="font-body text-sm text-[#1E293B] mb-6">This helps us estimate the correct price</p>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                      {PROPERTY_TYPES.map(pt => {
-                        const p = booking.serviceObj?.propertyPricing?.[pt] || 0;
-                        const isCustom = p === 0;
-                        return (
-                          <button
-                            key={pt}
-                            data-testid={BOOKING.propertySelect}
-                            onClick={() => setBooking(b => ({ ...b, propertyType: pt }))}
-                            className={`p-4 rounded-2xl border-2 text-center transition-all ${
-                              booking.propertyType === pt
-                                ? "border-[#F59E0B] bg-amber-50"
-                                : "border-gray-100 hover:border-[#F59E0B] hover:bg-amber-50"
-                            }`}
-                          >
-                            <div className="font-heading font-bold text-sm text-[#0F172A] mb-1">{pt}</div>
-                            <div className={`font-body text-xs font-semibold ${isCustom ? "text-[#94A3B8]" : "text-[#2563EB]"}`}>
-                              {isCustom ? "Custom" : `₹${p.toLocaleString("en-IN")}`}
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {pricing.base > 0 && (
+                    <p className="font-body text-sm text-[#1E293B] mb-6">
+                      {isPackageBooking ? "Confirming context configuration or skip ahead" : "This helps us estimate the correct price"}
+                    </p>
+                    {isPackageBooking ? (
+                      <div className="p-6 border border-dashed border-gray-200 rounded-2xl text-center bg-slate-50/50">
+                        <p className="font-body text-sm text-slate-500 mb-2">Property configurations are pre-calculated for customized packages.</p>
+                        <span className="inline-block bg-[#10B981]/10 text-[#10B981] font-heading font-bold text-xs px-3 py-1 rounded-full">Ready to proceed</span>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        {PROPERTY_TYPES.map(pt => {
+                          const p = booking.serviceObj?.propertyPricing?.[pt] || 0;
+                          const isCustom = p === 0;
+                          return (
+                            <button
+                              key={pt}
+                              data-testid={BOOKING.propertySelect}
+                              onClick={() => setBooking(b => ({ ...b, propertyType: pt }))}
+                              className={`p-4 rounded-2xl border-2 text-center transition-all ${
+                                booking.propertyType === pt
+                                  ? "border-[#F59E0B] bg-amber-50"
+                                  : "border-gray-100 hover:border-[#F59E0B] hover:bg-amber-50"
+                              }`}
+                            >
+                              <div className="font-heading font-bold text-sm text-[#0F172A] mb-1">{pt}</div>
+                              <div className={`font-body text-xs font-semibold ${isCustom ? "text-[#94A3B8]" : "text-[#2563EB]"}`}>
+                                {isCustom ? "Custom" : `₹${p.toLocaleString("en-IN")}`}
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                    {pricing.base > 0 && !isPackageBooking && (
                       <div className="mt-4 p-4 bg-blue-50 rounded-2xl">
                         <p className="font-body text-sm text-[#2563EB]">
                           <strong>Estimated Price:</strong> ₹{pricing.base.toLocaleString("en-IN")} + GST (18%) = <strong>₹{pricing.total.toLocaleString("en-IN")}</strong>
@@ -570,9 +618,25 @@ const BookingPage = () => {
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Booking Summary</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">Review your booking details before confirming</p>
                     <div className="space-y-3 mb-6">
+                      <div className="flex items-start justify-between gap-4 py-2 border-b border-gray-50">
+                        <span className="font-body text-xs font-semibold text-[#94A3B8] uppercase tracking-wide flex-shrink-0">Service</span>
+                        <div className="font-body text-sm text-[#0F172A] font-medium text-right">
+                          {isPackageBooking ? (
+                            <div className="space-y-1">
+                              <div className="font-heading font-bold text-[#0F172A]">Customized Cleaning Package</div>
+                              {booking.services.map(service => (
+                                <div key={service.id} className="text-xs text-slate-500 font-normal">
+                                  • {service.name}
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            booking.service
+                          )}
+                        </div>
+                      </div>
                       {[
-                        { label: "Service", value: booking.service },
-                        { label: "Property Type", value: booking.propertyType },
+                        { label: "Property Type", value: isPackageBooking ? "Custom Package" : booking.propertyType },
                         { label: "Location", value: booking.location },
                         { label: "Date", value: booking.date ? new Date(booking.date).toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" }) : "" },
                         { label: "Time", value: booking.time },
@@ -585,7 +649,6 @@ const BookingPage = () => {
                           <span className="font-body text-sm text-[#0F172A] font-medium text-right">{item.value || "—"}</span>
                         </div>
                       ))}
-                      {/* Add-on rows */}
                       {booking.sofaCleaningType !== "none" && booking.hasSofa && (
                         <div className="flex items-start justify-between gap-4 py-2 border-b border-gray-50">
                           <span className="font-body text-xs font-semibold text-[#94A3B8] uppercase tracking-wide">Sofa Cleaning</span>
@@ -656,7 +719,7 @@ const BookingPage = () => {
             </AnimatePresence>
           </div>
 
-          {/* Navigation — desktop: inline below form */}
+          {/* Navigation — desktop */}
           <div className="hidden sm:flex items-center justify-between mt-6">
             {step > 1 ? (
               <button data-testid={BOOKING.prevBtn} onClick={() => go(-1)}
@@ -678,7 +741,7 @@ const BookingPage = () => {
           </div>
         </div>
 
-        {/* Navigation — mobile: sticky bar just above the floating contact bar */}
+        {/* Navigation — mobile */}
         <div className="sm:hidden fixed bottom-[60px] left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] px-4 py-2.5 flex items-center justify-between gap-3">
           {step > 1 ? (
             <button data-testid={BOOKING.prevBtn} onClick={() => go(-1)}
@@ -686,7 +749,6 @@ const BookingPage = () => {
               <ChevronLeft className="w-4 h-4" /> Back
             </button>
           ) : <div />}
-          {/* Step name mini */}
           <span className="font-body text-xs text-[#94A3B8] font-semibold hidden xs:block">{STEPS[step - 1]?.label}</span>
           {step < 9 ? (
             <button data-testid={BOOKING.nextBtn} onClick={() => go(1)} disabled={!canNext()}
