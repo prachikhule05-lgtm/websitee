@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Search, X, Check, ArrowRight } from "lucide-react";
+import { Search, X, Check } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import api from "@/utils/api";
@@ -11,7 +11,6 @@ import { SERVICES } from "@/constants/testIds";
 const categories = ["All", "Full House Deep Cleaning", "Customized Cleaning Package", "Commercial Post Interior Cleaning Services"];
 
 const HorizontalServiceCard = ({ service, index }) => {
-  // Simulating Safsafaiwala's structured highlights array from description if strings match
   const standardIncludes = service.includes || [
     "Deep scrubbing of floors & tiles",
     "Stain, grease & heavy dirt removal",
@@ -23,29 +22,29 @@ const HorizontalServiceCard = ({ service, index }) => {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
-      className="bg-white border border-gray-100 rounded-2xl p-3 sm:p-4 hover:shadow-md transition-all duration-200 max-w-2xl mx-auto w-full"
+      className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-all duration-200 max-w-2xl mx-auto w-full"
     >
-      <div className="flex gap-3 sm:gap-4 items-start">
-        {/* Left Aspect Image Container */}
-        <div className="flex-shrink-0 relative">
+      {/* Top Section: Image and Core Header Info Side by Side */}
+      <div className="flex gap-4 items-center">
+        {/* Left Side: Thumbnail Image */}
+        <div className="flex-shrink-0">
           <img
             src={service.image}
             alt={service.name}
-            className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover border border-gray-50"
+            className="w-20 h-20 rounded-xl object-cover border border-gray-50"
           />
         </div>
 
-        {/* Right Info Section */}
+        {/* Right Side: Title, Rating, Price */}
         <div className="flex-1 min-w-0">
-          {/* Header Row: Title and Rating block stacked closely */}
           <div className="flex justify-between items-start gap-2">
             <div>
-              <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-tight line-clamp-2">
+              <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-tight">
                 {service.name}
               </h3>
               
-              {/* Rating and Meta Indicators Row */}
-              <div className="flex items-center gap-1.5 mt-0.5">
+              {/* Rating and Meta Indicators */}
+              <div className="flex items-center gap-1.5 mt-1">
                 <span className="text-amber-500 text-xs">★</span>
                 <span className="text-xs font-bold text-gray-700">4.7</span>
                 <span className="text-gray-300 text-[10px]">•</span>
@@ -55,47 +54,47 @@ const HorizontalServiceCard = ({ service, index }) => {
               </div>
             </div>
 
-            {/* Price Segment Alignment */}
+            {/* Price Element */}
             <div className="text-right flex-shrink-0">
               <span className="block text-[8px] tracking-wider text-gray-400 font-bold uppercase leading-none">
                 STARTS AT
               </span>
-              <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5">
+              <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5 whitespace-nowrap">
                 ₹{service.startingPrice?.toLocaleString("en-IN")}
               </span>
             </div>
           </div>
-
-          {/* Safsafaiwala Feature: Compact 'Includes' Checklist instead of raw paragraph blocks */}
-          <div className="mt-2.5 bg-gray-50/60 rounded-xl p-2 border border-gray-100/50">
-            <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1">Includes:</p>
-            <ul className="space-y-0.5">
-              {standardIncludes.slice(0, 3).map((item, idx) => (
-                <li key={idx} className="flex items-start gap-1.5 text-xs text-gray-600 leading-normal">
-                  <Check className="w-3 h-3 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span className="truncate">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Explicit Utility Interactive Actions Bar */}
-          <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-100/70">
-            <Link
-              to={`/service/${service.slug}`}
-              className="text-xs font-bold text-blue-600 hover:underline"
-            >
-              View details
-            </Link>
-
-            <Link
-              to={`/booking?service=${service.slug}`}
-              className="px-5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold tracking-wide transition-all duration-150 shadow-sm shadow-amber-500/10 active:scale-95"
-            >
-              Add +
-            </Link>
-          </div>
         </div>
+      </div>
+
+      {/* FIX: Move "Includes" box below the image so it spans the FULL width */}
+      <div className="mt-3 bg-gray-50/80 rounded-xl p-3 border border-gray-100/50">
+        <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1.5">Includes:</p>
+        <ul className="space-y-1">
+          {standardIncludes.slice(0, 3).map((item, idx) => (
+            <li key={idx} className="flex items-start gap-2 text-xs text-gray-600 leading-normal">
+              <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
+              <span className="text-gray-700 font-medium">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Actions Bar Footer */}
+      <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+        <Link
+          to={`/service/${service.slug}`}
+          className="text-xs font-bold text-blue-600 hover:underline"
+        >
+          View details
+        </Link>
+
+        <Link
+          to={`/booking?service=${service.slug}`}
+          className="px-6 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold tracking-wide transition-all duration-150 shadow-sm active:scale-95"
+        >
+          Add +
+        </Link>
       </div>
     </motion.div>
   );
@@ -117,23 +116,23 @@ const ServicesPage = () => {
     const matchSearch = !search ||
       s.name.toLowerCase().includes(search.toLowerCase()) ||
       s.description?.toLowerCase().includes(search.toLowerCase());
-    
-    // Looser categorization matching similar to safsafaiwala subheaders
-    const matchCat = category === "All" || 
-      (s.category && category.toLowerCase().includes(s.category.toLowerCase()));
+    const matchCat = category === "All" || (s.category && category.toLowerCase().includes(s.category.toLowerCase()));
     return matchSearch && matchCat;
   });
 
   return (
     <div className="bg-slate-50/50 min-h-screen flex flex-col font-sans antialiased">
-      <Header />
+      {/* Wrapper to handle static/sticky layouts gracefully */}
+      <div className="relative z-30 bg-white">
+        <Header />
+      </div>
       
-      <main className="flex-1 pb-20 md:pb-12">
-        {/* Flat Minimal Subheader & Filter Section */}
-        <div className="bg-white border-b border-gray-200/60 sticky top-0 z-10 py-3 shadow-xs">
+      <main className="flex-1 pb-24">
+        {/* FIX: Sticky layout adjustments with safe z-index and solid background */}
+        <div className="bg-white border-b border-gray-200/60 sticky top-[60px] md:top-[70px] z-20 py-3 shadow-sm">
           <div className="max-w-2xl mx-auto px-4">
             
-            {/* Horizontal Filter Navigation Row */}
+            {/* Categories slider */}
             <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-none -mx-4 px-4">
               {categories.map(cat => (
                 <button
@@ -150,7 +149,7 @@ const ServicesPage = () => {
               ))}
             </div>
 
-            {/* Integrated Dynamic Inline Search Input bar */}
+            {/* Search Input Bar */}
             <div className="relative mt-1">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
@@ -174,8 +173,8 @@ const ServicesPage = () => {
           </div>
         </div>
 
-        {/* Service Stack Canvas Wrapper */}
-        <div className="w-full max-w-2xl mx-auto px-3 sm:px-4 mt-4">
+        {/* Content Container Stack */}
+        <div className="w-full max-w-2xl mx-auto px-3 mt-4">
           <div className="mb-3 px-1">
             <h2 className="text-xs font-bold uppercase tracking-wider text-gray-400">
               {category === "All" ? "Top Booking Packages" : category}
@@ -194,13 +193,7 @@ const ServicesPage = () => {
 
           {filtered.length === 0 && !loading && (
             <div className="text-center py-16 bg-white border border-gray-100 rounded-2xl mt-4 p-6">
-              <p className="text-sm font-bold text-gray-700">No services found in this category</p>
-              <button
-                onClick={() => { setSearch(""); setCategory("All"); }}
-                className="mt-3 text-xs font-bold text-blue-600 hover:underline"
-              >
-                Clear search filters
-              </button>
+              <p className="text-sm font-bold text-gray-700">No services found</p>
             </div>
           )}
         </div>
