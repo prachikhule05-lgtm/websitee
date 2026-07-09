@@ -10,33 +10,71 @@ import { SERVICES } from "@/constants/testIds";
 
 const categories = ["All", "Full House Deep Cleaning", "Customized Cleaning Package", "Commercial Post Interior Cleaning Services"];
 
+{/* --- Dynamic Data Fields for Each Category Type --- */}
+const CATEGORY_DATA_MAP = {
+  "full house deep cleaning": {
+    includes: [
+      "Deep scrubbing of all floors, tiles, and bathroom walls",
+      "Stain, grease, and heavy dirt removal from kitchens",
+      "Dusting and wiping of fans, tubes, switchboards & balconies"
+    ],
+    excludes: [
+      "Cleaning of inside kitchen storage cabinets / wardrobes",
+      "Chandelier cleaning and removal of heavy trash/debris"
+    ]
+  },
+  "customized cleaning package": {
+    includes: [
+      "Tailored selection of cleaning zones (Living Room, Sofa, or Kitchen)",
+      "Express vacuuming and mechanized floor mopping",
+      "Wiping of easily accessible furniture exterior surfaces"
+    ],
+    excludes: [
+      "Wall washing or paint mark scraping treatments",
+      "Deep sanitation of non-selected add-on home zones"
+    ]
+  },
+  "commercial post interior cleaning services": {
+    includes: [
+      "Post-construction fine dust extraction from workstation spaces",
+      "Glass facade internal pane cleaning and adhesive scraping",
+      "Deep pressure wash and sanitization of office cafeteria/restrooms"
+    ],
+    excludes: [
+      "High-rise exterior glass drop-rope cleaning operations",
+      "Handling or organization of live server systems / office wiring"
+    ]
+  },
+  "default": {
+    includes: [
+      "Standard deep cleaning & scrubbing of target surfaces",
+      "Eco-friendly cleaning agents application for spot treatment",
+      "Mopping and surface polishing of primary floors"
+    ],
+    excludes: [
+      "Cleaning inside locked storage spaces or delicate appliances",
+      "High-level external window reach adjustments"
+    ]
+  }
+};
+
 {/* --- Dynamic Ultra-Compact Bottom Sheet Modal --- */}
 const DetailsModal = ({ service, onClose }) => {
   if (!service) return null;
 
-  // Dynamically reads the specific arrays belonging to this service
-  const includesList = service.includes && service.includes.length > 0 
-    ? service.includes 
-    : [
-        "Standard Deep scrubbing of target zones",
-        "Stain, grease & localized dirt removal",
-        "Eco-friendly cleaning agents application"
-      ];
+  // Determine category key for lookups
+  const catKey = service.category?.toLowerCase() || "";
+  const fallbackData = CATEGORY_DATA_MAP[catKey] || CATEGORY_DATA_MAP["default"];
 
-  const excludesList = service.excludes && service.excludes.length > 0 
-    ? service.excludes 
-    : [
-        "Cleaning of internal closed storage units",
-        "High-rise exterior glass operations"
-      ];
+  // Prioritize service specific data over category standard text fields
+  const includesList = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
+  const excludesList = service.excludes && service.excludes.length > 0 ? service.excludes : fallbackData.excludes;
 
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-xs px-2 sm:px-0">
-        {/* Backdrop click to close */}
         <div className="absolute inset-0" onClick={onClose} />
 
-        {/* Compact Sheet Container */}
         <motion.div
           initial={{ y: "100%" }}
           animate={{ y: 0 }}
@@ -44,22 +82,18 @@ const DetailsModal = ({ service, onClose }) => {
           transition={{ type: "spring", damping: 25, stiffness: 240 }}
           className="relative bg-white w-full max-w-md rounded-t-2xl max-h-[70vh] shadow-2xl flex flex-col z-10 overflow-hidden mb-16 md:mb-0"
         >
-          {/* Modal Header */}
+          {/* Header */}
           <div className="sticky top-0 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between z-20">
             <h2 className="font-extrabold text-gray-900 text-sm tracking-tight truncate pr-4">
               {service.name} Info
             </h2>
-            <button 
-              onClick={onClose} 
-              className="p-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
-            >
+            <button onClick={onClose} className="p-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
               <X className="w-3.5 h-3.5 text-gray-500" />
             </button>
           </div>
 
           {/* Scrollable Data Body */}
           <div className="p-4 space-y-4 pb-20 overflow-y-auto custom-scrollbar">
-            {/* Metadata Badges */}
             <div className="grid grid-cols-2 gap-2 text-xs font-bold text-gray-600 bg-gray-50 p-2.5 rounded-xl text-center">
               <div className="flex items-center justify-center gap-1">
                 <span className="text-amber-500 text-sm">★</span>
@@ -70,7 +104,7 @@ const DetailsModal = ({ service, onClose }) => {
               </div>
             </div>
 
-            {/* Dynamic Service Specific Includes */}
+            {/* Dynamic Includes Fields */}
             <div>
               <h4 className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 mb-1.5 flex items-center gap-1">
                 <Check className="w-3.5 h-3.5 text-emerald-500" /> Includes
@@ -85,7 +119,7 @@ const DetailsModal = ({ service, onClose }) => {
               </ul>
             </div>
 
-            {/* Dynamic Service Specific Excludes */}
+            {/* Dynamic Excludes Fields */}
             <div>
               <h4 className="text-[10px] font-bold uppercase tracking-wider text-rose-600 mb-1.5 flex items-center gap-1">
                 <X className="w-3.5 h-3.5 text-rose-500" /> Excludes
@@ -100,7 +134,7 @@ const DetailsModal = ({ service, onClose }) => {
               </ul>
             </div>
 
-            {/* Disclaimer Security Warning Block */}
+            {/* Disclaimer */}
             <div className="bg-amber-50/60 border border-amber-100 rounded-xl p-2.5">
               <p className="text-[10px] font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1 mb-0.5">
                 <AlertTriangle className="w-3 h-3 text-amber-600" /> Disclaimer
@@ -111,7 +145,7 @@ const DetailsModal = ({ service, onClose }) => {
             </div>
           </div>
 
-          {/* Sticky Book / Close CTA Footer Action */}
+          {/* Bottom Call Action */}
           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-3 z-20">
             <Link
               to={`/booking?service=${service.slug}`}
@@ -126,15 +160,11 @@ const DetailsModal = ({ service, onClose }) => {
   );
 };
 
-{/* --- Main Service Flex Card Row --- */}
+{/* --- Main Service Card --- */}
 const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
-  const standardIncludes = service.includes && service.includes.length > 0
-    ? service.includes
-    : [
-        "Deep scrubbing of floors & tiles",
-        "Stain, grease & heavy dirt removal",
-        "Eco-friendly cleaning agents used"
-      ];
+  const catKey = service.category?.toLowerCase() || "";
+  const fallbackData = CATEGORY_DATA_MAP[catKey] || CATEGORY_DATA_MAP["default"];
+  const standardIncludes = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
 
   return (
     <motion.div
@@ -143,7 +173,6 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
       transition={{ delay: index * 0.04 }}
       className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-md transition-all duration-200 max-w-2xl mx-auto w-full"
     >
-      {/* Top Flex Info block */}
       <div className="flex gap-4 items-center">
         <div className="flex-shrink-0">
           <img
@@ -181,7 +210,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
         </div>
       </div>
 
-      {/* Wide Includes Block beneath the top row to maximize text width without truncation */}
+      {/* Dynamic Sub-Card Quick View Includes list */}
       <div className="mt-3 bg-gray-50/80 rounded-xl p-3 border border-gray-100/50">
         <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1.5">Includes:</p>
         <ul className="space-y-1">
@@ -194,7 +223,6 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
         </ul>
       </div>
 
-      {/* Button Tray Actions */}
       <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
         <button
           type="button"
@@ -215,7 +243,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
   );
 };
 
-{/* --- Complete Master Layout Wrapper --- */}
+{/* --- Complete Master Layout Page Wrapper --- */}
 const ServicesPage = () => {
   const [services, setServices] = useState(SERVICES_STATIC);
   const [search, setSearch] = useState("");
@@ -239,13 +267,12 @@ const ServicesPage = () => {
 
   return (
     <div className="bg-slate-50/50 min-h-screen flex flex-col font-sans antialiased">
-      {/* Absolute base stacking context container */}
       <div className="relative z-30 bg-white">
         <Header />
       </div>
       
       <main className="flex-1 pb-24">
-        {/* Sticky Fixed Filter Control Grid with precise offset settings */}
+        {/* Navigation Sticky Controls */}
         <div className="bg-white border-b border-gray-200/60 sticky top-[60px] md:top-[70px] z-20 py-3 shadow-sm">
           <div className="max-w-2xl mx-auto px-4">
             
@@ -277,17 +304,11 @@ const ServicesPage = () => {
                 onChange={e => setSearch(e.target.value)}
                 className="w-full bg-gray-50/80 border border-gray-200 rounded-xl pl-10 pr-9 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-gray-800"
               />
-              {search && (
-                <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
             </div>
-
           </div>
         </div>
 
-        {/* Master Output Stack Grid */}
+        {/* Master Output Grid list container */}
         <div className="w-full max-w-2xl mx-auto px-3 mt-4">
           <div className="mb-3 px-1">
             <h2 className="text-xs font-bold uppercase tracking-wider text-gray-400">
@@ -314,7 +335,7 @@ const ServicesPage = () => {
         </div>
       </main>
 
-      {/* Interactive Floating Bottom Sheet Trigger Activation */}
+      {/* Floating Dynamic Details Overlay Sheet */}
       {selectedServiceDetails && (
         <DetailsModal 
           service={selectedServiceDetails} 
