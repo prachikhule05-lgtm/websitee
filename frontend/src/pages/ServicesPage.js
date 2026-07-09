@@ -5,15 +5,10 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import api from "@/utils/api";
 
-// Exact string literal definitions matching your requested filter layout
-const categories = [
-  "All Services", 
-  "Full House Deep Cleaning", 
-  "Customized Cleaning Package", 
-  "Commercial Post Interior Cleaning Services"
-];
+// Unified categories array matching UI text
+const categories = ["All Services", "Full House Deep Cleaning", "Customized Cleaning Package", "Commercial Post Interior Cleaning Services"];
 
-{/* --- Map Configuration Structure --- */}
+{/* --- Category Matrix mapping for flexible database tags --- */}
 const CATEGORY_DATA_MAP = {
   "full house deep cleaning": {
     tags: ["residential", "full house deep cleaning", "home deep cleaning"],
@@ -28,7 +23,7 @@ const CATEGORY_DATA_MAP = {
     ]
   },
   "customized cleaning package": {
-    tags: ["residential", "customized cleaning package", "sofa cleaning", "kitchen cleaning"],
+    tags: ["residential", "customized cleaning package", "sofa cleaning", "living room"],
     includes: [
       "Tailored selection of specialized standalone cleaning zones",
       "Express vacuuming and mechanized surface floor mopping",
@@ -65,90 +60,51 @@ const CATEGORY_DATA_MAP = {
   }
 };
 
-{/* --- Predefined Mock Data Array Database --- */}
 const INITIAL_STATIC_SERVICES = [
   {
     id: "fh-1bhk",
     slug: "1-bhk-deep-cleaning",
-    name: "1 BHK Full House Deep Cleaning",
-    category: "Full House Deep Cleaning",
-    startingPrice: 2499,
-    duration: "4-5 Hours",
-    rating: "4.8",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=300&q=80",
-    includes: ["Deep scrubbing of 1 Bedroom, 1 Kitchen, 1 Living Room & 1 Washroom", "Mechanized floor scrubbing and tile shine treatments", "Wall dusting & oil stain removal from kitchen tile walls"],
-    excludes: ["Cleaning inside locked closed wardrobes/cabinets", "Terrace wash layout"]
-  },
-  {
-    id: "fh-1bhk-stairs",
-    slug: "1-bhk-cleaning-with-stairs",
-    name: "1 BHK Full House Deep Cleaning (With Stairs)",
-    category: "Full House Deep Cleaning",
-    startingPrice: 2999,
-    duration: "5-6 Hours",
-    rating: "4.7",
-    image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=300&q=80",
-    includes: ["Complete 1 BHK full-suite deep sanitization template", "Sweeping, high-pressure washing, and mopping of internal/external stairs", "Handrail disinfecting & stepping surface border spot scrubbing"],
-    excludes: ["Cleaning of structural overhead residential water tanks"]
-  },
-  {
-    id: "fh-2bhk",
-    slug: "2-bhk-deep-cleaning",
-    name: "2 BHK Full House Deep Cleaning",
-    category: "Full House Deep Cleaning",
+    name: "Home Deep Cleaning",
+    category: "residential",
     startingPrice: 3499,
-    duration: "6-7 Hours",
+    duration: "4-8 Hours",
     rating: "4.9",
-    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=300&q=80",
-    includes: ["Deep cleaning of 2 Bedrooms, Kitchen, Living Room & 2 Washrooms", "Machine-driven floor crystallization & stain removal", "Window pane glass wiping & tracking slide frame dust suction"],
-    excludes: ["Rearranging structural heavy loaded vintage solid wood closets"]
-  },
-  {
-    id: "cust-sofa",
-    slug: "sofa-dry-cleaning",
-    name: "Sofa Dry Cleaning & Shampooing",
-    category: "Customized Cleaning Package",
-    startingPrice: 599,
-    duration: "1-2 Hours",
-    rating: "4.9",
-    image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=300&q=80",
-    includes: ["Vacuum extraction of embedded hidden crumbs & fine dust", "Injection-extraction organic chemical foam shampooing", "Fabric color locking enhancement & fresh scent finish spray"],
-    excludes: ["Genuine leather restorative buffing oils treatment"]
-  },
-  {
-    id: "cust-kitchen",
-    slug: "kitchen-deep-cleaning",
-    name: "Kitchen Deep Chemical Cleaning",
-    category: "Customized Cleaning Package",
-    startingPrice: 1399,
-    duration: "2-3 Hours",
-    rating: "4.8",
-    image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=300&q=80",
-    includes: ["Complete degreasing of chimney grids, gas hobs, and backsplash tiles", "Sink sanitization and high-shine chrome fixture scale scraping", "Exterior washing of all modular drawer panels"],
-    excludes: ["Re-arranging packed spice container jars inside closed cupboards"]
+    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=300&q=80",
+    includes: ["Deep scrubbing of floors & tiles", "Stain, grease & heavy dirt removal", "Eco-friendly cleaning agents application"],
+    excludes: ["Cleaning of inside kitchen storage cabinets & bathroom windows", "Exterior high-rise glass beyond safe immediate physical reach"]
   },
   {
     id: "comm-office",
     slug: "post-construction-office",
-    name: "Post-Construction Office Deep Cleaning",
-    category: "Commercial Post Interior Cleaning Services",
-    startingPrice: 6499,
-    duration: "8-12 Hours",
+    name: "Office Cleaning",
+    category: "commercial",
+    startingPrice: 2999,
+    duration: "3-8 Hours",
     rating: "4.9",
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=300&q=80",
-    includes: ["Fine industrial plaster dust suction using commercial extractors", "Scraping of leftover paint and glue tape residues from internal glass screens", "Full sanitation of conference pods, cabins, and multi-desking configurations"],
+    includes: ["Deep scrubbing of floors & tiles", "Stain, grease & heavy dirt removal", "Eco-friendly cleaning agents application"],
     excludes: ["External high-altitude rope-access glass cradle wash cycles"]
+  },
+  {
+    id: "cust-sofa",
+    slug: "sofa-dry-cleaning",
+    name: "Sofa Cleaning",
+    category: "residential",
+    startingPrice: 499,
+    duration: "30-120 Minutes",
+    rating: "4.9",
+    image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=300&q=80",
+    includes: ["Deep shampooing and upholstery cleaning"],
+    excludes: ["Genuine leather restorative buffing oils treatment"]
   }
 ];
 
-{/* --- Ultra-Compact Details Modal Component --- */}
+{/* --- Bottom Sheet Info Modal Component --- */}
 const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
   if (!service) return null;
 
   const catKey = service.category?.toLowerCase() || "";
-  const fallbackData = CATEGORY_DATA_MAP[catKey] || 
-    Object.values(CATEGORY_DATA_MAP).find(c => c.tags.includes(catKey)) || 
-    CATEGORY_DATA_MAP["default"];
+  const fallbackData = Object.values(CATEGORY_DATA_MAP).find(c => c.tags.includes(catKey)) || CATEGORY_DATA_MAP["default"];
 
   const includesList = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
   const excludesList = service.excludes && service.excludes.length > 0 ? service.excludes : fallbackData.excludes;
@@ -167,7 +123,7 @@ const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
         >
           <div className="sticky top-0 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between z-20">
             <h2 className="font-extrabold text-gray-900 text-sm tracking-tight truncate pr-4">
-              {service.name} Info
+              {service.name} Details
             </h2>
             <button onClick={onClose} className="p-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors cursor-pointer">
               <X className="w-4 h-4 text-gray-500" />
@@ -178,11 +134,11 @@ const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
             <div className="grid grid-cols-2 gap-2 text-xs font-bold text-gray-600 bg-gray-50 p-2.5 rounded-xl text-center">
               <div className="flex items-center justify-center gap-1">
                 <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                <span>{service.rating || "4.8"} Rating</span>
+                <span>{service.rating || "4.9"} Rating</span>
               </div>
               <div className="border-l border-gray-200 flex items-center justify-center gap-1">
                 <Clock className="w-3.5 h-3.5 text-blue-500" />
-                <span>{service.duration || "2 Hours"}</span>
+                <span>{service.duration || "4 Hours"}</span>
               </div>
             </div>
 
@@ -219,7 +175,7 @@ const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-600" /> Disclaimer
               </p>
               <p className="text-xs text-amber-700 leading-normal font-medium">
-                Please ensure valuables are securely stored. Our service teams cannot assume structural liabilities for unsupervised belongings.
+                Please guarantee that heavy or highly valuable ornaments are securely stored away. Our personnel cannot take administrative liabilities for loose items left unsupervised.
               </p>
             </div>
           </div>
@@ -233,7 +189,7 @@ const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
                   : "bg-amber-500 hover:bg-amber-600 text-white"
               }`}
             >
-              {isInCart ? "Remove Package Selection" : `Add Package — ₹${service.startingPrice?.toLocaleString("en-IN")}`}
+              {isInCart ? "Remove Selection" : `Book Now — ₹${service.startingPrice?.toLocaleString("en-IN")}`}
             </button>
           </div>
         </motion.div>
@@ -242,14 +198,8 @@ const DetailsModal = ({ service, onClose, onAddToCart, isInCart }) => {
   );
 };
 
-{/* --- Horizontal Service Card Item Component --- */}
+{/* --- Horizontal Service List Item Component --- */}
 const HorizontalServiceCard = ({ service, index, onOpenDetails, onAddToCart, isInCart }) => {
-  const catKey = service.category?.toLowerCase() || "";
-  const fallbackData = CATEGORY_DATA_MAP[catKey] || 
-    Object.values(CATEGORY_DATA_MAP).find(c => c.tags.includes(catKey)) || 
-    CATEGORY_DATA_MAP["default"];
-  const standardIncludes = service.includes && service.includes.length > 0 ? service.includes : fallbackData.includes;
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -257,8 +207,8 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAddToCart, isI
       transition={{ delay: index * 0.04 }}
       className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-sm transition-all duration-200 max-w-2xl mx-auto w-full"
     >
-      <div className="flex gap-4 items-center">
-        <div className="flex-shrink-0">
+      <div className="flex gap-4 items-start">
+        <div className="flex-shrink-0 mt-1">
           <img
             src={service.image}
             alt={service.name}
@@ -269,70 +219,74 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAddToCart, isI
         <div className="flex-1 min-w-0">
           <div className="flex justify-between items-start gap-2">
             <div>
-              <h3 className="text-sm sm:text-base font-extrabold text-gray-900 leading-tight">
+              <h3 className="text-sm sm:text-base font-extrabold text-gray-900 leading-snug truncate">
                 {service.name}
               </h3>
-              <div className="flex items-center gap-1.5 mt-1 flex-wrap">
-                <span className="flex items-center gap-0.5 text-xs font-bold text-gray-700">
+              
+              <div className="flex items-center gap-1.5 mt-1">
+                <span className="text-[10px] font-bold uppercase tracking-wide bg-blue-50 text-blue-600 px-2 py-0.5 rounded-md">
+                  {service.category}
+                </span>
+                <span className="flex items-center gap-0.5 text-xs font-bold text-gray-600">
                   <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                  {service.rating || "4.8"}
+                  {service.rating || "4.9"}
                 </span>
                 <span className="text-gray-300 text-[10px]">•</span>
-                <span className="text-[11px] text-blue-600 font-semibold bg-blue-50/70 px-1.5 py-0.5 rounded">
+                <span className="text-xs text-gray-500 font-medium">
                   {service.duration || "4 Hours"}
                 </span>
               </div>
             </div>
 
             <div className="text-right flex-shrink-0">
-              <span className="block text-[8px] tracking-wider text-gray-400 font-bold uppercase leading-none">
-                STARTS AT
-              </span>
-              <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5 whitespace-nowrap">
+              <span className="block text-[8px] tracking-wider text-gray-400 font-bold uppercase leading-none">FROM</span>
+              <span className="text-base sm:text-lg font-black text-blue-600 block mt-0.5 whitespace-nowrap">
                 ₹{service.startingPrice?.toLocaleString("en-IN")}
               </span>
             </div>
           </div>
+
+          {service.includes && service.includes.length > 0 && (
+            <div className="mt-3 bg-gray-50/60 rounded-xl p-2.5 border border-gray-100/50">
+              <p className="text-[9px] uppercase font-bold tracking-wider text-gray-400 mb-1">INCLUDES:</p>
+              <ul className="space-y-1">
+                {service.includes.slice(0, 3).map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-1.5 text-xs text-gray-600 leading-normal">
+                    <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700 font-medium truncate">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-gray-50">
+            <button
+              type="button"
+              onClick={() => onOpenDetails(service)}
+              className="text-xs font-bold text-blue-600 hover:underline cursor-pointer"
+            >
+              View Details
+            </button>
+
+            <button
+              onClick={() => onAddToCart(service)}
+              className={`px-5 py-1.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-150 cursor-pointer active:scale-95 ${
+                isInCart 
+                  ? "bg-gray-100 text-gray-700 hover:bg-gray-200" 
+                  : "bg-amber-500 text-white hover:bg-amber-600"
+              }`}
+            >
+              {isInCart ? "Added ✓" : "Book Now"}
+            </button>
+          </div>
         </div>
-      </div>
-
-      <div className="mt-3 bg-gray-50/80 rounded-xl p-3 border border-gray-100/50">
-        <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1.5">Includes:</p>
-        <ul className="space-y-1">
-          {standardIncludes.slice(0, 3).map((item, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-xs text-gray-600 leading-normal">
-              <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
-              <span className="text-gray-700 font-medium truncate">{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-        <button
-          type="button"
-          onClick={() => onOpenDetails(service)}
-          className="text-xs font-bold text-blue-600 hover:underline cursor-pointer"
-        >
-          View details
-        </button>
-
-        <button
-          onClick={() => onAddToCart(service)}
-          className={`px-5 py-1.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-150 cursor-pointer active:scale-95 ${
-            isInCart 
-              ? "bg-slate-200 text-slate-700 hover:bg-slate-300" 
-              : "bg-amber-500 text-white hover:bg-amber-600"
-          }`}
-        >
-          {isInCart ? "Added ✓" : "Add +"}
-        </button>
       </div>
     </motion.div>
   );
 };
 
-{/* --- Main Dashboard View Section Wrapper --- */}
+{/* --- Complete Responsive Main Layout Wrap --- */}
 const ServicesPage = () => {
   const [services, setServices] = useState(INITIAL_STATIC_SERVICES);
   const [search, setSearch] = useState("");
@@ -347,7 +301,7 @@ const ServicesPage = () => {
         setServices(r.data);
       }
     }).catch(() => {
-      // Automatic fallback default handling
+      // Automatic seamless graceful layout recovery fallback 
     }).finally(() => setLoading(false));
   }, []);
 
@@ -366,57 +320,50 @@ const ServicesPage = () => {
 
   const handleConfirmAndSendToWhatsApp = () => {
     if (cart.length === 0) return;
-
     const targetWhatsAppNumber = "919999999999"; 
-    let msgText = `*⚡ New Cleaning Service Booking Request* \n\n`;
-    msgText += `Hello, I would like to book the following selected cleaning packages:\n\n`;
-    
+    let msgText = `*⚡ New Royal Cleaning Service Booking Request* \n\n`;
     cart.forEach((item, i) => {
       msgText += `${i + 1}. *${item.name}* — ₹${item.startingPrice} (${item.duration || 'N/A'})\n`;
     });
-
     msgText += `\n━━━━━━━━━━━━━━━━━━━━━\n`;
     msgText += `💰 *Total Estimated Value:* ₹${cartTotal.toLocaleString("en-IN")}\n\n`;
-    msgText += `Please confirm availability and schedule my booking time slot. Thank you!`;
+    msgText += `Please confirm availability and schedule my slot. Thanks!`;
 
     window.open(`https://api.whatsapp.com/send?phone=${targetWhatsAppNumber}&text=${encodeURIComponent(msgText)}`, "_blank");
   };
 
-  {/* --- Complete Exact-Match Filter Engine Logic --- */}
+  // Fixed comprehensive filter lookup logic matrix
   const filtered = services.filter(s => {
-    // 1. Evaluate Search Query Match
     const matchSearch = !search ||
       s.name.toLowerCase().includes(search.toLowerCase()) ||
       (s.description && s.description.toLowerCase().includes(search.toLowerCase()));
 
-    // 2. Evaluate Category Match Selection
     if (category === "All Services") return matchSearch;
 
-    const dbCategoryRaw = s.category?.toLowerCase() || "";
+    const dbCategoryTag = s.category?.toLowerCase() || "";
     const activeUIPillName = category.toLowerCase();
-    
-    // Cross-reference data config matrix map list definitions
-    const mappedConfig = CATEGORY_DATA_MAP[activeUIPillName];
+    const mappedMatrixConfig = CATEGORY_DATA_MAP[activeUIPillName];
 
-    const matchCat = mappedConfig 
-      ? mappedConfig.tags.includes(dbCategoryRaw) || dbCategoryRaw === activeUIPillName
-      : dbCategoryRaw === activeUIPillName;
+    const matchCat = mappedMatrixConfig 
+      ? mappedMatrixConfig.tags.includes(dbCategoryTag) || dbCategoryTag === activeUIPillName
+      : dbCategoryTag === activeUIPillName;
 
     return matchSearch && matchCat;
   });
 
   return (
     <div className="bg-slate-50 min-h-screen flex flex-col font-sans antialiased">
+      {/* Structural Isolation Fix: Prevents layout collapse across header boundaries */}
       <div className="relative w-full block bg-white z-40 border-b border-gray-100">
         <Header />
       </div>
       
       <main className="flex-1 pb-36">
-        {/* Navigation Sticky Controls Tray */}
-        <div className="bg-white border-b border-gray-200 sticky top-0 z-30 py-3 shadow-xs">
+        {/* Isolated Search and Control Center Tray */}
+        <div className="bg-white border-b border-gray-200/80 sticky top-0 z-30 py-3 shadow-xs">
           <div className="max-w-2xl mx-auto px-4">
             
-            {/* Category Ribbon Layout Menu */}
+            {/* Horizontal Scroll Pill Container */}
             <div className="flex overflow-x-auto gap-2 pb-2.5 scrollbar-none -mx-4 px-4">
               {categories.map(cat => (
                 <button
@@ -433,12 +380,12 @@ const ServicesPage = () => {
               ))}
             </div>
 
-            {/* Input Filter Field Bar Layout */}
+            {/* Input Filter Bar */}
             <div className="relative mt-1">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search for a service package..."
+                placeholder="Search for a service package (e.g. 1 BHK, Sofa)..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-9 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-gray-800"
@@ -447,7 +394,7 @@ const ServicesPage = () => {
           </div>
         </div>
 
-        {/* Content Render Interface Layout Output list panel */}
+        {/* Catalog List */}
         <div className="w-full max-w-2xl mx-auto px-3 mt-5">
           <div className="mb-3 px-1 flex items-center justify-between">
             <h2 className="text-xs font-extrabold uppercase tracking-wider text-gray-400">
@@ -470,13 +417,13 @@ const ServicesPage = () => {
 
           {filtered.length === 0 && (
             <div className="text-center py-16 bg-white border border-gray-100 rounded-2xl mt-2 p-6 shadow-xs">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">No packages found under this selection</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">No services found matching criteria</p>
             </div>
           )}
         </div>
       </main>
 
-      {/* --- Cart Drawer Panel Action Layout --- */}
+      {/* Floating Sticky Actions Bar */}
       <AnimatePresence>
         {cart.length > 0 && (
           <motion.div
@@ -511,7 +458,6 @@ const ServicesPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Info Details Floating Modal Sheet */}
       {selectedServiceDetails && (
         <DetailsModal 
           service={selectedServiceDetails} 
