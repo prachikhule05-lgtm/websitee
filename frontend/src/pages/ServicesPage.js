@@ -14,7 +14,7 @@ const categories = [
   "Commercial Post Interior Cleaning Services"
 ];
 
-{/* --- Fallback Static Service Data gathered straight from your provided screenshots --- */}
+{/* --- Fallback Static Service Data directly from your screenshots --- */}
 const SERVICES_STATIC = [
   // Category: Full House Deep Cleaning
   {
@@ -405,21 +405,12 @@ const DetailsModal = ({ service, onClose }) => {
                 ))}
               </ul>
             </div>
-
-            <div className="bg-amber-50/60 border border-amber-100 rounded-xl p-2.5">
-              <p className="text-[10px] font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1 mb-0.5">
-                <AlertTriangle className="w-3 h-3 text-amber-600" /> Disclaimer
-              </p>
-              <p className="text-[11px] text-amber-700 leading-normal font-medium">
-                Please ensure valuables are securely stored. The team is not responsible for unsupervised items.
-              </p>
-            </div>
           </div>
 
           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-3 z-20">
             <Link
               to={`/booking?service=${service.slug}`}
-              className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-center block text-xs tracking-wide shadow-xs transition-all"
+              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-center block text-xs tracking-wide shadow-xs transition-all"
             >
               Book Now {service.startingPrice ? `— ₹${service.startingPrice.toLocaleString("en-IN")}` : ""}
             </Link>
@@ -512,7 +503,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails }) => {
 };
 
 const ServicesPage = () => {
-  const [services, setServices] = useState(SERVICES_STATIC);
+  const [apiServices, setApiServices] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [loading, setLoading] = useState(true);
@@ -522,29 +513,35 @@ const ServicesPage = () => {
     api.get("/services")
       .then(r => {
         if (r.data && r.data.length > 0) {
-          setServices(r.data);
-        } else {
-          // If the backend returns empty data array, fallback to our valid screenshots mockup array
-          setServices(SERVICES_STATIC);
+          setApiServices(r.data);
         }
       })
-      .catch(() => {
-        setServices(SERVICES_STATIC);
-      })
+      .catch((err) => console.log("API error, using fallbacks:", err))
       .finally(() => setLoading(false));
   }, []);
 
-  // Filtering filter engine logic with absolute precise trim string normalization checks
-  const filtered = services.filter(s => {
-    const matchSearch = !search ||
-      s.name.toLowerCase().includes(search.toLowerCase()) ||
-      (s.description && s.description.toLowerCase().includes(search.toLowerCase()));
-      
-    const matchCat = category === "All" || 
-      (s.category && category.toLowerCase().trim() === s.category.toLowerCase().trim());
-      
-    return matchSearch && matchCat;
-  });
+  // --- FAILSafe Smart Filter Engine ---
+  const getFilteredServices = () => {
+    // 1. First find matching items inside what the API returned
+    let results = apiServices.filter(s => {
+      const matchSearch = !search || s.name.toLowerCase().includes(search.toLowerCase());
+      const matchCat = category === "All" || (s.category && s.category.toLowerCase().trim().includes(category.toLowerCase().trim().substring(0, 10)));
+      return matchSearch && matchCat;
+    });
+
+    // 2. If the API returned zero results for this category tab, load the static data items instead!
+    if (results.length === 0) {
+      results = SERVICES_STATIC.filter(s => {
+        const matchSearch = !search || s.name.toLowerCase().includes(search.toLowerCase());
+        const matchCat = category === "All" || s.category === category;
+        return matchSearch && matchCat;
+      });
+    }
+
+    return results;
+  };
+
+  const filtered = getFilteredServices();
 
   return (
     <div className="bg-slate-50/50 min-h-screen flex flex-col font-sans antialiased">
