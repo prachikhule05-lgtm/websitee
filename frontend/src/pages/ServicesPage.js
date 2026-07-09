@@ -190,87 +190,96 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAddToCart, isI
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
-      className="bg-white border border-gray-100 rounded-2xl p-4 hover:shadow-sm transition-all duration-200 max-w-2xl mx-auto w-full"
+      className="bg-white border border-gray-100 rounded-3xl p-5 shadow-xs max-w-xl mx-auto w-full"
     >
-      <div className="flex gap-4 items-start">
-        <div className="flex-shrink-0 mt-1">
-          <img
-            src={service.image}
-            alt={service.name}
-            className="w-20 h-20 rounded-xl object-cover border border-gray-100"
-          />
-        </div>
+      {/* Top Section: Image, Title, Info & Price */}
+      <div className="flex justify-between items-start gap-4">
+        <div className="flex gap-4 items-start">
+          {/* Image */}
+          <div className="flex-shrink-0">
+            <img
+              src={service.image}
+              alt={service.name}
+              className="w-20 h-20 rounded-2xl object-cover"
+            />
+          </div>
 
-        <div className="flex-1 min-w-0">
-          <div className="flex justify-between items-start gap-2">
-            <div>
-              <h3 className="text-sm sm:text-base font-extrabold text-gray-900 leading-snug truncate">
-                {service.name}
-              </h3>
-              
-              <div className="flex items-center gap-1.5 mt-1">
-                <span className="text-[10px] font-bold uppercase tracking-wide bg-blue-50 text-blue-600 px-2 py-0.5 rounded-md">
-                  {service.category}
-                </span>
-                <span className="flex items-center gap-0.5 text-xs font-bold text-gray-600">
-                  <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                  {service.rating || "4.9"}
-                </span>
-                <span className="text-gray-300 text-[10px]">•</span>
-                <span className="text-xs text-gray-500 font-medium">
-                  {service.duration || "4 Hours"}
-                </span>
+          {/* Title and Badge Meta */}
+          <div className="space-y-1.5">
+            <h3 className="text-base font-extrabold text-slate-900 leading-snug">
+              {service.name}
+            </h3>
+            
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-0.5 text-sm font-bold text-gray-700">
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <span>{service.rating || "4.8"}</span>
               </div>
-            </div>
-
-            <div className="text-right flex-shrink-0">
-              <span className="block text-[8px] tracking-wider text-gray-400 font-bold uppercase leading-none">FROM</span>
-              <span className="text-base sm:text-lg font-black text-blue-600 block mt-0.5 whitespace-nowrap">
-                ₹{service.startingPrice?.toLocaleString("en-IN")}
+              <span className="text-gray-300 text-xs">•</span>
+              <span className="text-xs font-bold text-blue-600 bg-blue-50/60 px-2.5 py-0.5 rounded-md">
+                {service.duration || "4-8 Hours"}
               </span>
             </div>
           </div>
-
-          {service.includes && service.includes.length > 0 && (
-            <div className="mt-3 bg-gray-50/60 rounded-xl p-2.5 border border-gray-100/50">
-              <p className="text-[9px] uppercase font-bold tracking-wider text-gray-400 mb-1">INCLUDES:</p>
-              <ul className="space-y-1">
-                {service.includes.slice(0, 3).map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-1.5 text-xs text-gray-600 leading-normal">
-                    <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700 font-medium truncate">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-gray-50">
-            <button
-              type="button"
-              onClick={() => onOpenDetails(service)}
-              className="text-xs font-bold text-blue-600 hover:underline cursor-pointer"
-            >
-              View Details
-            </button>
-
-            <button
-              onClick={() => onAddToCart(service)}
-              className={`px-5 py-1.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-150 cursor-pointer active:scale-95 ${
-                isInCart 
-                  ? "bg-gray-100 text-gray-700 hover:bg-gray-200" 
-                  : "bg-amber-500 text-white hover:bg-amber-600"
-              }`}
-            >
-              {isInCart ? "Added ✓" : "Book Now"}
-            </button>
-          </div>
         </div>
+
+        {/* Price Section */}
+        <div className="text-right flex-shrink-0">
+          <span className="block text-[10px] tracking-wider text-gray-400 font-bold uppercase">
+            STARTS AT
+          </span>
+          <span className="text-xl font-black text-slate-900 block mt-0.5">
+            ₹{service.startingPrice?.toLocaleString("en-IN")}
+          </span>
+        </div>
+      </div>
+
+      {/* Includes Section Box */}
+      {service.includes && service.includes.length > 0 && (
+        <div className="mt-4 bg-slate-50/80 rounded-2xl p-4 border border-slate-100/50">
+          <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-2">
+            INCLUDES:
+          </p>
+          <ul className="space-y-2">
+            {service.includes.slice(0, 3).map((item, idx) => (
+              <li key={idx} className="flex items-center gap-2 text-sm text-slate-700">
+                <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                <span className="font-medium truncate block max-w-xs sm:max-w-md">
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Divider */}
+      <hr className="border-gray-100 my-4" />
+
+      {/* Bottom Actions Footer */}
+      <div className="flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => onOpenDetails(service)}
+          className="text-sm font-bold text-blue-600 hover:text-blue-700 cursor-pointer transition-colors"
+        >
+          View details
+        </button>
+
+        <button
+          onClick={() => onAddToCart(service)}
+          className={`px-7 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-150 cursor-pointer active:scale-95 shadow-sm ${
+            isInCart 
+              ? "bg-slate-800 text-white hover:bg-slate-900" 
+              : "bg-amber-500 text-white hover:bg-amber-600"
+          }`}
+        >
+          {isInCart ? "Added ✓" : "Add +"}
+        </button>
       </div>
     </motion.div>
   );
 };
-
 {/* --- Complete Responsive Main Layout Wrap --- */}
 const ServicesPage = () => {
   const [services, setServices] = useState(INITIAL_STATIC_SERVICES);
