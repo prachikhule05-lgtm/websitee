@@ -22,37 +22,39 @@ const HorizontalServiceCard = ({ service, index }) => {
       transition={{ delay: index * 0.05 }}
       className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden max-w-2xl mx-auto w-full"
     >
+      {/* Main Container: Image on Left, All Content on Right */}
       <div className="flex p-4 gap-4 sm:gap-5">
-        {/* Left Side: Thumbnail Image */}
+        
+        {/* Left Side: Fixed Image sizing to prevent pulling space */}
         <div className="flex-shrink-0">
           <img
             src={service.image}
             alt={service.name}
-            className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover"
+            className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover"
           />
         </div>
 
-        {/* Right Side: Main Content Panel */}
+        {/* Right Side: content takes full remaining width */}
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
-            {/* Header Flex: Title and Pricing Info */}
+            {/* Top Header: Title & Price Side-by-Side */}
             <div className="flex justify-between items-start gap-2">
-              <h3 className="text-base sm:text-xl font-bold text-gray-900 leading-snug line-clamp-1">
-                {service.name}
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 leading-snug truncate">
+                {service.name}...
               </h3>
-              <div className="text-right flex-shrink-0 pl-2">
-                <span className="block text-[10px] uppercase font-semibold tracking-wider text-gray-400 leading-none">
+              <div className="text-right flex-shrink-0">
+                <span className="block text-[9px] uppercase font-bold tracking-wider text-gray-400 leading-none">
                   FROM
                 </span>
-                <span className="text-xl sm:text-2xl font-black text-blue-600 tracking-tight block mt-0.5">
+                <span className="text-lg sm:text-xl font-black text-blue-600 tracking-tight block mt-0.5">
                   ₹{service.startingPrice?.toLocaleString("en-IN")}
                 </span>
               </div>
             </div>
 
-            {/* Badges, Rating and Timeline Meta items */}
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mt-1">
-              <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-600 text-[11px] font-bold tracking-wide uppercase">
+            {/* Badges & Meta Row: Kept tight on a single row */}
+            <div className="flex items-center gap-2 mt-1 flex-wrap">
+              <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wide">
                 {category}
               </span>
               <div className="flex items-center text-xs text-gray-500 font-medium">
@@ -65,28 +67,29 @@ const HorizontalServiceCard = ({ service, index }) => {
               </span>
             </div>
 
-            {/* Service Excerpt Description */}
-            <p className="mt-2 text-xs sm:text-sm text-gray-500 leading-relaxed line-clamp-2 pr-2">
+            {/* Description: Spans across under the header block to eliminate dead white space */}
+            <p className="mt-2 text-xs text-gray-500 leading-relaxed line-clamp-2">
               {service.description}
             </p>
           </div>
 
-          {/* Action Row Footer Elements */}
-          <div className="flex items-center justify-between mt-4 pt-1">
+          {/* Actions Row: Flat layout positioned cleanly at the baseline */}
+          <div className="flex items-center justify-between mt-3 pt-1 border-t border-gray-50">
             <Link
               to={`/service/${service.slug}`}
-              className="text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors py-2"
+              className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors"
             >
               View Details
             </Link>
 
             <Link
               to={`/booking?service=${service.slug}`}
-              className="px-6 py-2.5 sm:px-8 rounded-full bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-extrabold tracking-wide shadow-sm transition-all duration-200 transform active:scale-95 whitespace-nowrap"
+              className="px-5 py-2 rounded-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-extrabold tracking-wide transition-all duration-200 transform active:scale-95 shadow-sm"
             >
               Book Now
             </Link>
           </div>
+
         </div>
       </div>
     </motion.div>
