@@ -59,24 +59,18 @@ const Header = () => {
   return (
     <header
       data-testid={HEADER.nav}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/95 backdrop-blur-lg shadow-md border-b border-slate-100" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-lg shadow-md border-b border-slate-100" : "bg-transparent"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
-          <button onClick={() => handleNavClick({ path: "/" })} data-testid={HEADER.logo} className="flex items-center gap-3 group focus:outline-none">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden bg-white border border-gray-100 shadow-sm flex items-center justify-center">
-              <img
-                src="/site-logo/cleaning.jpeg"
-                alt="Royal Cleaning Services"
-               className="w-full h-full object-contain p-0"
-                loading="lazy"
-              />
+          <Link to="/" data-testid={HEADER.logo} className="flex items-center gap-2 group">
+            <div className="w-9 h-9 bg-gradient-to-br from-[#2563EB] to-[#0F172A] rounded-xl flex items-center justify-center shadow-blue group-hover:scale-105 transition-transform">
+              <Crown className="w-5 h-5 text-white" />
             </div>
-            <div className="leading-tight text-left">
-              <div className="font-heading font-extrabold text-base leading-none text-[#0F172A]">
+            <div className="leading-tight">
+              <div className={`font-heading font-extrabold text-base leading-none ${scrolled ? "text-[#0F172A]" : "text-white"}`}>
                 Royal Cleaning
               </div>
               <div className="font-body text-[10px] tracking-widest uppercase leading-none mt-0.5 text-[#166534]">
@@ -88,17 +82,16 @@ const Header = () => {
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link) => (
-              <button
-                key={link.label}
-                type="button"
-                onClick={() => handleNavClick(link)}
-                className={`px-3.5 py-2 rounded-lg font-body text-sm font-medium transition-all duration-200 ${
-                  isActive(link)
-                    ? "text-[#166534] bg-green-50 font-semibold"
+              <Link
+                key={link.href}
+                to={link.href}
+                className={`px-3.5 py-2 rounded-lg font-body text-sm font-medium transition-all duration-200
+                  ${isActive(link.href)
+                    ? "text-[#2563EB] bg-blue-50 font-semibold"
                     : scrolled
-                    ? "text-[#1E293B] hover:text-[#166534] hover:bg-green-50"
-                    : "text-slate-800 hover:text-[#166534] hover:bg-white/40"
-                }`}
+                      ? "text-[#1E293B] hover:text-[#2563EB] hover:bg-blue-50"
+                      : "text-white/90 hover:text-white hover:bg-white/10"
+                  }`}
               >
                 {link.label}
               </button>
@@ -124,7 +117,7 @@ const Header = () => {
               <Phone className="w-4 h-4" />
               <span className="hidden xl:block">{PHONE_NUMBER}</span>
             </a>
-              <Link
+            <Link
               to="/booking"
               data-testid={HEADER.bookNowBtn}
               className="bg-[#166534] text-white px-5 py-2.5 rounded-full font-body font-bold text-sm hover:bg-[#14532d] shadow-md transition-all duration-200"
@@ -158,13 +151,11 @@ const Header = () => {
           >
             <div className="px-4 py-4 space-y-1">
               {NAV_LINKS.map((link) => (
-                <button
-                  key={link.label}
-                  type="button"
-                  onClick={() => handleNavClick(link)}
-                  className={`w-full text-left block px-4 py-3 rounded-xl font-body font-medium text-sm transition-all ${
-                    isActive(link) ? "text-[#166534] bg-green-50 font-semibold" : "text-[#1E293B] hover:text-[#166534] hover:bg-green-50"
-                  }`}
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={`block px-4 py-3 rounded-xl font-body font-medium text-sm transition-all
+                    ${isActive(link.href) ? "text-[#2563EB] bg-blue-50 font-semibold" : "text-[#1E293B] hover:text-[#2563EB] hover:bg-blue-50"}`}
                 >
                   {link.label}
                 </button>
