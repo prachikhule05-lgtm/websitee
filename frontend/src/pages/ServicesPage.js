@@ -384,7 +384,7 @@ const DetailsModal = ({ service, onClose, onAdd, isAdded }) => {
               <ul className="space-y-1.5 pl-0.5">
                 {includesList.map((item, idx) => (
                   <li key={idx} className="text-xs text-gray-600 flex items-start gap-2 leading-relaxed">
-                    <span className="w-1 h-1 bg-amber-500 rounded-full mt-1.5 flex-shrink-0" />
+                    <span className="w-1 h-1 bg-[#0B3B2C] rounded-full mt-1.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -415,7 +415,7 @@ const DetailsModal = ({ service, onClose, onAdd, isAdded }) => {
               className={`w-full py-2.5 font-bold rounded-xl text-center block text-xs tracking-wide shadow-xs transition-all ${
                 isAdded 
                   ? "bg-rose-500 hover:bg-rose-600 text-white" 
-                  : "bg-amber-600 hover:bg-amber-700 text-white"
+                  : "bg-[#0B3B2C] hover:bg-[#07271D] text-white"
               }`}
             >
               {isAdded ? "Remove from Package" : `Add to Package ${service.startingPrice ? `— ₹${service.startingPrice.toLocaleString("en-IN")}` : ""}`}
@@ -438,7 +438,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAdd, isAdded }
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
       className={`bg-white border rounded-2xl p-4 hover:shadow-md transition-all duration-200 max-w-2xl mx-auto w-full ${
-        isAdded ? "border-amber-500 bg-amber-50/10" : "border-gray-100"
+        isAdded ? "border-[#0B3B2C] bg-[#F8FAF9]" : "border-gray-100"
       }`}
     >
       <div className="flex gap-4 items-center">
@@ -505,7 +505,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAdd, isAdded }
           className={`px-5 py-2 rounded-xl text-xs font-bold tracking-wide transition-all ${
             isAdded 
               ? "bg-rose-500 hover:bg-rose-600 text-white" 
-              : "bg-amber-600 hover:bg-amber-700 text-white"
+              : "bg-[#0B3B2C] hover:bg-[#07271D] text-white"
           }`}
         >
           {isAdded ? "Remove" : "Add +"}
@@ -694,7 +694,7 @@ const ServicesPage = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mt-10 bg-gradient-to-r from-slate-50 to-amber-50 border border-slate-100 rounded-3xl p-8 text-center"
+              className="mt-10 bg-gradient-to-r from-slate-50 to-[#E8F1EE] border border-slate-100 rounded-3xl p-8 text-center"
             >
               <h3 className="font-heading text-2xl font-bold text-[#0F172A] mb-2">
                 Can't find what you're looking for?
@@ -746,7 +746,7 @@ const ServicesPage = () => {
               </div>
               <button
                 onClick={handleProceedToBooking}
-                className="flex-1 sm:flex-initial px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold tracking-wide rounded-xl shadow-md transition-all text-center"
+                className="flex-1 sm:flex-initial px-6 py-3 bg-[#0B3B2C] hover:bg-[#07271D] text-white text-xs sm:text-sm font-bold tracking-wide rounded-xl shadow-md transition-all text-center"
               >
                 Continue Booking
               </button>
