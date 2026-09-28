@@ -82,11 +82,11 @@ const Header = () => {
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
+              <button
+                key={link.path || link.sectionId || link.label}
+                onClick={() => handleNavClick(link)}
                 className={`px-3.5 py-2 rounded-lg font-body text-sm font-medium transition-all duration-200
-                  ${isActive(link.href)
+                  ${isActive(link)
                     ? "text-[#2563EB] bg-blue-50 font-semibold"
                     : scrolled
                       ? "text-[#1E293B] hover:text-[#2563EB] hover:bg-blue-50"
@@ -94,7 +94,7 @@ const Header = () => {
                   }`}
               >
                 {link.label}
-              </Link>
+              </button>
             ))}
           </nav>
 
@@ -151,14 +151,14 @@ const Header = () => {
           >
             <div className="px-4 py-4 space-y-1">
               {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={`block px-4 py-3 rounded-xl font-body font-medium text-sm transition-all
-                    ${isActive(link.href) ? "text-[#2563EB] bg-blue-50 font-semibold" : "text-[#1E293B] hover:text-[#2563EB] hover:bg-blue-50"}`}
+                <button
+                  key={link.path || link.sectionId || link.label}
+                  onClick={() => handleNavClick(link)}
+                  className={`block w-full text-left px-4 py-3 rounded-xl font-body font-medium text-sm transition-all
+                    ${isActive(link) ? "text-[#2563EB] bg-blue-50 font-semibold" : "text-[#1E293B] hover:text-[#2563EB] hover:bg-blue-50"}`}
                 >
                   {link.label}
-                </Link>
+                </button>
               ))}
               <div className="pt-3 flex flex-col gap-2">
                 <a href={PHONE_URL} className="flex items-center gap-2 px-4 py-3 rounded-xl bg-green-50 text-[#166534] font-semibold text-sm">
