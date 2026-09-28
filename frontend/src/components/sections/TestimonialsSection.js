@@ -126,7 +126,7 @@ const ReviewForm = ({ onSubmitted }) => {
         type="submit"
         disabled={loading}
         data-testid="review-submit-btn"
-        className="w-full sm:w-auto bg-[#C5A059] hover:bg-[#D97706] text-white px-8 py-3.5 rounded-full font-body font-bold text-sm transition-all disabled:opacity-60 active:scale-95 flex items-center justify-center gap-2"
+        className="w-full sm:w-auto bg-[#0B3B2C] hover:bg-[#07271D] text-white px-8 py-3.5 rounded-full font-body font-bold text-sm transition-all disabled:opacity-60 active:scale-95 flex items-center justify-center gap-2"
       >
         {loading ? (
           <><div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" /> Submitting...</>

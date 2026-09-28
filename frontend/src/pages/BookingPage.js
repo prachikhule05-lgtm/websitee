@@ -755,7 +755,7 @@ const BookingPage = () => {
               </button>
             ) : (
               <button data-testid={BOOKING.confirmBtn} onClick={handleSubmit} disabled={loading}
-                className="flex items-center gap-2 bg-[#C5A059] hover:bg-[#059669] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-70 shadow-lg shadow-green-200">
+                className="flex items-center gap-2 bg-[#0B3B2C] hover:bg-[#07271D] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-70 shadow-lg shadow-green-200">
                 {loading ? <div className="spinner" /> : <><Check className="w-4 h-4" /> Confirm Booking</>}
               </button>
             )}
@@ -778,7 +778,7 @@ const BookingPage = () => {
             </button>
           ) : (
             <button data-testid={BOOKING.confirmBtn} onClick={handleSubmit} disabled={loading}
-              className="flex items-center gap-1.5 bg-[#C5A059] hover:bg-[#059669] text-white px-6 py-2.5 rounded-full font-body font-bold text-sm transition-all active:scale-95 disabled:opacity-70 shadow-lg shadow-green-200">
+              className="flex items-center gap-1.5 bg-[#0B3B2C] hover:bg-[#07271D] text-white px-6 py-2.5 rounded-full font-body font-bold text-sm transition-all active:scale-95 disabled:opacity-70 shadow-lg shadow-green-200">
               {loading ? <div className="spinner" /> : <><Check className="w-4 h-4" /> Confirm Booking</>}
             </button>
           )}

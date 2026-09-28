@@ -43,7 +43,7 @@ const ServiceCard = ({ service, index }) => {
           <Link
             to={`/booking?service=${service.slug}`}
             data-testid={SERVICES.bookBtn}
-            className="shadow-md bg-[#C5A059] hover:bg-[#D97706] text-white px-4 py-2 rounded-xl font-body font-bold text-xs flex items-center gap-1 transition-all"
+            className="shadow-md bg-[#0B3B2C] hover:bg-[#07271D] text-white px-4 py-2 rounded-xl font-body font-bold text-xs flex items-center gap-1 transition-all"
           >
             Book <ArrowRight className="w-3 h-3" />
           </Link>
@@ -130,7 +130,7 @@ const ServicesOverview = () => {
           className="mt-10 text-center"
         >
           <Link to="/booking"
-            className="inline-flex items-center gap-2 btn-orange-glow bg-[#C5A059] hover:bg-[#D97706] text-white px-8 py-4 rounded-full font-bold font-body text-base transition-all"
+            className="inline-flex items-center gap-2 btn-orange-glow bg-[#0B3B2C] hover:bg-[#07271D] text-white px-8 py-4 rounded-full font-bold font-body text-base transition-all"
           >
             <Zap className="w-5 h-5" />
             Book Any Service Now
