@@ -153,7 +153,7 @@ const BookingPage = () => {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[#F8FAFC] pb-36 sm:pb-8">
+      <main className="min-h-[70vh] bg-[#F8FAFC] pb-36 sm:pb-8">
         {/* Hero */}
         <div className="relative pt-32 pb-10 border-b border-gray-100 overflow-hidden bg-[#F8FAFC]">
           <div className="absolute inset-0">

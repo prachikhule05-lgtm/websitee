@@ -13,7 +13,7 @@ const BookingSuccessPage = () => {
 
   if (!booking) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-[70vh] flex flex-col">
         <Header />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
@@ -31,7 +31,7 @@ const BookingSuccessPage = () => {
   return (
     <>
       <Header />
-      <main data-testid={SUCCESS.page} className="min-h-screen bg-[#F8FAFC] pb-16 md:pb-0">
+      <main data-testid={SUCCESS.page} className="min-h-[70vh] bg-[#F8FAFC] pb-16 md:pb-0">
         {/* Hero */}
         <div className="relative pt-32 pb-16 border-b border-gray-100 overflow-hidden bg-[#F8FAFC]">
           <div className="absolute inset-0">

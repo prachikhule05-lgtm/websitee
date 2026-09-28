@@ -107,7 +107,7 @@ const LocalSEOPage = ({ service }) => {
         </div>
 
         {/* Content */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-12">
           {/* What's included */}
           <div>
             <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-6">What's Included</h2>

@@ -206,14 +206,14 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-[#F8FAFC] to-white" id="reviews">
+    <section className="py-10 bg-gradient-to-b from-[#F8FAFC] to-white" id="reviews">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.6 }}
-          className="mx-auto mb-12 max-w-3xl text-center"
+          className="mx-auto mb-6 max-w-3xl text-center"
         >
           <p className="font-body text-[14px] font-semibold uppercase tracking-[0.18em] text-[#166534]">CUSTOMER TESTIMONIALS</p>
           <h2 className="mt-4 font-heading text-[30px] sm:text-[38px] lg:text-[46px] font-extrabold leading-[1.15] text-[#0F172A]">What Our Customers Say</h2>
@@ -232,17 +232,6 @@ const TestimonialsSection = () => {
               className="bg-white rounded-3xl p-8 md:p-10 shadow-card border border-gray-100"
             >
               <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-gray-100 shadow-sm">
-                    {reviews[current]?.image ? (
-                      <img src={reviews[current].image} alt={reviews[current].name} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[#2563EB] to-[#F59E0B] flex items-center justify-center text-white font-bold text-xl">
-                        {reviews[current]?.name?.[0]}
-                      </div>
-                    )}
-                  </div>
-                </div>
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-3">
                     <div>

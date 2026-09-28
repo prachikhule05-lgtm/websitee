@@ -31,7 +31,7 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0F172A] via-[#1E3A5F] to-[#166534] flex items-center justify-center p-4">
+    <div className="min-h-[70vh] bg-gradient-to-br from-[#0F172A] via-[#1E3A5F] to-[#166534] flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

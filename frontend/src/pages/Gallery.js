@@ -19,7 +19,7 @@ const Gallery = () => {
     loadGallery();
   }, []);
 
-  if (loading) return <div className="text-center py-20 text-slate-500">Loading our collection...</div>;
+  if (loading) return <div className="text-center py-10 text-slate-500">Loading our collection...</div>;
 
   return (
     <section className="py-12 max-w-6xl mx-auto px-4">

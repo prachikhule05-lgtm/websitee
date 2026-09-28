@@ -69,14 +69,14 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
           <Link to="/" data-testid={HEADER.logo} className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center p-1 overflow-hidden group-hover:scale-105 transition-transform flex-shrink-0">
+            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform flex-shrink-0">
               <img
-                src="/site-logo/cleaning.jpeg"
+                src="/site-logo/refined-logo.png"
                 alt="Royal Cleaning Services"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover scale-[1.05]"
               />
             </div>
-            <div className="leading-tight">
+            <div className="leading-tight ml-1">
               <div className="font-heading font-extrabold text-base leading-none text-[#0F172A]">
                 Royal Cleaning
               </div>

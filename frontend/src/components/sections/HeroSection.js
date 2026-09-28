@@ -16,7 +16,7 @@ const HeroSection = () => {
   return (
     <section
       data-testid={HERO.section}
-      className="relative min-h-screen overflow-hidden bg-[#F8FAFC]"
+      className="relative min-h-[70vh] overflow-hidden bg-[#F8FAFC]"
     >
       {/* Background Image */}
       <div className="absolute inset-0">
@@ -75,7 +75,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap items-center gap-4 mb-12"
+              className="flex flex-wrap items-center gap-4 mb-6"
             >
               <Link
                 to="/booking"

@@ -13,7 +13,7 @@ const FAQSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-6"
         >
           <p className="font-body text-sm font-semibold text-[#166534] uppercase tracking-widest mb-2">Got Questions?</p>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[#0F172A]">Frequently Asked Questions</h2>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, X, Check, ShoppingBag } from "lucide-react";
+import { Search, X, Check, ShoppingBag, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import api from "@/utils/api";
@@ -582,9 +582,9 @@ const ServicesPage = () => {
   const filtered = getFilteredServices();
 
   return (
-    <div className="bg-slate-50/50 min-h-screen flex flex-col font-sans antialiased">
+    <div className="bg-slate-50/50 min-h-[70vh] flex flex-col font-sans antialiased">
       <Header />
-      <main className="flex-1 pb-32">
+      <main className="flex-1 pb-12">
         <div className="relative pt-24 pb-12 border-b border-gray-100 overflow-hidden bg-[#F8FAFC]">
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.p
@@ -663,7 +663,7 @@ const ServicesPage = () => {
           </div>
 
           {filtered.length === 0 && !loading && (
-            <div className="text-center py-16">
+            <div className="text-center py-8">
               <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Search className="w-8 h-8 text-[#94A3B8]" />
               </div>
