@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { Check, ChevronRight, ChevronLeft, MapPin, Calendar, Clock, User, Home, FileText, Search, Plus, Minus, Sofa } from "lucide-react";
@@ -40,7 +40,7 @@ const BookingPage = () => {
   const [showAreaList, setShowAreaList] = useState(false);
 
   // Read customized package parameters passed through React Router state
-  const selectedServices = location.state?.selectedServices || [];
+  const selectedServices = useMemo(() => location.state?.selectedServices || [], [location.state]);
   const totalPrice = location.state?.totalPrice || 0;
   const isPackageBooking = selectedServices.length > 0;
 

@@ -56,6 +56,7 @@ const AdminBookingsPage = () => {
   useEffect(() => { 
     fetchBookings(); 
     fetchLeads();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, statusFilter]);
 
   const updateStatus = async (bookingId, status) => {
