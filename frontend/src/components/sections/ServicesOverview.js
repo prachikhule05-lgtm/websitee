@@ -55,16 +55,11 @@ const ServiceCard = ({ service, index }) => {
 
 const ServicesOverview = () => {
   const [services, setServices] = useState(SERVICES_STATIC.slice(0, 6));
-  console.log("=== NEW BUILD ===");
-  console.log("services =", services);
-  console.log("isArray =", Array.isArray(services));
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await api.get("/services");
-
-        console.log("API Response:", response.data);
 
         let servicesData = [];
 
@@ -82,14 +77,11 @@ const ServicesOverview = () => {
         }
         // Unknown response
         else {
-          console.error("Unexpected API response:", response.data);
           servicesData = SERVICES_STATIC;
         }
 
         setServices(servicesData.slice(0, 6));
       } catch (error) {
-        console.error("Failed to fetch services:", error);
-
         // Keep static services if API fails
         setServices(SERVICES_STATIC.slice(0, 6));
       }
@@ -97,9 +89,6 @@ const ServicesOverview = () => {
 
     fetchServices();
   }, []);
-
-  console.log("Services:", services);
-  console.log("Is Array:", Array.isArray(services));
 
   return (
     <section className="py-20 bg-[#F8FAFC]" data-testid={SERVICES.section}>
