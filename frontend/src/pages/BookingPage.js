@@ -412,42 +412,13 @@ const BookingPage = () => {
                 {step === 3 && (
                   <div>
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Select Property Type</h2>
-<<<<<<< HEAD
-                    <p className="font-body text-sm text-[#1E293B] mb-6">This helps us estimate the correct price</p>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                      {PROPERTY_TYPES.map(pt => {
-                        const p = booking.serviceObj?.propertyPricing?.[pt] || 0;
-                        const isCustom = p === 0;
-                        return (
-                          <button
-                            key={pt}
-                            data-testid={BOOKING.propertySelect}
-                            onClick={() => setBooking(b => ({ ...b, propertyType: pt }))}
-                            className={`p-4 rounded-2xl border-2 text-center transition-all ${
-                              booking.propertyType === pt
-                                ? "border-[#166534] bg-green-50"
-                                : "border-gray-100 hover:border-[#166534] hover:bg-green-50"
-                            }`}
-                          >
-                            <div className="font-heading font-bold text-sm text-[#0F172A] mb-1">{pt}</div>
-                            <div className={`font-body text-xs font-semibold ${isCustom ? "text-[#94A3B8]" : "text-[#166534]"}`}>
-                              {isCustom ? "Custom" : `₹${p.toLocaleString("en-IN")}`}
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {pricing.base > 0 && (
-                      <div className="mt-4 p-4 bg-green-50 rounded-2xl">
-                        <p className="font-body text-sm text-[#166534]">
-=======
                     <p className="font-body text-sm text-[#1E293B] mb-6">
                       {isPackageBooking ? "Confirming context configuration or skip ahead" : "This helps us estimate the correct price"}
                     </p>
                     {isPackageBooking ? (
                       <div className="p-6 border border-dashed border-gray-200 rounded-2xl text-center bg-slate-50/50">
                         <p className="font-body text-sm text-slate-500 mb-2">Property configurations are pre-calculated for customized packages.</p>
-                        <span className="inline-block bg-[#10B981]/10 text-[#10B981] font-heading font-bold text-xs px-3 py-1 rounded-full">Ready to proceed</span>
+                        <span className="inline-block bg-[#166534]/10 text-[#166534] font-heading font-bold text-xs px-3 py-1 rounded-full">Ready to proceed</span>
                       </div>
                     ) : (
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -461,12 +432,12 @@ const BookingPage = () => {
                               onClick={() => setBooking(b => ({ ...b, propertyType: pt }))}
                               className={`p-4 rounded-2xl border-2 text-center transition-all ${
                                 booking.propertyType === pt
-                                  ? "border-[#F59E0B] bg-amber-50"
-                                  : "border-gray-100 hover:border-[#F59E0B] hover:bg-amber-50"
+                                  ? "border-[#166534] bg-green-50"
+                                  : "border-gray-100 hover:border-[#166534] hover:bg-green-50"
                               }`}
                             >
                               <div className="font-heading font-bold text-sm text-[#0F172A] mb-1">{pt}</div>
-                              <div className={`font-body text-xs font-semibold ${isCustom ? "text-[#94A3B8]" : "text-[#2563EB]"}`}>
+                              <div className={`font-body text-xs font-semibold ${isCustom ? "text-[#94A3B8]" : "text-[#166534]"}`}>
                                 {isCustom ? "Custom" : `₹${p.toLocaleString("en-IN")}`}
                               </div>
                             </button>
@@ -475,9 +446,8 @@ const BookingPage = () => {
                       </div>
                     )}
                     {pricing.base > 0 && !isPackageBooking && (
-                      <div className="mt-4 p-4 bg-blue-50 rounded-2xl">
-                        <p className="font-body text-sm text-[#2563EB]">
->>>>>>> 5aac131438dcb9e3c80f3cb3e0c18c69727b6ce6
+                      <div className="mt-4 p-4 bg-green-50 rounded-2xl">
+                        <p className="font-body text-sm text-[#166534]">
                           <strong>Estimated Price:</strong> ₹{pricing.base.toLocaleString("en-IN")} + GST (18%) = <strong>₹{pricing.total.toLocaleString("en-IN")}</strong>
                         </p>
                       </div>

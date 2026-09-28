@@ -2,7 +2,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://websitee-1-invl.onrender.com').rstrip('/')
 
 class TestReviewsAPI:
     """Review API endpoint tests"""
@@ -38,8 +38,8 @@ class TestReviewsAPI:
     def test_admin_can_see_pending_reviews(self):
         # Login as admin
         login_r = requests.post(f"{BASE_URL}/api/auth/login", json={
-            "email": "prachikhule05@gmail.com",
-            "password": "Prachi@2799"
+            "email": os.environ.get("ADMIN_EMAIL", "admin@royalcleaning.com"),
+            "password": os.environ.get("ADMIN_PASSWORD", "admin123")
         })
         assert login_r.status_code == 200
         token = login_r.json()["token"]
@@ -66,8 +66,8 @@ class TestReviewsAPI:
 
         # Login as admin
         login_r = requests.post(f"{BASE_URL}/api/auth/login", json={
-            "email": "prachikhule05@gmail.com",
-            "password": "Prachi@2799"
+            "email": os.environ.get("ADMIN_EMAIL", "admin@royalcleaning.com"),
+            "password": os.environ.get("ADMIN_PASSWORD", "admin123")
         })
         token = login_r.json()["token"]
         headers = {"Authorization": f"Bearer {token}"}

@@ -69,10 +69,10 @@ const TrustedClientsSection = () => {
   }, [isPaused, logos.length]);
 
   return (
-    <section id="trusted-clients" className="py-20 bg-white">
+    <section id="trusted-clients" className="py-6 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="font-body text-sm font-semibold uppercase tracking-[0.35em] text-[#166534]">
+          <p className="font-body text-sm font-semibold uppercase tracking-[0.35em] text-[#2563EB]">
             TRUSTED BY LEADING BRANDS
           </p>
           <h2 className="mt-4 font-heading text-3xl font-bold text-[#0F172A] sm:text-4xl">

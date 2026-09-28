@@ -77,7 +77,7 @@ const Header = () => {
                 Services
               </div>
             </div>
-          </button>
+          </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
@@ -94,7 +94,7 @@ const Header = () => {
                   }`}
               >
                 {link.label}
-              </button>
+              </Link>
             ))}
           </nav>
 
@@ -158,7 +158,7 @@ const Header = () => {
                     ${isActive(link.href) ? "text-[#2563EB] bg-blue-50 font-semibold" : "text-[#1E293B] hover:text-[#2563EB] hover:bg-blue-50"}`}
                 >
                   {link.label}
-                </button>
+                </Link>
               ))}
               <div className="pt-3 flex flex-col gap-2">
                 <a href={PHONE_URL} className="flex items-center gap-2 px-4 py-3 rounded-xl bg-green-50 text-[#166534] font-semibold text-sm">

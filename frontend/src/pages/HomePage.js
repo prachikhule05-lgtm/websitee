@@ -32,11 +32,8 @@ const HomePage = () => {
         <HeroSection />
         <ServicesOverview />
         <TestimonialsSection />
-<<<<<<< HEAD
-=======
         <TrustedClientsSection />
         <FAQSection />
->>>>>>> 5aac131438dcb9e3c80f3cb3e0c18c69727b6ce6
         <ContactSection />
       </main>
       <Footer />

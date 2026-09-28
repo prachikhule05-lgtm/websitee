@@ -141,14 +141,9 @@ const AdminDashboardPage = () => {
               { href: "/admin/bookings", label: "Manage Bookings", color: "bg-[#166534] text-white" },
               { href: "/admin/bookings?status=pending", label: `${stats?.pendingBookings || 0} Pending`, color: "bg-green-50 text-[#166534] border border-amber-200" },
               { href: "/admin/reviews", label: `${stats?.pendingReviews || 0} Pending Reviews`, color: "bg-yellow-50 text-yellow-600 border border-yellow-200" },
-<<<<<<< HEAD
               { href: "/admin/services", label: "Manage Services", color: "bg-green-50 text-[#22c55e] border border-green-200" },
+              { href: "/admin/gallery", label: "Manage Gallery", color: "bg-purple-50 text-purple-600 border border-purple-200" },
             ].map(a => (
-=======
-              { href: "/admin/services", label: "Manage Services", color: "bg-green-50 text-[#10B981] border border-green-200" },
-              { href: "/admin/gallery", label: "Manage Gallery", color: "bg-purple-50 text-purple-600 border border-purple-200" }, // <-- ADD THIS EXACT LINE
-              ].map(a => (
->>>>>>> 5aac131438dcb9e3c80f3cb3e0c18c69727b6ce6
               <Link key={a.href} to={a.href}
                 className={`${a.color} rounded-2xl p-4 font-body font-semibold text-sm text-center hover:opacity-90 transition-all shadow-sm`}>
                 {a.label}

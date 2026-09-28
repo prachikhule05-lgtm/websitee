@@ -2,10 +2,10 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://websitee-1-invl.onrender.com').rstrip('/')
 
-ADMIN_EMAIL = "prachikhule05@gmail.com"
-ADMIN_PASSWORD = "Prachi@2799"
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@royalcleaning.com')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
 
 @pytest.fixture(scope="module")
 def admin_token():
@@ -168,7 +168,7 @@ class TestReviews:
     def test_approve_review(self, admin_headers):
         if not TestReviews.review_id:
             pytest.skip("No review created")
-        resp = requests.patch(f"{BASE_URL}/api/admin/reviews/{TestReviews.review_id}/approve", headers=admin_headers)
+        resp = requests.put(f"{BASE_URL}/api/admin/reviews/{TestReviews.review_id}", json={"status": "approved"}, headers=admin_headers)
         assert resp.status_code == 200
 
 
