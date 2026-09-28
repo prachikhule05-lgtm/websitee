@@ -71,6 +71,7 @@ const BookingPage = () => {
         if (found) setBooking(b => ({ ...b, service: found.name, serviceId: found.id || found.slug, serviceObj: found }));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPackageBooking, selectedServices, totalPrice, searchParams]);
 
   const SOFA_WET_PRICE = 499;
