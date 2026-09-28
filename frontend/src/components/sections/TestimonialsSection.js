@@ -215,13 +215,13 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6 }}
           className="mx-auto mb-6 max-w-3xl text-center"
         >
-          <p className="font-body text-[14px] font-semibold uppercase tracking-[0.18em] text-[#166534]">CUSTOMER TESTIMONIALS</p>
+          <p className="font-body text-[14px] font-semibold uppercase tracking-[0.18em] text-[#0B2545]">CUSTOMER TESTIMONIALS</p>
           <h2 className="mt-4 font-heading text-[30px] sm:text-[38px] lg:text-[46px] font-extrabold leading-[1.15] text-[#0F172A]">What Our Customers Say</h2>
           <p className="mx-auto mt-5 max-w-[700px] text-[16px] sm:text-[18px] leading-[1.6] text-slate-600">Thousands of homeowners and businesses across Pune trust Royal Cleaning Services for reliable, professional, and high-quality cleaning. Here's what our customers say about us.</p>
         </motion.div>
 
         {/* Carousel */}
-        <div className="relative max-w-4xl mx-auto mb-10">
+        <div className="relative max-w-4xl mx-auto mb-10 mobile-snap-carousel px-4">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
@@ -229,7 +229,7 @@ const TestimonialsSection = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.4 }}
-              className="bg-white rounded-3xl p-8 md:p-10 shadow-card border border-gray-100"
+              className="bg-white rounded-[16px] p-6 shadow-sm border border-slate-100 min-w-[85vw] md:min-w-0 snap-item mr-4 shadow-card border border-gray-100"
             >
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 <div className="flex-1">
@@ -277,7 +277,7 @@ const TestimonialsSection = () => {
                 whileTap={{ scale: 0.97 }}
                 onClick={() => setShowForm(true)}
                 data-testid="write-review-btn"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#166534] hover:bg-[#14532d] text-white font-body text-sm font-semibold transition-all shadow-md"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0B2545] hover:bg-[#14532d] text-white font-body text-sm font-semibold transition-all shadow-md"
               >
                 <PenLine className="w-4 h-4" /> Write a Review
               </motion.button>

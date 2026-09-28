@@ -12,13 +12,13 @@
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 144 65% 24%; /* Forest Green (#166534) */
+    --primary: 212 73% 15%; /* Deep Royal Navy (#0B2545) */
     --primary-foreground: 0 0% 100%;
     --secondary: 210 40% 96%;
     --secondary-foreground: 222 47% 11%;
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
-    --accent: 142 71% 45%; /* Emerald Green (#22c55e) */
+    --accent: 211 72% 26%; /* Vibrant Royal Blue (#134074) */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
@@ -253,3 +253,15 @@ button:active:not(:disabled) {
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
+
+
+/* Mobile Carousel */
+.mobile-snap-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.mobile-snap-carousel::-webkit-scrollbar { display: none; }
+.snap-item { scroll-snap-align: center; flex-shrink: 0; }

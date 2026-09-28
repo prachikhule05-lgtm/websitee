@@ -34,7 +34,7 @@ const ServiceCard = ({ service, index }) => {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-body text-[10px] text-[#94A3B8] uppercase tracking-wide">Starting from</div>
-            <div className="font-heading font-extrabold text-lg text-[#166534]">
+            <div className="font-heading font-extrabold text-lg text-[#0B2545]">
               {isCustom ? "Custom Quote" : `₹${service.startingPrice.toLocaleString("en-IN")}`}
               {service.priceType === "per_seat" && <span className="font-body text-xs text-[#94A3B8] font-normal">/seat</span>}
               {service.priceType === "per_bathroom" && <span className="font-body text-xs text-[#94A3B8] font-normal">/bathroom</span>}
@@ -43,7 +43,7 @@ const ServiceCard = ({ service, index }) => {
           <Link
             to={`/booking?service=${service.slug}`}
             data-testid={SERVICES.bookBtn}
-            className="shadow-md bg-[#166534] hover:bg-[#14532d] text-white px-4 py-2 rounded-xl font-body font-bold text-xs flex items-center gap-1 transition-all"
+            className="shadow-md bg-[#F59E0B] hover:bg-[#D97706] text-white px-4 py-2 rounded-xl font-body font-bold text-xs flex items-center gap-1 transition-all"
           >
             Book <ArrowRight className="w-3 h-3" />
           </Link>

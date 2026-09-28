@@ -54,6 +54,7 @@ const BookingPage = () => {
   });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     api.get("/services").then(r => { if (r.data?.length) setServices(r.data); }).catch(() => {});
     
     if (isPackageBooking) {
@@ -101,6 +102,7 @@ const BookingPage = () => {
   const go = (dir2) => {
     setDir(dir2);
     setStep(s => Math.max(1, Math.min(9, s + dir2)));
+    window.scrollTo(0, 0);
   };
 
   const canNext = () => {
@@ -148,7 +150,10 @@ const BookingPage = () => {
     }
   };
 
-  const filteredAreas = PUNE_AREAS.filter(a => a.toLowerCase().includes(areaSearch.toLowerCase()));
+  const POPULAR_AREAS = ["Kothrud", "Wakad", "Viman Nagar", "Baner", "Hadapsar", "Hinjewadi", "Kharadi", "Pimpri", "Katraj", "Narhe"];
+  const filteredAreas = areaSearch
+    ? PUNE_AREAS.filter(a => a.toLowerCase().includes(areaSearch.toLowerCase()))
+    : POPULAR_AREAS;
 
   return (
     <>
@@ -478,16 +483,26 @@ const BookingPage = () => {
                       />
                     </div>
                     {showAreaList && (
-                      <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm max-h-60 overflow-y-auto">
+                      <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm max-h-60 overflow-y-auto mt-2 bg-white">
+                        {!areaSearch && <div className="px-4 py-2 bg-slate-50 text-xs font-semibold text-slate-500 uppercase tracking-wider">Popular Areas</div>}
                         {filteredAreas.map(area => (
                           <button
                             key={area}
-                            className={`w-full text-left px-4 py-3 font-body text-sm hover:bg-green-50 transition-colors border-b border-gray-50 last:border-0 ${booking.location === area ? "bg-green-50 text-[#166534] font-semibold" : "text-[#0F172A]"}`}
+                            className={`w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-b border-gray-50 last:border-0 ${booking.location === area ? "bg-slate-50 text-[#0B2545] font-bold" : "text-[#0F172A]"}`}
                             onClick={() => { setBooking(b => ({ ...b, location: area })); setAreaSearch(area); setShowAreaList(false); }}
                           >
-                            <MapPin className="w-3.5 h-3.5 inline mr-2 text-[#94A3B8]" />{area}
+                            <MapPin className={`w-3.5 h-3.5 inline mr-2 ${booking.location === area ? "text-[#F59E0B]" : "text-[#94A3B8]"}`} />{area}
                           </button>
                         ))}
+                        {areaSearch && !filteredAreas.find(a => a.toLowerCase() === areaSearch.toLowerCase()) && (
+                          <button
+                            className="w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-t border-gray-100 text-[#0B2545] font-semibold"
+                            onClick={() => { setBooking(b => ({ ...b, location: areaSearch })); setShowAreaList(false); }}
+                          >
+                            <MapPin className="w-3.5 h-3.5 inline mr-2 text-[#F59E0B]" />
+                            Use "{areaSearch}, Pune"
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>

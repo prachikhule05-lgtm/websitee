@@ -19,7 +19,7 @@ const FloatingContact = () => {
           },
           {
             href: PHONE_URL, label: "Call", target: "_self",
-            className: "bg-[#166534] hover:scale-110 shadow-md",
+            className: "bg-[#F59E0B] hover:scale-110 shadow-md",
             testId: FLOATING.callBtn,
             icon: <Phone className="w-5 h-5 text-white" />
           },
@@ -87,7 +87,7 @@ const FloatingContact = () => {
           </a>
           <Link
             to="/booking"
-            className="flex-1 flex flex-col items-center gap-0.5 py-2.5 bg-[#166534] text-white hover:bg-[#14532d] active:bg-[#14532d] transition-colors"
+            className="flex-1 flex flex-col items-center gap-0.5 py-2.5 bg-[#F59E0B] text-white hover:bg-[#D97706] active:bg-[#14532d] transition-colors"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M8 2h8l2 5H6L8 2z"/><path d="M3 7h18l-1.5 9a2 2 0 01-2 1.7H6.5a2 2 0 01-2-1.7L3 7z"/><circle cx="9" cy="20" r="1"/><circle cx="15" cy="20" r="1"/></svg>
             <span className="text-[10px] font-body font-bold">Book Now</span>

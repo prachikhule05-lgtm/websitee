@@ -8,17 +8,29 @@ export const TIME_SLOTS = [
 ];
 
 export const PUNE_AREAS = [
-  "Baner", "Balewadi", "Kothrud", "Aundh", "Wakad", "Hinjewadi", "Pimple Saudagar",
-  "Pimple Nilakh", "Pimple Gurav", "Bavdhan", "Sus", "Pashan", "Warje", "Karve Nagar",
-  "Erandwane", "Shivajinagar", "Deccan Gymkhana", "Koregaon Park", "Kalyani Nagar",
-  "Viman Nagar", "Kharadi", "Hadapsar", "Magarpatta", "NIBM Road", "Undri", "Kondhwa",
-  "Katraj", "Dhankawadi", "Bibwewadi", "Wanowrie", "Parvati", "Sinhagad Road",
-  "Vishrantwadi", "Lohegaon", "Dhanori", "Yerawada", "Nagar Road", "Wadgaon Sheri",
-  "Sopan Baug", "Camp", "Sadashiv Peth", "Narayan Peth", "Kasba Peth", "Swargate",
-  "Pune Station Area", "Mundhwa", "Manjri", "Keshav Nagar", "Wagholi", "Alandi Road",
-  "Talegaon", "Chinchwad", "Pimpri", "Akurdi", "Nigdi", "Ravet", "Tathawade",
-  "Mahalunge", "Bhandari", "Kalewadi", "Moshi", "Chikhali", "Dudulgaon",
-  "Other (Custom Area)"
+  "Agarkar Nagar", "Akurdi", "Alandi", "Alandi Road", "Amanora Park Town", "Ambegaon", "Ambegaon Budruk", "Ambegaon Khurd", "Ambegaon Pathar", "Anand Nagar", "Aundh", "Aundh Annexe", "Aundh Gaon", "Awhalwadi",
+  "Bajirao Road", "Bakori", "Balaji Nagar", "Balewadi", "Balewadi High Street", "Balewadi Phata", "Baner", "Baner Gaon", "Baner-Pashan Link Road", "Bavdhan", "Bavdhan Budruk", "Bavdhan Khurd", "Bhawani Peth", "Bhekrai Nagar", "Bhosale Nagar", "Bhosari", "Bhosari MIDC", "Bhugaon", "Bhukum", "Bhumkar Chowk", "Bhusari Colony", "Bibwewadi", "Blue Ridge Township", "Boat Club Road", "Bopkhel", "Bopodi", "BT Kawade Road", "Budhwar Peth", "Bund Garden", "Bund Garden Road",
+  "Camp", "Chakan", "Chandan Nagar", "Chandani Chowk", "Charholi Budruk", "Charholi Khurd", "Chikhali", "Chinchwad", "Chinchwad Gaon", "Chinchwad Station", "Chintamani Nagar", "Clover Park",
+  "Dahanukar Colony", "Dange Chowk", "Dapodi", "Dattanagar", "Dattawadi", "Deccan", "Deccan Gymkhana", "Dehu", "Dehu Road", "Dhankawadi", "Dhanori", "Dhayari", "Dhayari Phata", "Dhole Patil Road", "Dighi", "Dudulgaon",
+  "Empress Garden", "Erandwane",
+  "Fatima Nagar", "FC Road (Fergusson College Road)", "Fursungi (Phursungi)",
+  "Gahunje", "Ganesh Nagar", "Ganesh Peth", "Ganeshkhind", "Ganga Dham", "Ghorpade Peth", "Ghorpadi", "Ghorpadi Gaon", "Gokhale Nagar", "Gokul Nagar", "Gultekdi", "Guru Nanak Nagar", "Guruganesh Nagar", "Guruwar Peth",
+  "Hadapsar", "Hadapsar Gaon", "Hadapsar Industrial Estate", "Handewadi", "Handewadi Road", "Hingne Budruk", "Hingne Khurd", "Hinjewadi Phase 1", "Hinjewadi Phase 2", "Hinjewadi Phase 3",
+  "Ideal Colony", "Indira Nagar", "Indrayani Nagar",
+  "JM Road (Jangli Maharaj Road)",
+  "Kachare Colony", "Kalas", "Kale Padal", "Kalewadi", "Kalyani Nagar", "Karve Nagar", "Karve Road", "Kasar Amboli", "Kasarwadi", "Kasba Peth", "Kaspate Wasti", "Katraj", "Katraj-Kondhwa Road", "Keshav Nagar", "Kesnand", "Khadakwasla", "Khadki", "Kharadi", "Kharadi South", "Khed Shivapur", "Kirkatwadi", "Kiwale", "Kondhawe Dhawade", "Kondhwa", "Kondhwa Budruk", "Kondhwa Khurd", "Koregaon Bhima", "Koregaon Park", "Koregaon Park Annexe", "Kothrud", "Kothrud Depot",
+  "Law College Road", "Lavale", "Lohegaon", "Lokmanya Nagar", "Loni Kalbhor", "Lonikand", "Lulla Nagar",
+  "Maan", "Magarpatta City", "Mahalunge", "Maharshi Nagar", "Mahatma Phule Peth", "Mamurdi", "Mandai", "Mangalwar Peth", "Manik Baug", "Manjri", "Manjri Budruk", "Manjri Khurd", "Markal", "Market Yard", "Marunji", "Masulkar Colony", "Mayur Colony", "MG Road", "Mhada Colony", "Mitramandal Colony", "Model Colony", "Mohammed Wadi", "Mohan Nagar", "Moshi", "Moshi Pradhikaran", "Mukund Nagar", "Mulshi", "Mundhwa",
+  "Nagar Road", "Nana Peth", "Nande", "Nanded City", "Narayan Peth", "Narhe", "Narhe Ambegaon", "Navi Peth", "NDA Road", "Nehru Nagar", "New Sangvi", "NIBM", "NIBM Annexe", "NIBM Road", "Nigdi", "Nigdi Pradhikaran", "Nilakh",
+  "Old Mumbai-Pune Highway", "Old Sangvi",
+  "Padmavati", "Panshet", "Parvati", "Parvati Darshan", "Parvati Gaon", "Parvati Paytha", "Pashan", "Pashan-Sus Road", "Patil Nagar", "Paud", "Paud Road", "Phugewadi", "Pimple Gurav", "Pimple Nilakh", "Pimple Saudagar", "Pimpri", "Pimpri Colony", "Pirangut", "Pisoli", "Prabhat Road", "Pradhikaran", "Punawale", "Pune Cantonment", "Pune Railway Station", "Pune University (SPPU)",
+  "Rahatani", "Rambaug Colony", "Ramtekdi", "Range Hills", "Rasta Peth", "Ravet", "Raviwar Peth", "Revenue Colony", "Rohan Nilay",
+  "Sadashiv Peth", "Sadhu Vaswani Chowk", "Sahakar Nagar", "Sainath Nagar", "Sakore Nagar", "Salisbury Park", "Salunke Vihar", "Sambhaji Nagar", "Sanaswadi", "Sangamvadi", "Sangvi", "Sanjay Park", "Sant Tukaram Nagar", "Sasane Nagar", "Saswad", "Saswad Road", "Satara Road", "Satav Nagar", "Senapati Bapat Road (SB Road)", "Shaniwar Peth", "Shaniwar Wada", "Shankar Kalat Nagar", "Shankar Shet Road", "Shastri Nagar", "Shewalewadi", "Shikrapur", "Shinde Chhatri", "Shivajinagar", "Shivane", "Shivतीर्थ Nagar (Shivtirth Nagar)", "Shukrawar Peth", "Sinhagad Road", "Somatne Phata", "Somwar Peth", "Sopan Baug", "Spine Road", "Subhash Nagar", "Sukh Sagar Nagar", "Sun City", "Sus", "Sus Gaon", "Swargate",
+  "Talawade", "Talegaon Dabhade", "Taljai", "Tadiwala Road", "Tathawade", "Thergaon", "Theur", "Thite Nagar", "Tilak Road", "Tingre Nagar", "Transport Nagar", "Tukaram Nagar", "Tulshibaug",
+  "Uday Baug", "Undri", "Uruli Devachi", "Uruli Kanchan", "Uttam Nagar",
+  "Vadgaon Budruk", "Vadgaon Maval", "Vadgaon Sheri (Wadgaon Sheri)", "Vallabh Nagar", "Vanaz", "Varje", "Veerbhadra Nagar", "Vidyanagar", "Viman Nagar", "Vishal Nagar", "Vishrantwadi", "Vitthalwadi",
+  "Wadaki", "Wadebolai", "Wadgaon Budruk", "Wadgaon Sheri", "Wadmukhwadi", "Wagholi", "Wakad", "Wakadewadi", "Walhekarwadi", "Walvekar Nagar", "Wanowrie (Wanwadi)", "Warje", "Warje Malwadi", "Wireless Colony",
+  "Yamuna Nagar", "Yavat", "Yerwada", "Yewalewadi"
 ];
 
 export const SERVICES_STATIC = [

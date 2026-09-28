@@ -378,13 +378,13 @@ const DetailsModal = ({ service, onClose, onAdd, isAdded }) => {
             </div>
 
             <div>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 mb-1.5 flex items-center gap-1">
-                <Check className="w-3.5 h-3.5 text-emerald-500" /> Includes
+              <h4 className="text-[10px] font-bold uppercase tracking-wider text-amber-600 mb-1.5 flex items-center gap-1">
+                <Check className="w-3.5 h-3.5 text-amber-500" /> Includes
               </h4>
               <ul className="space-y-1.5 pl-0.5">
                 {includesList.map((item, idx) => (
                   <li key={idx} className="text-xs text-gray-600 flex items-start gap-2 leading-relaxed">
-                    <span className="w-1 h-1 bg-emerald-500 rounded-full mt-1.5 flex-shrink-0" />
+                    <span className="w-1 h-1 bg-amber-500 rounded-full mt-1.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -415,7 +415,7 @@ const DetailsModal = ({ service, onClose, onAdd, isAdded }) => {
               className={`w-full py-2.5 font-bold rounded-xl text-center block text-xs tracking-wide shadow-xs transition-all ${
                 isAdded 
                   ? "bg-rose-500 hover:bg-rose-600 text-white" 
-                  : "bg-emerald-600 hover:bg-emerald-700 text-white"
+                  : "bg-amber-600 hover:bg-amber-700 text-white"
               }`}
             >
               {isAdded ? "Remove from Package" : `Add to Package ${service.startingPrice ? `— ₹${service.startingPrice.toLocaleString("en-IN")}` : ""}`}
@@ -438,7 +438,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAdd, isAdded }
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
       className={`bg-white border rounded-2xl p-4 hover:shadow-md transition-all duration-200 max-w-2xl mx-auto w-full ${
-        isAdded ? "border-emerald-500 bg-emerald-50/10" : "border-gray-100"
+        isAdded ? "border-amber-500 bg-amber-50/10" : "border-gray-100"
       }`}
     >
       <div className="flex gap-4 items-center">
@@ -483,7 +483,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAdd, isAdded }
         <ul className="space-y-1">
           {standardIncludes.slice(0, 3).map((item, idx) => (
             <li key={idx} className="flex items-start gap-2 text-xs text-gray-600 leading-normal">
-              <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
+              <Check className="w-3.5 h-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
               <span className="text-gray-700 font-medium truncate">{item}</span>
             </li>
           ))}
@@ -505,7 +505,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAdd, isAdded }
           className={`px-5 py-2 rounded-xl text-xs font-bold tracking-wide transition-all ${
             isAdded 
               ? "bg-rose-500 hover:bg-rose-600 text-white" 
-              : "bg-emerald-600 hover:bg-emerald-700 text-white"
+              : "bg-amber-600 hover:bg-amber-700 text-white"
           }`}
         >
           {isAdded ? "Remove" : "Add +"}
@@ -590,7 +590,7 @@ const ServicesPage = () => {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="font-body text-sm font-semibold text-[#166534] uppercase tracking-widest mb-2"
+              className="font-body text-sm font-semibold text-[#0B2545] uppercase tracking-widest mb-2"
             >
               What We Offer
             </motion.p>
@@ -611,29 +611,39 @@ const ServicesPage = () => {
           </div>
         </div>
 
-            <div className="relative mt-1">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                data-testid={SERVICES.searchInput}
-                type="text"
-                placeholder="Search for a service..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                className="w-full bg-white border border-gray-200 rounded-2xl pl-12 pr-10 py-4 font-body text-sm focus:outline-none focus:ring-2 focus:ring-[#166534] shadow-md"
-              />
-            </div>
         {/* Filter + Cards */}
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+          {/* Search Bar */}
+          <div className="relative mb-6">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input
+              data-testid={SERVICES.searchInput}
+              type="text"
+              placeholder="Search for a service..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="w-full bg-white border border-slate-200 rounded-[12px] pl-12 pr-10 py-3 text-[16px] text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0B2545] focus:ring-1 focus:ring-[#0B2545] shadow-sm transition-all"
+            />
+            {search && (
+              <button 
+                onClick={() => setSearch("")}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+
           {/* Category filters */}
-          <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-3 mb-6 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+          <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-3 mb-6 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap mobile-snap-carousel">
             {categories.map(cat => (
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
                 className={`px-5 py-2 rounded-full font-body text-sm font-semibold transition-all border ${
                   category === cat
-                    ? "bg-[#166534] text-white border-[#166534] shadow-md"
-                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#166534] hover:text-[#166534]"
+                    ? "bg-[#0B2545] text-white border-[#0B2545] shadow-md"
+                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#0B2545] hover:text-[#0B2545]"
                 }`}
               >
                 {cat}
@@ -642,7 +652,7 @@ const ServicesPage = () => {
             {(search || category !== "All") && (
               <button
                 onClick={() => { setSearch(""); setCategory("All"); }}
-                className="flex items-center gap-1 px-4 py-2 rounded-full font-body text-xs text-[#166534] border border-green-200 hover:bg-green-50 transition-all"
+                className="flex items-center gap-1 px-4 py-2 rounded-full font-body text-xs text-[#0B2545] border border-slate-200 hover:bg-slate-50 transition-all"
               >
                 <X className="w-3 h-3" /> Clear filters
               </button>
@@ -671,7 +681,7 @@ const ServicesPage = () => {
               <p className="font-body text-sm text-[#1E293B]">Try a different search or category</p>
               <button
                 onClick={() => { setSearch(""); setCategory("All"); }}
-                className="mt-4 bg-[#166534] text-white px-6 py-2.5 rounded-full font-body font-semibold text-sm hover:bg-[#14532d] transition-all"
+                className="mt-4 bg-[#0B2545] text-white px-6 py-2.5 rounded-full font-body font-semibold text-sm hover:bg-[#14532d] transition-all"
               >
                 View All Services
               </button>
@@ -684,7 +694,7 @@ const ServicesPage = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mt-10 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100 rounded-3xl p-8 text-center"
+              className="mt-10 bg-gradient-to-r from-slate-50 to-amber-50 border border-slate-100 rounded-3xl p-8 text-center"
             >
               <h3 className="font-heading text-2xl font-bold text-[#0F172A] mb-2">
                 Can't find what you're looking for?
@@ -695,7 +705,7 @@ const ServicesPage = () => {
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   to="/booking"
-                  className="bg-[#166534] hover:bg-[#14532d] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center shadow-md"
+                  className="bg-[#0B2545] hover:bg-[#14532d] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center shadow-md"
                 >
                   Book Any Service <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -722,7 +732,7 @@ const ServicesPage = () => {
           >
             <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-emerald-100 text-emerald-700 rounded-xl hidden sm:block">
+                <div className="p-2.5 bg-amber-100 text-amber-700 rounded-xl hidden sm:block">
                   <ShoppingBag className="w-5 h-5" />
                 </div>
                 <div>
@@ -730,13 +740,13 @@ const ServicesPage = () => {
                     {selectedServices.length} {selectedServices.length === 1 ? 'Service' : 'Services'} Selected
                   </p>
                   <p className="text-xs font-semibold text-slate-500">
-                    Total: <span className="text-emerald-600 font-bold">₹{calculateTotal().toLocaleString("en-IN")}</span>
+                    Total: <span className="text-amber-600 font-bold">₹{calculateTotal().toLocaleString("en-IN")}</span>
                   </p>
                 </div>
               </div>
               <button
                 onClick={handleProceedToBooking}
-                className="flex-1 sm:flex-initial px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold tracking-wide rounded-xl shadow-md transition-all text-center"
+                className="flex-1 sm:flex-initial px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold tracking-wide rounded-xl shadow-md transition-all text-center"
               >
                 Continue Booking
               </button>
