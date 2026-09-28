@@ -27,17 +27,17 @@ const AdminLayout = ({ children, title }) => {
   ];
 
   return (
-    <div className="min-h-[70vh] bg-[#F8FAFC] flex">
+    <div className="min-h-[70vh] bg-[#F8FAF9] flex">
       {/* Sidebar */}
       <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#0F172A] transform transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static lg:z-auto`}>
         <div className="p-6">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#166534] to-[#166534] rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#0B3B2C] to-[#0B3B2C] rounded-xl flex items-center justify-center">
               <Crown className="w-6 h-6 text-white" />
             </div>
             <div>
               <div className="font-heading font-bold text-white text-sm">Royal Cleaning</div>
-              <div className="font-body text-[10px] text-[#166534] uppercase tracking-wide">Admin Panel</div>
+              <div className="font-body text-[10px] text-[#0B3B2C] uppercase tracking-wide">Admin Panel</div>
             </div>
           </div>
           <nav className="space-y-1">
@@ -45,7 +45,7 @@ const AdminLayout = ({ children, title }) => {
               <Link key={item.href} to={item.href}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl font-body text-sm font-medium transition-all ${
                   location.pathname === item.href
-                    ? "bg-[#166534] text-white"
+                    ? "bg-[#0B3B2C] text-white"
                     : "text-slate-400 hover:text-white hover:bg-white/10"
                 }`}>
                 {item.icon} {item.label}
@@ -77,7 +77,7 @@ const AdminLayout = ({ children, title }) => {
             </button>
             <h1 className="font-heading font-bold text-lg text-[#0F172A]">{title}</h1>
           </div>
-          <Link to="/" className="font-body text-sm text-[#166534] hover:underline">← View Site</Link>
+          <Link to="/" className="font-body text-sm text-[#0B3B2C] hover:underline">← View Site</Link>
         </div>
         <div data-testid={ADMIN.dashboard} className="p-6">
           {children}
@@ -97,7 +97,7 @@ const StatCard = ({ label, value, icon, color, bg, trend }) => (
       <div className={`w-12 h-12 ${bg} rounded-2xl flex items-center justify-center`}>
         <span className={color}>{icon}</span>
       </div>
-      {trend && <span className="font-body text-xs text-[#22c55e] font-semibold bg-green-50 px-2 py-1 rounded-full">+{trend}</span>}
+      {trend && <span className="font-body text-xs text-[#C5A059] font-semibold bg-green-50 px-2 py-1 rounded-full">+{trend}</span>}
     </div>
     <div className="font-heading font-extrabold text-3xl text-[#0F172A] mb-1">{value}</div>
     <div className="font-body text-sm text-[#1E293B]">{label}</div>
@@ -113,24 +113,24 @@ const AdminDashboardPage = () => {
   }, []);
 
   const statusColor = (status) => {
-    if (status === "confirmed") return "bg-green-50 text-[#22c55e]";
-    if (status === "completed") return "bg-green-50 text-[#166534]";
+    if (status === "confirmed") return "bg-green-50 text-[#C5A059]";
+    if (status === "completed") return "bg-green-50 text-[#0B3B2C]";
     if (status === "cancelled") return "bg-red-50 text-red-500";
-    return "bg-green-50 text-[#166534]";
+    return "bg-green-50 text-[#0B3B2C]";
   };
 
   return (
     <AdminLayout title="Dashboard">
       {loading ? (
         <div className="flex items-center justify-center h-64">
-          <div className="spinner !w-8 !h-8 !border-[#166534]" style={{ borderColor: "#166534", borderTopColor: "transparent", borderWidth: "3px" }} />
+          <div className="spinner !w-8 !h-8 !border-[#0B3B2C]" style={{ borderColor: "#0B3B2C", borderTopColor: "transparent", borderWidth: "3px" }} />
         </div>
       ) : (
         <div className="space-y-6">
           {/* Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <StatCard label="Total Bookings" value={stats?.totalBookings || 0} icon={<Calendar className="w-6 h-6" />} color="text-[#166534]" bg="bg-green-50" />
-            <StatCard label="Pending" value={stats?.pendingBookings || 0} icon={<Clock className="w-6 h-6" />} color="text-[#166534]" bg="bg-green-50" />
+            <StatCard label="Total Bookings" value={stats?.totalBookings || 0} icon={<Calendar className="w-6 h-6" />} color="text-[#0B3B2C]" bg="bg-green-50" />
+            <StatCard label="Pending" value={stats?.pendingBookings || 0} icon={<Clock className="w-6 h-6" />} color="text-[#0B3B2C]" bg="bg-green-50" />
             <StatCard label="Total Leads" value={stats?.totalLeads || 0} icon={<Users className="w-6 h-6" />} color="text-purple-600" bg="bg-purple-50" />
             <StatCard label="Total Reviews" value={stats?.totalReviews || 0} icon={<Star className="w-6 h-6" />} color="text-yellow-500" bg="bg-yellow-50" />
           </div>
@@ -138,10 +138,10 @@ const AdminDashboardPage = () => {
           {/* Quick Actions */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
-              { href: "/admin/bookings", label: "Manage Bookings", color: "bg-[#166534] text-white" },
-              { href: "/admin/bookings?status=pending", label: `${stats?.pendingBookings || 0} Pending`, color: "bg-green-50 text-[#166534] border border-amber-200" },
+              { href: "/admin/bookings", label: "Manage Bookings", color: "bg-[#0B3B2C] text-white" },
+              { href: "/admin/bookings?status=pending", label: `${stats?.pendingBookings || 0} Pending`, color: "bg-green-50 text-[#0B3B2C] border border-amber-200" },
               { href: "/admin/reviews", label: `${stats?.pendingReviews || 0} Pending Reviews`, color: "bg-yellow-50 text-yellow-600 border border-yellow-200" },
-              { href: "/admin/services", label: "Manage Services", color: "bg-green-50 text-[#22c55e] border border-green-200" },
+              { href: "/admin/services", label: "Manage Services", color: "bg-green-50 text-[#C5A059] border border-green-200" },
               { href: "/admin/gallery", label: "Manage Gallery", color: "bg-purple-50 text-purple-600 border border-purple-200" },
             ].map(a => (
               <Link key={a.href} to={a.href}
@@ -155,7 +155,7 @@ const AdminDashboardPage = () => {
           <div className="bg-white rounded-2xl border border-gray-100 shadow-card">
             <div className="flex items-center justify-between p-5 border-b border-gray-50">
               <h3 className="font-heading font-bold text-[#0F172A]">Recent Bookings</h3>
-              <Link to="/admin/bookings" className="font-body text-sm text-[#166534] hover:underline">View All</Link>
+              <Link to="/admin/bookings" className="font-body text-sm text-[#0B3B2C] hover:underline">View All</Link>
             </div>
             <div className="overflow-x-auto">
               <table data-testid={ADMIN.bookingsTable} className="w-full">
@@ -169,7 +169,7 @@ const AdminDashboardPage = () => {
                 <tbody>
                   {(stats?.recentBookings || []).map((b, i) => (
                     <tr key={b.bookingId || i} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                      <td className="px-5 py-3 font-body text-sm font-semibold text-[#166534]">{b.bookingId}</td>
+                      <td className="px-5 py-3 font-body text-sm font-semibold text-[#0B3B2C]">{b.bookingId}</td>
                       <td className="px-5 py-3 font-body text-sm text-[#0F172A]">{b.customerName}</td>
                       <td className="px-5 py-3 font-body text-sm text-[#1E293B]">{b.service}</td>
                       <td className="px-5 py-3 font-body text-sm text-[#1E293B]">{b.date}</td>

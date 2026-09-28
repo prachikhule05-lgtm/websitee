@@ -158,17 +158,17 @@ const BookingPage = () => {
   return (
     <>
       <Header />
-      <main className="min-h-[70vh] bg-[#F8FAFC] pb-36 sm:pb-8">
+      <main className="min-h-[70vh] bg-[#F8FAF9] pb-36 sm:pb-8">
         {/* Hero */}
-        <div className="relative pt-32 pb-10 border-b border-gray-100 overflow-hidden bg-[#F8FAFC]">
+        <div className="relative pt-32 pb-10 border-b border-gray-100 overflow-hidden bg-[#F8FAF9]">
           <div className="absolute inset-0">
             <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1600&q=85" alt="Clean modern home" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-white/90" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAF9] to-transparent" />
           </div>
           <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
             <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-[#0F172A] mb-2">Book a Cleaning Service</h1>
-            <p className="font-body text-slate-600 text-sm">Complete in minutes. Pay only after service.</p>
+            <p className="font-body text-[#64748B] text-sm">Complete in minutes. Pay only after service.</p>
           </div>
         </div>
 
@@ -189,7 +189,7 @@ const BookingPage = () => {
                   key={s.id}
                   onClick={() => { if (s.id < step) { setDir(-1); setStep(s.id); } }}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    s.id === step ? "w-6 bg-[#166534]" : s.id < step ? "w-2 bg-[#22c55e]" : "w-2 bg-gray-200"
+                    s.id === step ? "w-6 bg-[#0B3B2C]" : s.id < step ? "w-2 bg-[#C5A059]" : "w-2 bg-gray-200"
                   }`}
                 />
               ))}
@@ -207,17 +207,17 @@ const BookingPage = () => {
                     ${s.id < step ? "step-completed" : s.id === step ? "step-active" : "step-inactive"}`}>
                     {s.id < step ? <Check className="w-4 h-4" /> : s.id}
                   </div>
-                  <span className={`font-body text-[10px] ${s.id === step ? "text-[#166534] font-semibold" : "text-[#94A3B8]"}`}>{s.label}</span>
+                  <span className={`font-body text-[10px] ${s.id === step ? "text-[#0B3B2C] font-semibold" : "text-[#94A3B8]"}`}>{s.label}</span>
                 </div>
                 {i < STEPS.length - 1 && (
-                  <div className={`h-0.5 flex-1 transition-colors min-w-[12px] ${s.id < step ? "bg-[#22c55e]" : "bg-gray-200"}`} />
+                  <div className={`h-0.5 flex-1 transition-colors min-w-[12px] ${s.id < step ? "bg-[#C5A059]" : "bg-gray-200"}`} />
                 )}
               </React.Fragment>
             ))}
           </div>
 
           <div className="h-1 bg-gray-200 rounded-full mt-2 sm:mt-3">
-            <div className="h-full bg-gradient-to-r from-[#22c55e] to-[#166534] rounded-full transition-all duration-500"
+            <div className="h-full bg-gradient-to-r from-[#C5A059] to-[#0B3B2C] rounded-full transition-all duration-500"
               style={{ width: `${((step - 1) / (STEPS.length - 1)) * 100}%` }} />
           </div>
         </div>
@@ -248,15 +248,15 @@ const BookingPage = () => {
                           onClick={() => setBooking(b => ({ ...b, service: s.name, serviceId: s.id || s.slug, serviceObj: s }))}
                           className={`w-full flex items-center gap-3 p-3 rounded-2xl border-2 text-left transition-all active:scale-[0.98] ${
                             booking.service === s.name
-                              ? "border-[#166534] bg-green-50 shadow-[0_0_0_3px_rgba(22,101,52,0.15)]"
-                              : "border-gray-100 bg-white hover:border-[#166534] hover:bg-green-50"
+                              ? "border-[#0B3B2C] bg-green-50 shadow-[0_0_0_3px_rgba(22,101,52,0.15)]"
+                              : "border-gray-100 bg-white hover:border-[#0B3B2C] hover:bg-green-50"
                           }`}
                         >
                           <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
                             <img src={s.image} alt={s.name} className="w-full h-full object-cover" loading="lazy" />
                             {booking.service === s.name && (
-                              <div className="absolute inset-0 bg-[#166534]/20 flex items-center justify-center">
-                                <div className="w-6 h-6 bg-[#166534] rounded-full flex items-center justify-center">
+                              <div className="absolute inset-0 bg-[#0B3B2C]/20 flex items-center justify-center">
+                                <div className="w-6 h-6 bg-[#0B3B2C] rounded-full flex items-center justify-center">
                                   <Check className="w-3.5 h-3.5 text-white" />
                                 </div>
                               </div>
@@ -268,12 +268,12 @@ const BookingPage = () => {
                               {s.isPopular && <span className="badge-popular flex-shrink-0">Popular</span>}
                             </div>
                             <p className="font-body text-xs text-[#94A3B8] mt-0.5 line-clamp-1">{s.duration || "Professional cleaning"}</p>
-                            <p className="font-body text-xs text-[#166534] font-bold mt-1">
+                            <p className="font-body text-xs text-[#0B3B2C] font-bold mt-1">
                               {s.priceType === "custom" ? "Custom Quote" : `From ₹${s.startingPrice?.toLocaleString("en-IN")}`}
                             </p>
                           </div>
                           <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
-                            booking.service === s.name ? "bg-[#166534]" : "bg-gray-100"
+                            booking.service === s.name ? "bg-[#0B3B2C]" : "bg-gray-100"
                           }`}>
                             <Check className={`w-3.5 h-3.5 ${booking.service === s.name ? "text-white" : "text-gray-300"}`} />
                           </div>
@@ -310,17 +310,17 @@ const BookingPage = () => {
                     <h2 className="font-heading text-2xl font-bold text-[#0F172A] mb-1">Add-on Services</h2>
                     <p className="font-body text-sm text-[#1E293B] mb-6">Enhance your booking with optional extras</p>
 
-                    <div className="mb-6 p-5 bg-[#F8FAFC] rounded-2xl border border-gray-100">
+                    <div className="mb-6 p-5 bg-[#F8FAF9] rounded-2xl border border-gray-100">
                       <div className="flex items-center gap-2 mb-3">
                         <div className="w-8 h-8 bg-green-100 rounded-xl flex items-center justify-center">
-                          <Sofa className="w-4 h-4 text-[#166534]" />
+                          <Sofa className="w-4 h-4 text-[#0B3B2C]" />
                         </div>
                         <h3 className="font-heading font-bold text-base text-[#0F172A]">Do you have a sofa or furnished flat?</h3>
                       </div>
                       <div className="flex gap-3 mb-4">
                         <button
                           onClick={() => setBooking(b => ({ ...b, hasSofa: true }))}
-                          className={`flex-1 py-3 rounded-xl border-2 font-body font-bold text-sm transition-all ${booking.hasSofa === true ? "border-[#166534] bg-green-50 text-[#166534]" : "border-gray-200 text-[#1E293B] hover:border-[#166534]"}`}
+                          className={`flex-1 py-3 rounded-xl border-2 font-body font-bold text-sm transition-all ${booking.hasSofa === true ? "border-[#0B3B2C] bg-green-50 text-[#0B3B2C]" : "border-gray-200 text-[#1E293B] hover:border-[#0B3B2C]"}`}
                         >Yes, I do</button>
                         <button
                           onClick={() => setBooking(b => ({ ...b, hasSofa: false, sofaCleaningType: "none", sofaSeats: 1 }))}
@@ -340,10 +340,10 @@ const BookingPage = () => {
                               <button
                                 key={opt.key}
                                 onClick={() => setBooking(b => ({ ...b, sofaCleaningType: opt.key }))}
-                                className={`p-3 rounded-xl border-2 text-center transition-all ${booking.sofaCleaningType === opt.key ? "border-[#166534] bg-green-50" : "border-gray-100 hover:border-[#166534]"}`}
+                                className={`p-3 rounded-xl border-2 text-center transition-all ${booking.sofaCleaningType === opt.key ? "border-[#0B3B2C] bg-green-50" : "border-gray-100 hover:border-[#0B3B2C]"}`}
                               >
                                 <div className="font-heading font-bold text-xs text-[#0F172A]">{opt.label}</div>
-                                <div className={`font-body text-[10px] mt-0.5 ${opt.key === "wet" ? "text-[#166534] font-semibold" : "text-[#94A3B8]"}`}>{opt.sub}</div>
+                                <div className={`font-body text-[10px] mt-0.5 ${opt.key === "wet" ? "text-[#0B3B2C] font-semibold" : "text-[#94A3B8]"}`}>{opt.sub}</div>
                               </button>
                             ))}
                           </div>
@@ -353,27 +353,27 @@ const BookingPage = () => {
                               <span className="font-body text-sm font-semibold text-[#0F172A] flex-1">Number of sofa seats:</span>
                               <div className="flex items-center gap-3">
                                 <button onClick={() => setBooking(b => ({ ...b, sofaSeats: Math.max(1, b.sofaSeats - 1) }))}
-                                  className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#166534] transition-all">
+                                  className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#0B3B2C] transition-all">
                                   <Minus className="w-3 h-3" />
                                 </button>
-                                <span className="font-heading font-extrabold text-xl text-[#166534] w-6 text-center">{booking.sofaSeats}</span>
+                                <span className="font-heading font-extrabold text-xl text-[#0B3B2C] w-6 text-center">{booking.sofaSeats}</span>
                                 <button onClick={() => setBooking(b => ({ ...b, sofaSeats: b.sofaSeats + 1 }))}
-                                  className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#166534] transition-all">
+                                  className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#0B3B2C] transition-all">
                                   <Plus className="w-3 h-3" />
                                 </button>
                               </div>
-                              <span className="font-heading font-bold text-[#166534] text-sm">₹{(booking.sofaSeats * 499).toLocaleString("en-IN")}</span>
+                              <span className="font-heading font-bold text-[#0B3B2C] text-sm">₹{(booking.sofaSeats * 499).toLocaleString("en-IN")}</span>
                             </div>
                           )}
                         </div>
                       )}
                     </div>
 
-                    <div className="p-5 bg-[#F8FAFC] rounded-2xl border border-gray-100 mb-4">
+                    <div className="p-5 bg-[#F8FAF9] rounded-2xl border border-gray-100 mb-4">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
                           <div className="w-8 h-8 bg-emerald-100 rounded-xl flex items-center justify-center">
-                            <User className="w-4 h-4 text-[#166534]" />
+                            <User className="w-4 h-4 text-[#0B3B2C]" />
                           </div>
                           <div>
                             <h3 className="font-heading font-bold text-base text-[#0F172A]">Chair Cleaning</h3>
@@ -382,12 +382,12 @@ const BookingPage = () => {
                         </div>
                         <div className="flex items-center gap-3">
                           <button onClick={() => setBooking(b => ({ ...b, chairCount: Math.max(0, b.chairCount - 1) }))}
-                            className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#166534] transition-all">
+                            className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#0B3B2C] transition-all">
                             <Minus className="w-3 h-3" />
                           </button>
                           <span className="font-heading font-extrabold text-xl text-[#0F172A] w-6 text-center">{booking.chairCount}</span>
                           <button onClick={() => setBooking(b => ({ ...b, chairCount: b.chairCount + 1 }))}
-                            className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#166534] transition-all">
+                            className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:border-[#0B3B2C] transition-all">
                             <Plus className="w-3 h-3" />
                           </button>
                         </div>
@@ -395,7 +395,7 @@ const BookingPage = () => {
                       {booking.chairCount > 0 && (
                         <div className="bg-green-50 rounded-xl px-4 py-2 flex justify-between">
                           <span className="font-body text-sm text-[#1E293B]">{booking.chairCount} chair{booking.chairCount > 1 ? "s" : ""} × ₹150</span>
-                          <span className="font-heading font-bold text-[#166534]">₹{(booking.chairCount * 150).toLocaleString("en-IN")}</span>
+                          <span className="font-heading font-bold text-[#0B3B2C]">₹{(booking.chairCount * 150).toLocaleString("en-IN")}</span>
                         </div>
                       )}
                     </div>
@@ -403,9 +403,9 @@ const BookingPage = () => {
                     {addonBase > 0 && (
                       <div className="bg-green-50 border border-green-200 rounded-2xl p-4 flex justify-between items-center">
                         <div>
-                          <span className="font-body text-sm font-semibold text-[#22c55e]">Add-on Total (incl. 18% GST)</span>
+                          <span className="font-body text-sm font-semibold text-[#C5A059]">Add-on Total (incl. 18% GST)</span>
                         </div>
-                        <span className="font-heading font-extrabold text-lg text-[#22c55e]">₹{addonTotal.toLocaleString("en-IN")}</span>
+                        <span className="font-heading font-extrabold text-lg text-[#C5A059]">₹{addonTotal.toLocaleString("en-IN")}</span>
                       </div>
                     )}
                     {addonBase === 0 && (
@@ -424,7 +424,7 @@ const BookingPage = () => {
                     {isPackageBooking ? (
                       <div className="p-6 border border-dashed border-gray-200 rounded-2xl text-center bg-slate-50/50">
                         <p className="font-body text-sm text-slate-500 mb-2">Property configurations are pre-calculated for customized packages.</p>
-                        <span className="inline-block bg-[#166534]/10 text-[#166534] font-heading font-bold text-xs px-3 py-1 rounded-full">Ready to proceed</span>
+                        <span className="inline-block bg-[#0B3B2C]/10 text-[#0B3B2C] font-heading font-bold text-xs px-3 py-1 rounded-full">Ready to proceed</span>
                       </div>
                     ) : (
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -438,12 +438,12 @@ const BookingPage = () => {
                               onClick={() => setBooking(b => ({ ...b, propertyType: pt }))}
                               className={`p-4 rounded-2xl border-2 text-center transition-all ${
                                 booking.propertyType === pt
-                                  ? "border-[#166534] bg-green-50"
-                                  : "border-gray-100 hover:border-[#166534] hover:bg-green-50"
+                                  ? "border-[#0B3B2C] bg-green-50"
+                                  : "border-gray-100 hover:border-[#0B3B2C] hover:bg-green-50"
                               }`}
                             >
                               <div className="font-heading font-bold text-sm text-[#0F172A] mb-1">{pt}</div>
-                              <div className={`font-body text-xs font-semibold ${isCustom ? "text-[#94A3B8]" : "text-[#166534]"}`}>
+                              <div className={`font-body text-xs font-semibold ${isCustom ? "text-[#94A3B8]" : "text-[#0B3B2C]"}`}>
                                 {isCustom ? "Custom" : `₹${p.toLocaleString("en-IN")}`}
                               </div>
                             </button>
@@ -453,7 +453,7 @@ const BookingPage = () => {
                     )}
                     {pricing.base > 0 && !isPackageBooking && (
                       <div className="mt-4 p-4 bg-green-50 rounded-2xl">
-                        <p className="font-body text-sm text-[#166534]">
+                        <p className="font-body text-sm text-[#0B3B2C]">
                           <strong>Estimated Price:</strong> ₹{pricing.base.toLocaleString("en-IN")} + GST (18%) = <strong>₹{pricing.total.toLocaleString("en-IN")}</strong>
                         </p>
                       </div>
@@ -479,7 +479,7 @@ const BookingPage = () => {
                           setShowAreaList(true);
                         }}
                         onFocus={() => setShowAreaList(true)}
-                        className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl font-body text-sm focus:outline-none focus:border-[#166534]"
+                        className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl font-body text-sm focus:outline-none focus:border-[#0B3B2C]"
                       />
                     </div>
                     {showAreaList && (
@@ -488,18 +488,18 @@ const BookingPage = () => {
                         {filteredAreas.map(area => (
                           <button
                             key={area}
-                            className={`w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-b border-gray-50 last:border-0 ${booking.location === area ? "bg-slate-50 text-[#166534] font-bold" : "text-[#0F172A]"}`}
+                            className={`w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-b border-gray-50 last:border-0 ${booking.location === area ? "bg-slate-50 text-[#0B3B2C] font-bold" : "text-[#0F172A]"}`}
                             onClick={() => { setBooking(b => ({ ...b, location: area })); setAreaSearch(area); setShowAreaList(false); }}
                           >
-                            <MapPin className={`w-3.5 h-3.5 inline mr-2 ${booking.location === area ? "text-[#22c55e]" : "text-[#94A3B8]"}`} />{area}
+                            <MapPin className={`w-3.5 h-3.5 inline mr-2 ${booking.location === area ? "text-[#C5A059]" : "text-[#94A3B8]"}`} />{area}
                           </button>
                         ))}
                         {areaSearch && !filteredAreas.find(a => a.toLowerCase() === areaSearch.toLowerCase()) && (
                           <button
-                            className="w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-t border-gray-100 text-[#166534] font-semibold"
+                            className="w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-t border-gray-100 text-[#0B3B2C] font-semibold"
                             onClick={() => { setBooking(b => ({ ...b, location: areaSearch })); setShowAreaList(false); }}
                           >
-                            <MapPin className="w-3.5 h-3.5 inline mr-2 text-[#22c55e]" />
+                            <MapPin className="w-3.5 h-3.5 inline mr-2 text-[#C5A059]" />
                             Use "{areaSearch}, Pune"
                           </button>
                         )}
@@ -519,12 +519,12 @@ const BookingPage = () => {
                       min={today}
                       value={booking.date}
                       onChange={e => setBooking(b => ({ ...b, date: e.target.value }))}
-                      className="w-full border-2 border-gray-200 rounded-xl px-4 py-4 font-body text-base focus:outline-none focus:border-[#166534] transition-colors"
+                      className="w-full border-2 border-gray-200 rounded-xl px-4 py-4 font-body text-base focus:outline-none focus:border-[#0B3B2C] transition-colors"
                     />
                     {booking.date && (
                       <div className="mt-4 p-4 bg-green-50 rounded-2xl flex items-center gap-2">
-                        <Check className="w-4 h-4 text-[#22c55e]" />
-                        <p className="font-body text-sm text-[#22c55e] font-semibold">
+                        <Check className="w-4 h-4 text-[#C5A059]" />
+                        <p className="font-body text-sm text-[#C5A059] font-semibold">
                           Selected: {new Date(booking.date).toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
                         </p>
                       </div>
@@ -545,8 +545,8 @@ const BookingPage = () => {
                           onClick={() => setBooking(b => ({ ...b, time: slot }))}
                           className={`p-3 rounded-xl border-2 font-body text-sm font-semibold transition-all ${
                             booking.time === slot
-                              ? "border-[#166534] bg-[#166534] text-white shadow-md"
-                              : "border-gray-200 text-[#1E293B] hover:border-[#166534] hover:text-[#166534] hover:bg-green-50"
+                              ? "border-[#0B3B2C] bg-[#0B3B2C] text-white shadow-md"
+                              : "border-gray-200 text-[#1E293B] hover:border-[#0B3B2C] hover:text-[#0B3B2C] hover:bg-green-50"
                           }`}
                         >
                           {slot}
@@ -566,19 +566,19 @@ const BookingPage = () => {
                         <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1.5 block">Full Name *</label>
                         <input data-testid={BOOKING.customerName} type="text" placeholder="Enter your full name"
                           value={booking.customerName} onChange={e => setBooking(b => ({ ...b, customerName: e.target.value }))}
-                          className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#166534]" />
+                          className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#0B3B2C]" />
                       </div>
                       <div>
                         <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1.5 block">Mobile Number *</label>
                         <input data-testid={BOOKING.customerMobile} type="tel" placeholder="+91 XXXXX XXXXX"
                           value={booking.mobile} onChange={e => setBooking(b => ({ ...b, mobile: e.target.value }))}
-                          className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#166534]" />
+                          className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#0B3B2C]" />
                       </div>
                       <div>
                         <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1.5 block">Email (Optional)</label>
                         <input data-testid={BOOKING.customerEmail} type="email" placeholder="you@email.com"
                           value={booking.email} onChange={e => setBooking(b => ({ ...b, email: e.target.value }))}
-                          className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#166534]" />
+                          className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#0B3B2C]" />
                       </div>
                     </div>
                   </div>
@@ -595,33 +595,33 @@ const BookingPage = () => {
                           <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">House / Flat No. *</label>
                           <input type="text" placeholder="e.g. 402, B-Wing" value={booking.houseNo}
                             onChange={e => setBooking(b => ({ ...b, houseNo: e.target.value }))}
-                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#166534]" />
+                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#0B3B2C]" />
                         </div>
                         <div>
                           <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Street / Society *</label>
                           <input type="text" placeholder="Street or society name" value={booking.street}
                             onChange={e => setBooking(b => ({ ...b, street: e.target.value }))}
-                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#166534]" />
+                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#0B3B2C]" />
                         </div>
                       </div>
                       <div>
                         <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Landmark (Optional)</label>
                         <input type="text" placeholder="Near landmark" value={booking.landmark}
                           onChange={e => setBooking(b => ({ ...b, landmark: e.target.value }))}
-                          className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#166534]" />
+                          className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#0B3B2C]" />
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="sm:col-span-2">
                           <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Area *</label>
                           <input type="text" placeholder="Area / Locality" value={booking.area}
                             onChange={e => setBooking(b => ({ ...b, area: e.target.value }))}
-                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#166534]" />
+                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#0B3B2C]" />
                         </div>
                         <div>
                           <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Pincode *</label>
                           <input type="text" placeholder="411XXX" value={booking.pincode} maxLength={6}
                             onChange={e => setBooking(b => ({ ...b, pincode: e.target.value }))}
-                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#166534]" />
+                            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#0B3B2C]" />
                         </div>
                       </div>
                       <div>
@@ -687,7 +687,7 @@ const BookingPage = () => {
                     </div>
 
                     {/* Pricing */}
-                    <div className="bg-[#F8FAFC] rounded-2xl p-5 mb-5">
+                    <div className="bg-[#F8FAF9] rounded-2xl p-5 mb-5">
                       {pricing.isCustom ? (
                         <div className="text-center py-2">
                           <p className="font-heading font-bold text-[#0F172A]">Custom Quote Service</p>
@@ -707,7 +707,7 @@ const BookingPage = () => {
                             <>
                               <div className="flex justify-between mb-2">
                                 <span className="font-body text-sm text-[#1E293B]">Add-on Services</span>
-                                <span className="font-body text-sm font-semibold text-[#22c55e]">₹{addonBase.toLocaleString("en-IN")}</span>
+                                <span className="font-body text-sm font-semibold text-[#C5A059]">₹{addonBase.toLocaleString("en-IN")}</span>
                               </div>
                               <div className="flex justify-between mb-3 pb-3 border-b border-gray-200">
                                 <span className="font-body text-sm text-[#1E293B]">Add-on GST (18%)</span>
@@ -718,7 +718,7 @@ const BookingPage = () => {
                           {addonBase === 0 && <div className="border-b border-gray-200 mb-3" />}
                           <div className="flex justify-between">
                             <span className="font-heading font-bold text-[#0F172A]">Grand Total</span>
-                            <span className="font-heading font-extrabold text-xl text-[#166534]">₹{grandTotal.toLocaleString("en-IN")}</span>
+                            <span className="font-heading font-extrabold text-xl text-[#0B3B2C]">₹{grandTotal.toLocaleString("en-IN")}</span>
                           </div>
                         </>
                       )}
@@ -727,9 +727,9 @@ const BookingPage = () => {
                     {/* Payment Note */}
                     <div className="bg-green-50 border border-green-200 rounded-2xl p-4 mb-5">
                       <div className="flex items-center gap-2">
-                        <Check className="w-5 h-5 text-[#22c55e] flex-shrink-0" />
+                        <Check className="w-5 h-5 text-[#C5A059] flex-shrink-0" />
                         <div>
-                          <div className="font-heading font-bold text-sm text-[#22c55e]">Pay After Service</div>
+                          <div className="font-heading font-bold text-sm text-[#C5A059]">Pay After Service</div>
                           <div className="font-body text-xs text-[#1E293B]">No advance payment required. Pay only after the cleaning service is completed.</div>
                         </div>
                       </div>
@@ -744,18 +744,18 @@ const BookingPage = () => {
           <div className="hidden sm:flex items-center justify-between mt-6">
             {step > 1 ? (
               <button data-testid={BOOKING.prevBtn} onClick={() => go(-1)}
-                className="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-200 font-body font-semibold text-sm text-[#1E293B] hover:border-[#166534] hover:text-[#166534] transition-all">
+                className="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-gray-200 font-body font-semibold text-sm text-[#1E293B] hover:border-[#0B3B2C] hover:text-[#0B3B2C] transition-all">
                 <ChevronLeft className="w-4 h-4" /> Back
               </button>
             ) : <div />}
             {step < 9 ? (
               <button data-testid={BOOKING.nextBtn} onClick={() => go(1)} disabled={!canNext()}
-                className="flex items-center gap-2 bg-[#166534] hover:bg-[#14532d] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md">
+                className="flex items-center gap-2 bg-[#0B3B2C] hover:bg-[#07271D] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md">
                 Continue <ChevronRight className="w-4 h-4" />
               </button>
             ) : (
               <button data-testid={BOOKING.confirmBtn} onClick={handleSubmit} disabled={loading}
-                className="flex items-center gap-2 bg-[#22c55e] hover:bg-[#059669] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-70 shadow-lg shadow-green-200">
+                className="flex items-center gap-2 bg-[#C5A059] hover:bg-[#059669] text-white px-8 py-3 rounded-full font-body font-bold text-sm transition-all disabled:opacity-70 shadow-lg shadow-green-200">
                 {loading ? <div className="spinner" /> : <><Check className="w-4 h-4" /> Confirm Booking</>}
               </button>
             )}
@@ -773,12 +773,12 @@ const BookingPage = () => {
           <span className="font-body text-xs text-[#94A3B8] font-semibold hidden xs:block">{STEPS[step - 1]?.label}</span>
           {step < 9 ? (
             <button data-testid={BOOKING.nextBtn} onClick={() => go(1)} disabled={!canNext()}
-              className="flex items-center gap-1.5 bg-[#166534] hover:bg-[#14532d] text-white px-6 py-2.5 rounded-full font-body font-bold text-sm transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none shadow-md">
+              className="flex items-center gap-1.5 bg-[#0B3B2C] hover:bg-[#07271D] text-white px-6 py-2.5 rounded-full font-body font-bold text-sm transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none shadow-md">
               Continue <ChevronRight className="w-4 h-4" />
             </button>
           ) : (
             <button data-testid={BOOKING.confirmBtn} onClick={handleSubmit} disabled={loading}
-              className="flex items-center gap-1.5 bg-[#22c55e] hover:bg-[#059669] text-white px-6 py-2.5 rounded-full font-body font-bold text-sm transition-all active:scale-95 disabled:opacity-70 shadow-lg shadow-green-200">
+              className="flex items-center gap-1.5 bg-[#C5A059] hover:bg-[#059669] text-white px-6 py-2.5 rounded-full font-body font-bold text-sm transition-all active:scale-95 disabled:opacity-70 shadow-lg shadow-green-200">
               {loading ? <div className="spinner" /> : <><Check className="w-4 h-4" /> Confirm Booking</>}
             </button>
           )}

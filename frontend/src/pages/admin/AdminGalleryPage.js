@@ -69,7 +69,7 @@ const AdminGalleryPage = () => {
 
         {/* Existing Grid Gallery Display */}
         <div>
-          <h3 className="font-heading font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <h3 className="font-heading font-bold text-[#1E293B] mb-4 flex items-center gap-2">
             <ImageIcon className="w-5 h-5 text-green-500" /> Current Live Gallery ({images.length} items)
           </h3>
 

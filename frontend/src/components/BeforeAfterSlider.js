@@ -84,7 +84,7 @@ const BeforeAfterSlider = ({
       {/* After image (full background) */}
       <div className="absolute inset-0">
         <img src={after} alt={afterLabel} className="w-full h-full object-cover" loading="lazy" draggable={false} />
-        <div className="absolute top-3 right-3 z-10 bg-[#22c55e] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest shadow-md">
+        <div className="absolute top-3 right-3 z-10 bg-[#C5A059] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest shadow-md">
           {afterLabel}
         </div>
       </div>
@@ -95,7 +95,7 @@ const BeforeAfterSlider = ({
         style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
       >
         <img src={before} alt={beforeLabel} className="w-full h-full object-cover" loading="lazy" draggable={false} />
-        <div className="absolute top-3 left-3 z-10 bg-[#166534] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest shadow-md">
+        <div className="absolute top-3 left-3 z-10 bg-[#0B3B2C] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest shadow-md">
           {beforeLabel}
         </div>
       </div>
@@ -105,7 +105,7 @@ const BeforeAfterSlider = ({
         className="absolute top-0 bottom-0 z-20 pointer-events-none"
         style={{ left: `${sliderPos}%`, transform: "translateX(-50%)" }}
       >
-        <div className={`h-full w-[2px] ${isDragging ? "bg-[#166534]" : "bg-white"} shadow-[0_0_12px_rgba(0,0,0,0.5)] transition-colors`} />
+        <div className={`h-full w-[2px] ${isDragging ? "bg-[#0B3B2C]" : "bg-white"} shadow-[0_0_12px_rgba(0,0,0,0.5)] transition-colors`} />
       </div>
 
       {/* Drag handle */}
@@ -118,10 +118,10 @@ const BeforeAfterSlider = ({
         <motion.div
           animate={{ scale: isDragging ? 1.15 : 1 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          className="w-11 h-11 bg-white rounded-full shadow-2xl flex items-center justify-center border-[3px] border-[#166534] cursor-ew-resize"
+          className="w-11 h-11 bg-white rounded-full shadow-2xl flex items-center justify-center border-[3px] border-[#0B3B2C] cursor-ew-resize"
           style={{ boxShadow: isDragging ? "0 0 0 4px rgba(37,99,235,0.2), 0 8px 24px rgba(0,0,0,0.3)" : "0 4px 16px rgba(0,0,0,0.25)" }}
         >
-          <MoveHorizontal className={`w-5 h-5 ${isDragging ? "text-[#166534]" : "text-[#166534]"} transition-colors`} />
+          <MoveHorizontal className={`w-5 h-5 ${isDragging ? "text-[#0B3B2C]" : "text-[#0B3B2C]"} transition-colors`} />
         </motion.div>
       </div>
 

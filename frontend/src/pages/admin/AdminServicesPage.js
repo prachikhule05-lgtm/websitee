@@ -77,7 +77,7 @@ const AdminServicesPage = () => {
           <p className="font-body text-sm text-[#94A3B8]">{services.length} services</p>
           <button
             onClick={() => setEditing({ name: "", description: "", startingPrice: 0, duration: "", isActive: true, image: "", category: "residential" })}
-            className="flex items-center gap-2 bg-[#166534] text-white px-4 py-2.5 rounded-xl font-body font-bold text-sm shadow-md"
+            className="flex items-center gap-2 bg-[#0B3B2C] text-white px-4 py-2.5 rounded-xl font-body font-bold text-sm shadow-md"
           >
             <Plus className="w-4 h-4" /> Add Service
           </button>
@@ -104,7 +104,7 @@ const AdminServicesPage = () => {
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`font-body text-xs font-semibold px-2.5 py-1 rounded-full capitalize ${s.category === "commercial" ? "bg-purple-50 text-purple-600" : "bg-green-50 text-[#166534]"}`}>
+                    <span className={`font-body text-xs font-semibold px-2.5 py-1 rounded-full capitalize ${s.category === "commercial" ? "bg-purple-50 text-purple-600" : "bg-green-50 text-[#0B3B2C]"}`}>
                       {s.category}
                     </span>
                   </td>
@@ -113,16 +113,16 @@ const AdminServicesPage = () => {
                   </td>
                   <td className="px-4 py-3 font-body text-sm text-[#1E293B]">{s.duration}</td>
                   <td className="px-4 py-3">
-                    <span className={`font-body text-xs font-semibold px-2.5 py-1 rounded-full ${s.isActive ? "bg-green-50 text-[#22c55e]" : "bg-gray-100 text-[#94A3B8]"}`}>
+                    <span className={`font-body text-xs font-semibold px-2.5 py-1 rounded-full ${s.isActive ? "bg-green-50 text-[#C5A059]" : "bg-gray-100 text-[#94A3B8]"}`}>
                       {s.isActive ? "Active" : "Inactive"}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
-                      <button onClick={() => setEditing({ ...s })} className="p-1.5 hover:bg-green-50 rounded-lg text-[#166534]" title="Edit">
+                      <button onClick={() => setEditing({ ...s })} className="p-1.5 hover:bg-green-50 rounded-lg text-[#0B3B2C]" title="Edit">
                         <Edit className="w-4 h-4" />
                       </button>
-                      <button onClick={() => handleToggle(s)} className={`p-1.5 rounded-lg transition-colors ${s.isActive ? "hover:bg-red-50 text-red-400" : "hover:bg-green-50 text-[#22c55e]"}`} title={s.isActive ? "Deactivate" : "Activate"}>
+                      <button onClick={() => handleToggle(s)} className={`p-1.5 rounded-lg transition-colors ${s.isActive ? "hover:bg-red-50 text-red-400" : "hover:bg-green-50 text-[#C5A059]"}`} title={s.isActive ? "Deactivate" : "Activate"}>
                         {s.isActive ? <X className="w-4 h-4" /> : <Check className="w-4 h-4" />}
                       </button>
                     </div>
@@ -153,25 +153,25 @@ const AdminServicesPage = () => {
                     <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">{f.label}</label>
                     {f.type === "select" ? (
                       <select value={editing[f.key] || ""} onChange={e => setEditing(ed => ({ ...ed, [f.key]: e.target.value }))}
-                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:border-[#166534]">
+                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:border-[#0B3B2C]">
                         {f.options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                       </select>
                     ) : (
                       <input type={f.type} value={editing[f.key] || ""} onChange={e => setEditing(ed => ({ ...ed, [f.key]: f.type === "number" ? Number(e.target.value) : e.target.value }))}
-                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:border-[#166534]" />
+                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:border-[#0B3B2C]" />
                     )}
                   </div>
                 ))}
                 <div>
                   <label className="font-body text-xs font-semibold text-[#1E293B] uppercase tracking-wide mb-1 block">Description</label>
                   <textarea rows={3} value={editing.description || ""} onChange={e => setEditing(ed => ({ ...ed, description: e.target.value }))}
-                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:border-[#166534] resize-none" />
+                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:border-[#0B3B2C] resize-none" />
                 </div>
               </div>
               <div className="flex gap-3 mt-5">
                 <button onClick={() => setEditing(null)} className="flex-1 bg-gray-100 text-[#1E293B] py-3 rounded-xl font-body font-semibold text-sm">Cancel</button>
                 <button onClick={handleSave} disabled={saving}
-                  className="flex-1 bg-[#166534] text-white py-3 rounded-xl font-body font-bold text-sm shadow-md disabled:opacity-70">
+                  className="flex-1 bg-[#0B3B2C] text-white py-3 rounded-xl font-body font-bold text-sm shadow-md disabled:opacity-70">
                   {saving ? "Saving..." : "Save Changes"}
                 </button>
               </div>

@@ -3,10 +3,10 @@ import { motion, useInView } from "framer-motion";
 import { Users, Star, Leaf, Award } from "lucide-react";
 
 const stats = [
-  { icon: <Users className="w-6 h-6" />, value: 1000, suffix: "+", label: "Happy Customers", color: "text-[#166534]", bg: "bg-green-50" },
-  { icon: <Star className="w-6 h-6" />, value: 4.9, suffix: "/5", label: "Average Rating", color: "text-[#166534]", bg: "bg-green-50", decimals: 1 },
-  { icon: <Leaf className="w-6 h-6" />, value: 100, suffix: "%", label: "Eco-Friendly Products", color: "text-[#22c55e]", bg: "bg-green-50" },
-  { icon: <Award className="w-6 h-6" />, value: 5, suffix: "+", label: "Years of Experience", color: "text-[#166534]", bg: "bg-green-50" },
+  { icon: <Users className="w-6 h-6" />, value: 1000, suffix: "+", label: "Happy Customers", color: "text-[#0B3B2C]", bg: "bg-green-50" },
+  { icon: <Star className="w-6 h-6" />, value: 4.9, suffix: "/5", label: "Average Rating", color: "text-[#0B3B2C]", bg: "bg-green-50", decimals: 1 },
+  { icon: <Leaf className="w-6 h-6" />, value: 100, suffix: "%", label: "Eco-Friendly Products", color: "text-[#C5A059]", bg: "bg-green-50" },
+  { icon: <Award className="w-6 h-6" />, value: 5, suffix: "+", label: "Years of Experience", color: "text-[#0B3B2C]", bg: "bg-green-50" },
 ];
 
 const AnimatedNumber = ({ value, suffix, decimals = 0 }) => {
@@ -50,13 +50,13 @@ const StatsSection = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-8"
         >
-          <p className="font-body text-[15px] font-semibold uppercase tracking-[0.18em] text-[#166534] mb-3">
+          <p className="font-body text-[15px] font-semibold uppercase tracking-[0.18em] text-[#0B3B2C] mb-3">
             OUR NUMBERS
           </p>
           <h2 className="mx-auto max-w-[700px] font-heading text-[30px] sm:text-[38px] lg:text-[46px] font-extrabold leading-[1.15] text-[#0F172A]">
             Trusted by Pune's Homeowners
           </h2>
-          <p className="mx-auto mt-4 max-w-[650px] text-[18px] leading-[1.6] text-slate-600">
+          <p className="mx-auto mt-4 max-w-[650px] text-[18px] leading-[1.6] text-[#64748B]">
             We deliver premium cleaning services across Pune with proven experience, fast response, and trusted professionals for homes, offices, and commercial spaces.
           </p>
         </motion.div>

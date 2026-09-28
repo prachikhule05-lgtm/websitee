@@ -17,20 +17,20 @@ const GalleryPage = () => {
       <Header />
       <main className="pb-16 md:pb-0">
         {/* Hero */}
-        <div className="relative pt-32 pb-16 border-b border-gray-100 overflow-hidden bg-[#F8FAFC]">
+        <div className="relative pt-32 pb-16 border-b border-gray-100 overflow-hidden bg-[#F8FAF9]">
           <div className="absolute inset-0">
             <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1600&q=85" alt="Clean modern home" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-white/90" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAF9] to-transparent" />
           </div>
           <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-body text-sm font-semibold text-[#166534] uppercase tracking-widest mb-2">
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-body text-sm font-semibold text-[#0B3B2C] uppercase tracking-widest mb-2">
               Our Results
             </motion.p>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-4xl sm:text-5xl font-extrabold text-[#0F172A] mb-4">
               Before & After Gallery
             </motion.h1>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.2 } }} className="font-body text-slate-600 text-base max-w-xl mx-auto">
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.2 } }} className="font-body text-[#64748B] text-base max-w-xl mx-auto">
               Drag the slider to see the remarkable transformation our team delivers.
             </motion.p>
           </div>
@@ -45,8 +45,8 @@ const GalleryPage = () => {
                 onClick={() => setActive(cat)}
                 className={`px-5 py-2 rounded-full font-body text-sm font-semibold transition-all border ${
                   active === cat
-                    ? "bg-[#166534] text-white border-[#166534] shadow-md"
-                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#166534] hover:text-[#166534]"
+                    ? "bg-[#0B3B2C] text-white border-[#0B3B2C] shadow-md"
+                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#0B3B2C] hover:text-[#0B3B2C]"
                 }`}
               >
                 {cat}
@@ -75,12 +75,12 @@ const GalleryPage = () => {
           {/* CTA Section */}
           <div className="mt-16 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100 rounded-3xl p-8 md:p-12 text-center">
             <h2 className="font-heading text-2xl sm:text-3xl font-bold text-[#0F172A] mb-3">Ready for the Same Results?</h2>
-            <p className="font-body text-slate-600 text-base mb-6 max-w-lg mx-auto">
+            <p className="font-body text-[#64748B] text-base mb-6 max-w-lg mx-auto">
               Book our professional cleaning service today and see the transformation for yourself.
             </p>
             <a
               href="/booking"
-              className="inline-flex items-center gap-2 bg-[#166534] hover:bg-[#14532d] text-white px-8 py-4 rounded-full font-body font-bold text-base transition-all shadow-md"
+              className="inline-flex items-center gap-2 bg-[#0B3B2C] hover:bg-[#07271D] text-white px-8 py-4 rounded-full font-body font-bold text-base transition-all shadow-md"
             >
               Book Now — Pay After Service
             </a>

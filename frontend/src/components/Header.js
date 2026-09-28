@@ -77,10 +77,10 @@ const Header = () => {
               />
             </div>
             <div className="leading-tight ml-1">
-              <div className="font-heading font-extrabold text-base leading-none text-[#166534]">
+              <div className="font-heading font-extrabold text-base leading-none text-[#0B3B2C]">
                 Royal Cleaning
               </div>
-              <div className="font-body text-[10px] tracking-widest uppercase leading-none mt-1 text-[#166534] font-bold">
+              <div className="font-body text-[10px] tracking-widest uppercase leading-none mt-1 text-[#0B3B2C] font-bold">
                 Services
               </div>
             </div>
@@ -95,8 +95,8 @@ const Header = () => {
                 className={`px-3.5 py-2 rounded-lg font-body text-sm font-medium transition-all duration-200
                   ${
                     isActive(link)
-                      ? "text-[#166534] bg-green-50 font-semibold"
-                      : "text-[#1E293B] hover:text-[#166534] hover:bg-green-50/60"
+                      ? "text-[#0B3B2C] bg-[#F8FAF9] font-semibold"
+                      : "text-[#1E293B] hover:text-[#0B3B2C] hover:bg-[#F8FAF9]/60"
                   }`}
               >
                 {link.label}
@@ -118,7 +118,7 @@ const Header = () => {
             <a
               href={PHONE_URL}
               data-testid={HEADER.callBtn}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg font-body text-sm font-semibold text-[#166534] bg-green-50/80 hover:bg-green-100 border border-green-200 transition-all"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg font-body text-sm font-semibold text-[#0B3B2C] bg-green-50/80 hover:bg-green-100 border border-green-200 transition-all"
             >
               <Phone className="w-4 h-4" />
               <span className="hidden xl:block">{PHONE_NUMBER}</span>
@@ -126,7 +126,7 @@ const Header = () => {
             <Link
               to="/booking"
               data-testid={HEADER.bookNowBtn}
-              className="bg-[#166534] text-white px-5 py-2.5 rounded-full font-body font-bold text-sm hover:bg-[#14532d] shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
+              className="bg-[#0B3B2C] text-white px-5 py-2.5 rounded-full font-body font-bold text-sm hover:bg-[#07271D] shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
             >
               Book Now
             </Link>
@@ -135,7 +135,7 @@ const Header = () => {
           {/* Mobile menu toggle */}
           <button
             data-testid={HEADER.mobileMenuToggle}
-            className="lg:hidden p-2 rounded-lg text-[#166534] hover:bg-gray-100 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-[#0B3B2C] hover:bg-gray-100 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -163,8 +163,8 @@ const Header = () => {
                   className={`block w-full text-left px-4 py-3 rounded-xl font-body font-medium text-sm transition-all
                     ${
                       isActive(link)
-                        ? "text-[#166534] bg-green-50 font-semibold"
-                        : "text-[#1E293B] hover:text-[#166534] hover:bg-green-50"
+                        ? "text-[#0B3B2C] bg-green-50 font-semibold"
+                        : "text-[#1E293B] hover:text-[#0B3B2C] hover:bg-green-50"
                     }`}
                 >
                   {link.label}
@@ -173,13 +173,13 @@ const Header = () => {
               <div className="pt-3 flex flex-col gap-2">
                 <a
                   href={PHONE_URL}
-                  className="flex items-center gap-2 px-4 py-3 rounded-xl bg-green-50 text-[#166534] font-semibold text-sm"
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl bg-green-50 text-[#0B3B2C] font-semibold text-sm"
                 >
                   <Phone className="w-4 h-4" /> {PHONE_NUMBER}
                 </a>
                 <Link
                   to="/booking"
-                  className="bg-[#166534] text-white px-4 py-3 rounded-xl font-bold text-sm text-center block shadow-md hover:bg-[#14532d]"
+                  className="bg-[#0B3B2C] text-white px-4 py-3 rounded-xl font-bold text-sm text-center block shadow-md hover:bg-[#07271D]"
                 >
                   Book Now
                 </Link>

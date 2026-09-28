@@ -31,7 +31,7 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="min-h-[70vh] bg-gradient-to-br from-[#0F172A] via-[#1E3A5F] to-[#166534] flex items-center justify-center p-4">
+    <div className="min-h-[70vh] bg-gradient-to-br from-[#0F172A] via-[#1E3A5F] to-[#0B3B2C] flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -39,12 +39,12 @@ const AdminLoginPage = () => {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 mb-8 justify-center">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#166534] to-[#0F172A] rounded-2xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-br from-[#0B3B2C] to-[#0F172A] rounded-2xl flex items-center justify-center">
             <Crown className="w-7 h-7 text-white" />
           </div>
           <div>
             <div className="font-heading font-extrabold text-lg text-[#0F172A]">Royal Cleaning</div>
-            <div className="font-body text-xs text-[#166534] font-semibold uppercase tracking-wide">Admin Panel</div>
+            <div className="font-body text-xs text-[#0B3B2C] font-semibold uppercase tracking-wide">Admin Panel</div>
           </div>
         </div>
 
@@ -61,7 +61,7 @@ const AdminLoginPage = () => {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#166534] transition-colors"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 font-body text-sm focus:outline-none focus:border-[#0B3B2C] transition-colors"
             />
           </div>
           <div>
@@ -74,7 +74,7 @@ const AdminLoginPage = () => {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
-                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 pr-12 font-body text-sm focus:outline-none focus:border-[#166534] transition-colors"
+                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 pr-12 font-body text-sm focus:outline-none focus:border-[#0B3B2C] transition-colors"
               />
               <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8]">
                 {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -85,7 +85,7 @@ const AdminLoginPage = () => {
             type="submit"
             data-testid={ADMIN.loginBtn}
             disabled={loading}
-            className="w-full shadow-md bg-[#166534] hover:bg-[#14532d] text-white py-4 rounded-xl font-body font-bold text-sm transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+            className="w-full shadow-md bg-[#0B3B2C] hover:bg-[#07271D] text-white py-4 rounded-xl font-body font-bold text-sm transition-all disabled:opacity-70 flex items-center justify-center gap-2"
           >
             {loading ? <div className="spinner" /> : "Sign In to Admin Panel"}
           </button>

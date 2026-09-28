@@ -12,13 +12,13 @@
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 143 64% 24%; /* Dark Green (#166534) */
+    --primary: 143 64% 24%; /* Dark Green (#0B3B2C) */
     --primary-foreground: 0 0% 100%;
     --secondary: 210 40% 96%;
     --secondary-foreground: 222 47% 11%;
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
-    --accent: 144 65% 20%; /* Vibrant Royal Blue (#14532d) */
+    --accent: 144 65% 20%; /* Vibrant Royal Blue (#07271D) */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
@@ -56,8 +56,8 @@
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #F1F5F9; }
-::-webkit-scrollbar-thumb { background: #166534; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #14532d; }
+::-webkit-scrollbar-thumb { background: #0B3B2C; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #07271D; }
 
 /* Smooth scroll */
 html { scroll-behavior: smooth; }
@@ -156,7 +156,7 @@ button:active:not(:disabled) {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #166534, #166534);
+  background: linear-gradient(135deg, #0B3B2C, #0B3B2C);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -214,13 +214,13 @@ button:active:not(:disabled) {
 
 /* Booking step progress */
 .step-active {
-  background: #166534;
+  background: #0B3B2C;
   color: white;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 .step-completed {
-  background: #22c55e;
+  background: #C5A059;
   color: white;
 }
 
@@ -231,7 +231,7 @@ button:active:not(:disabled) {
 
 /* Service card badge */
 .badge-popular {
-  background: linear-gradient(135deg, #166534, #14532d);
+  background: linear-gradient(135deg, #0B3B2C, #07271D);
   color: white;
   font-size: 11px;
   font-weight: 700;

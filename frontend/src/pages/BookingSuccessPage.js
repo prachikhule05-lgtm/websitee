@@ -18,7 +18,7 @@ const BookingSuccessPage = () => {
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <p className="font-body text-[#1E293B]">Booking details not found.</p>
-            <Link to="/booking" className="font-body text-[#166534] hover:underline mt-2 block">Make a new booking</Link>
+            <Link to="/booking" className="font-body text-[#0B3B2C] hover:underline mt-2 block">Make a new booking</Link>
           </div>
         </div>
         <Footer />
@@ -31,13 +31,13 @@ const BookingSuccessPage = () => {
   return (
     <>
       <Header />
-      <main data-testid={SUCCESS.page} className="min-h-[70vh] bg-[#F8FAFC] pb-16 md:pb-0">
+      <main data-testid={SUCCESS.page} className="min-h-[70vh] bg-[#F8FAF9] pb-16 md:pb-0">
         {/* Hero */}
-        <div className="relative pt-32 pb-16 border-b border-gray-100 overflow-hidden bg-[#F8FAFC]">
+        <div className="relative pt-32 pb-16 border-b border-gray-100 overflow-hidden bg-[#F8FAF9]">
           <div className="absolute inset-0">
             <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1600&q=85" alt="Clean modern home" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-white/90" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAF9] to-transparent" />
           </div>
           <div className="relative z-10 max-w-xl mx-auto px-4 text-center">
             <motion.div
@@ -46,7 +46,7 @@ const BookingSuccessPage = () => {
               transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
               className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
             >
-              <CheckCircle className="w-12 h-12 text-[#166534]" />
+              <CheckCircle className="w-12 h-12 text-[#0B3B2C]" />
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -60,7 +60,7 @@ const BookingSuccessPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="font-body text-slate-600 text-base"
+              className="font-body text-[#64748B] text-base"
             >
               Our team will reach out to confirm your appointment.
             </motion.p>
@@ -78,16 +78,16 @@ const BookingSuccessPage = () => {
             {/* Booking ID */}
             <div className="text-center mb-6 pb-6 border-b border-gray-100">
               <p className="font-body text-xs text-[#94A3B8] uppercase tracking-widest mb-1">Booking ID</p>
-              <p data-testid={SUCCESS.bookingId} className="font-heading text-3xl font-extrabold text-[#166534]">{booking.bookingId}</p>
+              <p data-testid={SUCCESS.bookingId} className="font-heading text-3xl font-extrabold text-[#0B3B2C]">{booking.bookingId}</p>
               <p className="font-body text-xs text-[#94A3B8] mt-1">Save this for your reference</p>
             </div>
 
             {/* Details grid */}
             <div className="space-y-3">
               {[
-                { icon: <Package className="w-4 h-4" />, label: "Service", value: booking.service, color: "text-[#166534] bg-green-50" },
-                { icon: <Calendar className="w-4 h-4" />, label: "Date & Time", value: `${booking.date ? new Date(booking.date).toLocaleDateString("en-IN", { weekday: "short", month: "long", day: "numeric" }) : booking.date} at ${booking.time}`, color: "text-[#166534] bg-green-50" },
-                { icon: <Phone className="w-4 h-4" />, label: "Contact", value: booking.customerName ? `${booking.customerName} · ${booking.mobile}` : booking.mobile, color: "text-[#22c55e] bg-green-50" },
+                { icon: <Package className="w-4 h-4" />, label: "Service", value: booking.service, color: "text-[#0B3B2C] bg-green-50" },
+                { icon: <Calendar className="w-4 h-4" />, label: "Date & Time", value: `${booking.date ? new Date(booking.date).toLocaleDateString("en-IN", { weekday: "short", month: "long", day: "numeric" }) : booking.date} at ${booking.time}`, color: "text-[#0B3B2C] bg-green-50" },
+                { icon: <Phone className="w-4 h-4" />, label: "Contact", value: booking.customerName ? `${booking.customerName} · ${booking.mobile}` : booking.mobile, color: "text-[#C5A059] bg-green-50" },
                 { icon: <MapPin className="w-4 h-4" />, label: "Address", value: booking.address || `${booking.houseNo}, ${booking.street}, ${booking.area}, ${booking.city}`, color: "text-purple-600 bg-purple-50" },
               ].map(item => (
                 <div key={item.label} className="flex items-start gap-3 p-3 rounded-xl bg-gray-50">
@@ -107,9 +107,9 @@ const BookingSuccessPage = () => {
               <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
                 <div>
                   <p className="font-body text-xs text-[#94A3B8]">Expected Total</p>
-                  <p className="font-heading font-extrabold text-xl text-[#166534]">₹{booking.grandTotal?.toLocaleString("en-IN")}</p>
+                  <p className="font-heading font-extrabold text-xl text-[#0B3B2C]">₹{booking.grandTotal?.toLocaleString("en-IN")}</p>
                 </div>
-                <div className="bg-green-50 text-[#22c55e] px-4 py-2 rounded-full font-body font-bold text-sm">
+                <div className="bg-green-50 text-[#C5A059] px-4 py-2 rounded-full font-body font-bold text-sm">
                   Pay After Service
                 </div>
               </div>
@@ -136,14 +136,14 @@ const BookingSuccessPage = () => {
             <a
               href={PHONE_URL}
               data-testid={SUCCESS.callBtn}
-              className="bg-[#166534] hover:bg-[#14532d] text-white py-4 rounded-2xl font-body font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md"
+              className="bg-[#0B3B2C] hover:bg-[#07271D] text-white py-4 rounded-2xl font-body font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md"
             >
               <Phone className="w-5 h-5" /> Call Royal Cleaning Services
             </a>
             <Link
               to="/"
               data-testid={SUCCESS.homeBtn}
-              className="bg-white border-2 border-gray-200 hover:border-[#166534] text-[#0F172A] py-4 rounded-2xl font-body font-bold text-sm flex items-center justify-center gap-2 transition-all"
+              className="bg-white border-2 border-gray-200 hover:border-[#0B3B2C] text-[#0F172A] py-4 rounded-2xl font-body font-bold text-sm flex items-center justify-center gap-2 transition-all"
             >
               <Home className="w-4 h-4" /> Back to Home
             </Link>

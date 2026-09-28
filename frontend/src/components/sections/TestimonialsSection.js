@@ -71,7 +71,7 @@ const ReviewForm = ({ onSubmitted }) => {
         <label className="font-body text-xs font-semibold text-[#94A3B8] uppercase tracking-widest block mb-2">Your Rating</label>
         <div className="flex items-center gap-3">
           <StarPicker value={form.rating} onChange={v => set("rating", v)} />
-          <span className={`font-heading font-bold text-base transition-colors ${form.rating >= 4 ? "text-[#10B981]" : form.rating >= 3 ? "text-[#22c55e]" : "text-red-400"}`}>
+          <span className={`font-heading font-bold text-base transition-colors ${form.rating >= 4 ? "text-[#10B981]" : form.rating >= 3 ? "text-[#C5A059]" : "text-red-400"}`}>
             {STAR_LABELS[form.rating]}
           </span>
         </div>
@@ -86,7 +86,7 @@ const ReviewForm = ({ onSubmitted }) => {
             value={form.customerName}
             onChange={e => set("customerName", e.target.value)}
             placeholder="e.g. Priya Sharma"
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 font-body text-sm text-[#0F172A] bg-[#F8FAFC] focus:outline-none focus:border-[#2563EB] focus:bg-white transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 font-body text-sm text-[#0F172A] bg-[#F8FAF9] focus:outline-none focus:border-[#2563EB] focus:bg-white transition-all"
             data-testid="review-name-input"
           />
         </div>
@@ -95,7 +95,7 @@ const ReviewForm = ({ onSubmitted }) => {
           <select
             value={form.service}
             onChange={e => set("service", e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 font-body text-sm text-[#0F172A] bg-[#F8FAFC] focus:outline-none focus:border-[#2563EB] focus:bg-white transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 font-body text-sm text-[#0F172A] bg-[#F8FAF9] focus:outline-none focus:border-[#2563EB] focus:bg-white transition-all"
             data-testid="review-service-select"
           >
             <option value="">Select a service</option>
@@ -114,7 +114,7 @@ const ReviewForm = ({ onSubmitted }) => {
           onChange={e => set("text", e.target.value)}
           rows={3}
           placeholder="Tell us about your experience with our cleaning team..."
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 font-body text-sm text-[#0F172A] bg-[#F8FAFC] focus:outline-none focus:border-[#2563EB] focus:bg-white transition-all resize-none"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 font-body text-sm text-[#0F172A] bg-[#F8FAF9] focus:outline-none focus:border-[#2563EB] focus:bg-white transition-all resize-none"
           data-testid="review-text-input"
         />
         <div className={`text-right text-xs mt-1 font-body transition-colors ${form.text.length < 10 ? "text-[#94A3B8]" : "text-[#10B981]"}`}>
@@ -126,7 +126,7 @@ const ReviewForm = ({ onSubmitted }) => {
         type="submit"
         disabled={loading}
         data-testid="review-submit-btn"
-        className="w-full sm:w-auto bg-[#22c55e] hover:bg-[#D97706] text-white px-8 py-3.5 rounded-full font-body font-bold text-sm transition-all disabled:opacity-60 active:scale-95 flex items-center justify-center gap-2"
+        className="w-full sm:w-auto bg-[#C5A059] hover:bg-[#D97706] text-white px-8 py-3.5 rounded-full font-body font-bold text-sm transition-all disabled:opacity-60 active:scale-95 flex items-center justify-center gap-2"
       >
         {loading ? (
           <><div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" /> Submitting...</>
@@ -206,7 +206,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-10 bg-gradient-to-b from-[#F8FAFC] to-white" id="reviews">
+    <section className="py-10 bg-gradient-to-b from-[#F8FAF9] to-white" id="reviews">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -215,9 +215,9 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6 }}
           className="mx-auto mb-6 max-w-3xl text-center"
         >
-          <p className="font-body text-[14px] font-semibold uppercase tracking-[0.18em] text-[#166534]">CUSTOMER TESTIMONIALS</p>
+          <p className="font-body text-[14px] font-semibold uppercase tracking-[0.18em] text-[#0B3B2C]">CUSTOMER TESTIMONIALS</p>
           <h2 className="mt-4 font-heading text-[30px] sm:text-[38px] lg:text-[46px] font-extrabold leading-[1.15] text-[#0F172A]">What Our Customers Say</h2>
-          <p className="mx-auto mt-5 max-w-[700px] text-[16px] sm:text-[18px] leading-[1.6] text-slate-600">Thousands of homeowners and businesses across Pune trust Royal Cleaning Services for reliable, professional, and high-quality cleaning. Here's what our customers say about us.</p>
+          <p className="mx-auto mt-5 max-w-[700px] text-[16px] sm:text-[18px] leading-[1.6] text-[#64748B]">Thousands of homeowners and businesses across Pune trust Royal Cleaning Services for reliable, professional, and high-quality cleaning. Here's what our customers say about us.</p>
         </motion.div>
 
         {/* Carousel */}
@@ -277,7 +277,7 @@ const TestimonialsSection = () => {
                 whileTap={{ scale: 0.97 }}
                 onClick={() => setShowForm(true)}
                 data-testid="write-review-btn"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#166534] hover:bg-[#14532d] text-white font-body text-sm font-semibold transition-all shadow-md"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0B3B2C] hover:bg-[#07271D] text-white font-body text-sm font-semibold transition-all shadow-md"
               >
                 <PenLine className="w-4 h-4" /> Write a Review
               </motion.button>

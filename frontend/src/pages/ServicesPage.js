@@ -585,12 +585,12 @@ const ServicesPage = () => {
     <div className="bg-slate-50/50 min-h-[70vh] flex flex-col font-sans antialiased">
       <Header />
       <main className="flex-1 pb-12">
-        <div className="relative pt-24 pb-12 border-b border-gray-100 overflow-hidden bg-[#F8FAFC]">
+        <div className="relative pt-24 pb-12 border-b border-gray-100 overflow-hidden bg-[#F8FAF9]">
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="font-body text-sm font-semibold text-[#166534] uppercase tracking-widest mb-2"
+              className="font-body text-sm font-semibold text-[#0B3B2C] uppercase tracking-widest mb-2"
             >
               What We Offer
             </motion.p>
@@ -604,7 +604,7 @@ const ServicesPage = () => {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.2 } }}
-              className="font-body text-base text-slate-600 max-w-xl mx-auto mb-6"
+              className="font-body text-base text-[#64748B] max-w-xl mx-auto mb-6"
             >
               Professional cleaning for homes, offices, and commercial spaces across Pune.
             </motion.p>
@@ -622,12 +622,12 @@ const ServicesPage = () => {
               placeholder="Search for a service..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-[12px] pl-12 pr-10 py-3 text-[16px] text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#166534] focus:ring-1 focus:ring-[#166534] shadow-sm transition-all"
+              className="w-full bg-white border border-slate-200 rounded-[12px] pl-12 pr-10 py-3 text-[16px] text-[#1E293B] placeholder-slate-400 focus:outline-none focus:border-[#0B3B2C] focus:ring-1 focus:ring-[#0B3B2C] shadow-sm transition-all"
             />
             {search && (
               <button 
                 onClick={() => setSearch("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#64748B]"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -642,8 +642,8 @@ const ServicesPage = () => {
                 onClick={() => setCategory(cat)}
                 className={`px-5 py-2 rounded-full font-body text-sm font-semibold transition-all border ${
                   category === cat
-                    ? "bg-[#166534] text-white border-[#166534] shadow-md"
-                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#166534] hover:text-[#166534]"
+                    ? "bg-[#0B3B2C] text-white border-[#0B3B2C] shadow-md"
+                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#0B3B2C] hover:text-[#0B3B2C]"
                 }`}
               >
                 {cat}
@@ -652,7 +652,7 @@ const ServicesPage = () => {
             {(search || category !== "All") && (
               <button
                 onClick={() => { setSearch(""); setCategory("All"); }}
-                className="flex items-center gap-1 px-4 py-2 rounded-full font-body text-xs text-[#166534] border border-slate-200 hover:bg-slate-50 transition-all"
+                className="flex items-center gap-1 px-4 py-2 rounded-full font-body text-xs text-[#0B3B2C] border border-slate-200 hover:bg-slate-50 transition-all"
               >
                 <X className="w-3 h-3" /> Clear filters
               </button>
@@ -681,7 +681,7 @@ const ServicesPage = () => {
               <p className="font-body text-sm text-[#1E293B]">Try a different search or category</p>
               <button
                 onClick={() => { setSearch(""); setCategory("All"); }}
-                className="mt-4 bg-[#166534] text-white px-6 py-2.5 rounded-full font-body font-semibold text-sm hover:bg-[#14532d] transition-all"
+                className="mt-4 bg-[#0B3B2C] text-white px-6 py-2.5 rounded-full font-body font-semibold text-sm hover:bg-[#07271D] transition-all"
               >
                 View All Services
               </button>
@@ -699,19 +699,19 @@ const ServicesPage = () => {
               <h3 className="font-heading text-2xl font-bold text-[#0F172A] mb-2">
                 Can't find what you're looking for?
               </h3>
-              <p className="font-body text-slate-600 text-sm mb-5">
+              <p className="font-body text-[#64748B] text-sm mb-5">
                 Contact us for a custom cleaning quote tailored to your needs.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   to="/booking"
-                  className="bg-[#166534] hover:bg-[#14532d] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center shadow-md"
+                  className="bg-[#0B3B2C] hover:bg-[#07271D] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center shadow-md"
                 >
                   Book Any Service <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   to="/contact"
-                  className="bg-white border border-slate-200 text-slate-800 px-8 py-4 rounded-full font-body font-semibold text-sm hover:bg-slate-50 transition-all justify-center inline-flex items-center gap-2"
+                  className="bg-white border border-slate-200 text-[#1E293B] px-8 py-4 rounded-full font-body font-semibold text-sm hover:bg-slate-50 transition-all justify-center inline-flex items-center gap-2"
                 >
                   Get Custom Quote
                 </Link>

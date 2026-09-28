@@ -15,7 +15,7 @@ const FAQSection = () => {
           viewport={{ once: true }}
           className="text-center mb-6"
         >
-          <p className="font-body text-sm font-semibold text-[#166534] uppercase tracking-widest mb-2">Got Questions?</p>
+          <p className="font-body text-sm font-semibold text-[#0B3B2C] uppercase tracking-widest mb-2">Got Questions?</p>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[#0F172A]">Frequently Asked Questions</h2>
           <p className="font-body text-base text-[#1E293B] mt-3">Everything you need to know about our cleaning services.</p>
         </motion.div>
@@ -28,7 +28,7 @@ const FAQSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className={`border rounded-2xl overflow-hidden transition-all ${open === i ? "border-[#166534] shadow-md/10 shadow-lg" : "border-gray-100 shadow-sm"}`}
+              className={`border rounded-2xl overflow-hidden transition-all ${open === i ? "border-[#0B3B2C] shadow-md/10 shadow-lg" : "border-gray-100 shadow-sm"}`}
             >
               <button
                 className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-gray-50 transition-colors"
@@ -36,17 +36,17 @@ const FAQSection = () => {
                 aria-expanded={open === i}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${open === i ? "bg-[#166534] text-white" : "bg-green-50 text-[#166534]"}`}>
+                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${open === i ? "bg-[#0B3B2C] text-white" : "bg-green-50 text-[#0B3B2C]"}`}>
                     <HelpCircle className="w-4 h-4" />
                   </div>
-                  <span className={`font-heading font-semibold text-sm sm:text-base ${open === i ? "text-[#166534]" : "text-[#0F172A]"}`}>
+                  <span className={`font-heading font-semibold text-sm sm:text-base ${open === i ? "text-[#0B3B2C]" : "text-[#0F172A]"}`}>
                     {item.q}
                   </span>
                 </div>
                 <motion.div
                   animate={{ rotate: open === i ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
-                  className={`w-5 h-5 flex-shrink-0 ${open === i ? "text-[#166534]" : "text-[#94A3B8]"}`}
+                  className={`w-5 h-5 flex-shrink-0 ${open === i ? "text-[#0B3B2C]" : "text-[#94A3B8]"}`}
                 >
                   <ChevronDown className="w-5 h-5" />
                 </motion.div>

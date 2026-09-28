@@ -32,7 +32,7 @@ const LogoCard = ({ client }) => {
 
         {(!showImage || hasBrokenLogo || !hasLoaded) && (
           <div className="flex h-full w-full items-center justify-center text-center">
-            <span className="text-sm font-semibold uppercase tracking-[0.12em] text-slate-600">
+            <span className="text-sm font-semibold uppercase tracking-[0.12em] text-[#64748B]">
               {client.name}
             </span>
           </div>
