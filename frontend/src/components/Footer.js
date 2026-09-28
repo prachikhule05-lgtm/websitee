@@ -39,7 +39,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="font-heading text-2xl font-bold text-white">Ready for a Spotless Home?</h3>
-            <p className="text-blue-100 mt-1 font-body text-sm">Book now & pay after service. No advance needed.</p>
+            <p className="text-green-100 mt-1 font-body text-sm">Book now & pay after service. No advance needed.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <Link

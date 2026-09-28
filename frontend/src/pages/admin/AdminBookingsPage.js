@@ -165,7 +165,7 @@ const AdminBookingsPage = () => {
         {/* ==================== 2. USER MESSAGES SECTION ==================== */}
         <div className="space-y-4 pt-4 border-t border-gray-100">
           <h2 className="font-heading text-xl font-bold text-[#0F172A] flex items-center gap-2">
-            <MessageSquare className="w-5 h-5 text-[#F59E0B]" />
+            <MessageSquare className="w-5 h-5 text-[#22c55e]" />
             User Messages & Inquiries (Leads)
           </h2>
 
@@ -181,7 +181,7 @@ const AdminBookingsPage = () => {
                 </thead>
                 <tbody>
                   {loadingLeads ? (
-                    <tr><td colSpan={6} className="px-4 py-12 text-center"><div className="spinner mx-auto !w-6 !h-6" style={{ borderColor: "#F59E0B44", borderTopColor: "#F59E0B", borderWidth: "2px" }} /></td></tr>
+                    <tr><td colSpan={6} className="px-4 py-12 text-center"><div className="spinner mx-auto !w-6 !h-6" style={{ borderColor: "#22c55e44", borderTopColor: "#22c55e", borderWidth: "2px" }} /></td></tr>
                   ) : leads.length === 0 ? (
                     <tr><td colSpan={6} className="px-4 py-12 text-center font-body text-sm text-[#94A3B8]">No user messages found</td></tr>
                   ) : leads.map((lead, idx) => (
@@ -196,7 +196,7 @@ const AdminBookingsPage = () => {
                       </td>
                       <td className="px-4 py-3 font-body text-sm text-[#64748B] max-w-xs truncate">{lead.message}</td>
                       <td className="px-4 py-3">
-                        <button onClick={() => setSelectedLead(lead)} className="p-1.5 hover:bg-amber-50 rounded-lg text-[#F59E0B] transition-colors" title="View Full Message">
+                        <button onClick={() => setSelectedLead(lead)} className="p-1.5 hover:bg-amber-50 rounded-lg text-[#22c55e] transition-colors" title="View Full Message">
                           <Eye className="w-4 h-4" />
                         </button>
                       </td>
@@ -258,7 +258,7 @@ const AdminBookingsPage = () => {
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl" onClick={e => e.stopPropagation()}>
               <div className="flex items-center justify-between mb-5">
                 <h3 className="font-heading font-bold text-[#0F172A] text-lg flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-[#F59E0B]" /> Message Details
+                  <Mail className="w-5 h-5 text-[#22c55e]" /> Message Details
                 </h3>
                 <button onClick={() => setSelectedLead(null)} className="text-[#94A3B8] hover:text-[#0F172A]"><X className="w-5 h-5" /></button>
               </div>

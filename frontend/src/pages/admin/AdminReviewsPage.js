@@ -7,7 +7,7 @@ import api, { formatApiError } from "@/utils/api";
 import { ADMIN } from "@/constants/testIds";
 
 const STATUS_CONFIG = {
-  pending: { label: "Pending", bg: "bg-green-50", text: "text-amber-600", border: "border-amber-200" },
+  pending: { label: "Pending", bg: "bg-green-50", text: "text-emerald-600", border: "border-amber-200" },
   approved: { label: "Approved", bg: "bg-green-50", text: "text-[#22c55e]", border: "border-green-200" },
   rejected: { label: "Rejected", bg: "bg-red-50", text: "text-red-500", border: "border-red-200" },
 };
@@ -60,7 +60,7 @@ const ReviewCard = ({ review, onUpdate, onDelete }) => {
           <div className="flex items-center gap-2 flex-wrap">
             {review.status !== "approved" && (<button data-testid="approve-review-btn" onClick={() => onUpdate(review.id, "approved")} className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 hover:bg-green-100 text-[#22c55e] rounded-xl font-body text-xs font-bold transition-all border border-green-200"><ThumbsUp className="w-3.5 h-3.5" /> Approve</button>)}
             {review.status !== "rejected" && (<button data-testid="reject-review-btn" onClick={() => onUpdate(review.id, "rejected")} className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-500 rounded-xl font-body text-xs font-bold transition-all border border-red-200"><ThumbsDown className="w-3.5 h-3.5" /> Reject</button>)}
-            {review.status !== "pending" && (<button data-testid="reset-review-btn" onClick={() => onUpdate(review.id, "pending")} className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 hover:bg-amber-100 text-amber-600 rounded-xl font-body text-xs font-bold transition-all border border-amber-200"><RotateCcw className="w-3.5 h-3.5" /> Reset</button>)}
+            {review.status !== "pending" && (<button data-testid="reset-review-btn" onClick={() => onUpdate(review.id, "pending")} className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 hover:bg-emerald-100 text-emerald-600 rounded-xl font-body text-xs font-bold transition-all border border-amber-200"><RotateCcw className="w-3.5 h-3.5" /> Reset</button>)}
             <button data-testid="delete-review-btn" onClick={() => onDelete(review)} className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 hover:bg-red-50 text-[#94A3B8] hover:text-red-500 rounded-xl font-body text-xs font-bold transition-all border border-gray-200 hover:border-red-200 ml-auto"><Trash2 className="w-3.5 h-3.5" /> Delete</button>
           </div>
         </div>
@@ -152,7 +152,7 @@ const AdminReviewsPage = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
               { label: "Total", value: counts.all, color: "text-[#166534]", bg: "bg-green-50" },
-              { label: "Pending", value: counts.pending, color: "text-amber-600", bg: "bg-green-50" },
+              { label: "Pending", value: counts.pending, color: "text-emerald-600", bg: "bg-green-50" },
               { label: "Approved", value: counts.approved, color: "text-[#22c55e]", bg: "bg-green-50" },
               { label: "Rejected", value: counts.rejected, color: "text-red-500", bg: "bg-red-50" },
             ].map((stat) => (
@@ -171,7 +171,7 @@ const AdminReviewsPage = () => {
         </div>
         <div className="flex gap-2 flex-wrap">{TABS.map((tab) => (<button key={tab.key} data-testid={`review-filter-${tab.key}`} onClick={() => setFilter(tab.key)} className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-body text-sm font-semibold capitalize transition-all ${filter === tab.key ? "bg-[#166534] text-white shadow-sm" : "bg-white border border-gray-200 text-[#1E293B] hover:border-[#166534] hover:text-[#166534]"}`}><span>{tab.icon}</span>{tab.label}<span className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${filter === tab.key ? "bg-white/20 text-white" : "bg-gray-100 text-[#94A3B8]"}`}>{counts[tab.key]}</span></button>))}</div>
         <div data-testid={ADMIN.reviewsTable} className="space-y-3">{loading ? (<div className="bg-white rounded-2xl p-10 text-center font-body text-sm text-[#94A3B8]">Loading reviews...</div>) : filtered.length === 0 ? (<div className="bg-white rounded-2xl p-10 text-center"><MessageSquare className="w-10 h-10 text-gray-200 mx-auto mb-3" /><p className="font-body text-sm text-[#94A3B8]">No {filter !== "all" ? filter : ""} reviews found</p></div>) : (<AnimatePresence mode="popLayout">{filtered.map((review) => (<ReviewCard key={review.id} review={review} onUpdate={handleUpdate} onDelete={setDeleteTarget} />))}</AnimatePresence>)}</div>
-        {counts.pending > 0 && filter !== "pending" && (<div className="bg-green-50 border border-amber-200 rounded-2xl p-4 flex items-center justify-between gap-3"><div className="flex items-center gap-2"><div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" /><span className="font-body text-sm font-semibold text-amber-700">{counts.pending} review{counts.pending > 1 ? "s" : ""} awaiting moderation</span></div><button onClick={() => setFilter("pending")} className="font-body text-xs font-bold text-amber-700 hover:underline">Review now →</button></div>)}
+        {counts.pending > 0 && filter !== "pending" && (<div className="bg-green-50 border border-amber-200 rounded-2xl p-4 flex items-center justify-between gap-3"><div className="flex items-center gap-2"><div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" /><span className="font-body text-sm font-semibold text-emerald-700">{counts.pending} review{counts.pending > 1 ? "s" : ""} awaiting moderation</span></div><button onClick={() => setFilter("pending")} className="font-body text-xs font-bold text-emerald-700 hover:underline">Review now →</button></div>)}
       </div>
     </AdminLayout>
   );

@@ -312,7 +312,7 @@ const BookingPage = () => {
 
                     <div className="mb-6 p-5 bg-[#F8FAFC] rounded-2xl border border-gray-100">
                       <div className="flex items-center gap-2 mb-3">
-                        <div className="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center">
+                        <div className="w-8 h-8 bg-green-100 rounded-xl flex items-center justify-center">
                           <Sofa className="w-4 h-4 text-[#166534]" />
                         </div>
                         <h3 className="font-heading font-bold text-base text-[#0F172A]">Do you have a sofa or furnished flat?</h3>
@@ -372,7 +372,7 @@ const BookingPage = () => {
                     <div className="p-5 bg-[#F8FAFC] rounded-2xl border border-gray-100 mb-4">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 bg-amber-100 rounded-xl flex items-center justify-center">
+                          <div className="w-8 h-8 bg-emerald-100 rounded-xl flex items-center justify-center">
                             <User className="w-4 h-4 text-[#166534]" />
                           </div>
                           <div>
@@ -488,18 +488,18 @@ const BookingPage = () => {
                         {filteredAreas.map(area => (
                           <button
                             key={area}
-                            className={`w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-b border-gray-50 last:border-0 ${booking.location === area ? "bg-slate-50 text-[#0B2545] font-bold" : "text-[#0F172A]"}`}
+                            className={`w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-b border-gray-50 last:border-0 ${booking.location === area ? "bg-slate-50 text-[#166534] font-bold" : "text-[#0F172A]"}`}
                             onClick={() => { setBooking(b => ({ ...b, location: area })); setAreaSearch(area); setShowAreaList(false); }}
                           >
-                            <MapPin className={`w-3.5 h-3.5 inline mr-2 ${booking.location === area ? "text-[#F59E0B]" : "text-[#94A3B8]"}`} />{area}
+                            <MapPin className={`w-3.5 h-3.5 inline mr-2 ${booking.location === area ? "text-[#22c55e]" : "text-[#94A3B8]"}`} />{area}
                           </button>
                         ))}
                         {areaSearch && !filteredAreas.find(a => a.toLowerCase() === areaSearch.toLowerCase()) && (
                           <button
-                            className="w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-t border-gray-100 text-[#0B2545] font-semibold"
+                            className="w-full text-left px-4 py-3 font-body text-sm hover:bg-slate-50 transition-colors border-t border-gray-100 text-[#166534] font-semibold"
                             onClick={() => { setBooking(b => ({ ...b, location: areaSearch })); setShowAreaList(false); }}
                           >
-                            <MapPin className="w-3.5 h-3.5 inline mr-2 text-[#F59E0B]" />
+                            <MapPin className="w-3.5 h-3.5 inline mr-2 text-[#22c55e]" />
                             Use "{areaSearch}, Pune"
                           </button>
                         )}

@@ -77,10 +77,10 @@ const Header = () => {
               />
             </div>
             <div className="leading-tight ml-1">
-              <div className="font-heading font-extrabold text-base leading-none text-[#0B2545]">
+              <div className="font-heading font-extrabold text-base leading-none text-[#166534]">
                 Royal Cleaning
               </div>
-              <div className="font-body text-[10px] tracking-widest uppercase leading-none mt-1 text-[#0B2545] font-bold">
+              <div className="font-body text-[10px] tracking-widest uppercase leading-none mt-1 text-[#166534] font-bold">
                 Services
               </div>
             </div>
@@ -95,8 +95,8 @@ const Header = () => {
                 className={`px-3.5 py-2 rounded-lg font-body text-sm font-medium transition-all duration-200
                   ${
                     isActive(link)
-                      ? "text-[#0B2545] bg-green-50 font-semibold"
-                      : "text-[#1E293B] hover:text-[#0B2545] hover:bg-green-50/60"
+                      ? "text-[#166534] bg-green-50 font-semibold"
+                      : "text-[#1E293B] hover:text-[#166534] hover:bg-green-50/60"
                   }`}
               >
                 {link.label}
@@ -118,7 +118,7 @@ const Header = () => {
             <a
               href={PHONE_URL}
               data-testid={HEADER.callBtn}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg font-body text-sm font-semibold text-[#0B2545] bg-green-50/80 hover:bg-green-100 border border-green-200 transition-all"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg font-body text-sm font-semibold text-[#166534] bg-green-50/80 hover:bg-green-100 border border-green-200 transition-all"
             >
               <Phone className="w-4 h-4" />
               <span className="hidden xl:block">{PHONE_NUMBER}</span>
@@ -135,7 +135,7 @@ const Header = () => {
           {/* Mobile menu toggle */}
           <button
             data-testid={HEADER.mobileMenuToggle}
-            className="lg:hidden p-2 rounded-lg text-[#0B2545] hover:bg-gray-100 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-[#166534] hover:bg-gray-100 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -163,8 +163,8 @@ const Header = () => {
                   className={`block w-full text-left px-4 py-3 rounded-xl font-body font-medium text-sm transition-all
                     ${
                       isActive(link)
-                        ? "text-[#0B2545] bg-green-50 font-semibold"
-                        : "text-[#1E293B] hover:text-[#0B2545] hover:bg-green-50"
+                        ? "text-[#166534] bg-green-50 font-semibold"
+                        : "text-[#1E293B] hover:text-[#166534] hover:bg-green-50"
                     }`}
                 >
                   {link.label}
@@ -173,7 +173,7 @@ const Header = () => {
               <div className="pt-3 flex flex-col gap-2">
                 <a
                   href={PHONE_URL}
-                  className="flex items-center gap-2 px-4 py-3 rounded-xl bg-green-50 text-[#0B2545] font-semibold text-sm"
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl bg-green-50 text-[#166534] font-semibold text-sm"
                 >
                   <Phone className="w-4 h-4" /> {PHONE_NUMBER}
                 </a>

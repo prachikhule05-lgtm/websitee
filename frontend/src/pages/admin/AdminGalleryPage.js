@@ -56,7 +56,7 @@ const AdminGalleryPage = () => {
         {/* Upload Container Area */}
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center border-dashed border-2 border-slate-200">
           <label className="cursor-pointer flex flex-col items-center gap-2 text-center p-4">
-            <div className="p-3 bg-blue-50 text-blue-600 rounded-full">
+            <div className="p-3 bg-green-50 text-green-600 rounded-full">
               <Upload className="w-6 h-6" />
             </div>
             <span className="font-body text-sm font-semibold text-slate-700">
@@ -70,7 +70,7 @@ const AdminGalleryPage = () => {
         {/* Existing Grid Gallery Display */}
         <div>
           <h3 className="font-heading font-bold text-slate-800 mb-4 flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-blue-500" /> Current Live Gallery ({images.length} items)
+            <ImageIcon className="w-5 h-5 text-green-500" /> Current Live Gallery ({images.length} items)
           </h3>
 
           {loading ? (

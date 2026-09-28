@@ -369,7 +369,7 @@ const DetailsModal = ({ service, onClose, onAdd, isAdded }) => {
           <div className="p-4 space-y-4 pb-24 overflow-y-auto custom-scrollbar">
             <div className="grid grid-cols-2 gap-2 text-xs font-bold text-gray-600 bg-gray-50 p-2.5 rounded-xl text-center">
               <div className="flex items-center justify-center gap-1">
-                <span className="text-amber-500 text-sm">★</span>
+                <span className="text-emerald-500 text-sm">★</span>
                 <span>{service.rating || "4.7"} Rating</span>
               </div>
               <div className="border-l border-gray-200 flex items-center justify-center">
@@ -378,8 +378,8 @@ const DetailsModal = ({ service, onClose, onAdd, isAdded }) => {
             </div>
 
             <div>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider text-amber-600 mb-1.5 flex items-center gap-1">
-                <Check className="w-3.5 h-3.5 text-amber-500" /> Includes
+              <h4 className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 mb-1.5 flex items-center gap-1">
+                <Check className="w-3.5 h-3.5 text-emerald-500" /> Includes
               </h4>
               <ul className="space-y-1.5 pl-0.5">
                 {includesList.map((item, idx) => (
@@ -457,10 +457,10 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAdd, isAdded }
                 {service.name}
               </h3>
               <div className="flex items-center gap-1.5 mt-1">
-                <span className="text-amber-500 text-xs">★</span>
+                <span className="text-emerald-500 text-xs">★</span>
                 <span className="text-xs font-bold text-gray-700">{service.rating || "4.7"}</span>
                 <span className="text-gray-300 text-[10px]">•</span>
-                <span className="text-[11px] text-blue-600 font-semibold bg-blue-50/70 px-1.5 py-0.5 rounded">
+                <span className="text-[11px] text-green-600 font-semibold bg-green-50/70 px-1.5 py-0.5 rounded">
                   {service.duration || "4-8 Hours"}
                 </span>
               </div>
@@ -483,7 +483,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAdd, isAdded }
         <ul className="space-y-1">
           {standardIncludes.slice(0, 3).map((item, idx) => (
             <li key={idx} className="flex items-start gap-2 text-xs text-gray-600 leading-normal">
-              <Check className="w-3.5 h-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
+              <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
               <span className="text-gray-700 font-medium truncate">{item}</span>
             </li>
           ))}
@@ -494,7 +494,7 @@ const HorizontalServiceCard = ({ service, index, onOpenDetails, onAdd, isAdded }
         <button
           type="button"
           onClick={() => onOpenDetails(service)}
-          className="text-xs font-bold text-blue-600 hover:underline cursor-pointer"
+          className="text-xs font-bold text-green-600 hover:underline cursor-pointer"
         >
           View details
         </button>
@@ -590,7 +590,7 @@ const ServicesPage = () => {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="font-body text-sm font-semibold text-[#0B2545] uppercase tracking-widest mb-2"
+              className="font-body text-sm font-semibold text-[#166534] uppercase tracking-widest mb-2"
             >
               What We Offer
             </motion.p>
@@ -622,7 +622,7 @@ const ServicesPage = () => {
               placeholder="Search for a service..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-[12px] pl-12 pr-10 py-3 text-[16px] text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0B2545] focus:ring-1 focus:ring-[#0B2545] shadow-sm transition-all"
+              className="w-full bg-white border border-slate-200 rounded-[12px] pl-12 pr-10 py-3 text-[16px] text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#166534] focus:ring-1 focus:ring-[#166534] shadow-sm transition-all"
             />
             {search && (
               <button 
@@ -642,8 +642,8 @@ const ServicesPage = () => {
                 onClick={() => setCategory(cat)}
                 className={`px-5 py-2 rounded-full font-body text-sm font-semibold transition-all border ${
                   category === cat
-                    ? "bg-[#0B2545] text-white border-[#0B2545] shadow-md"
-                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#0B2545] hover:text-[#0B2545]"
+                    ? "bg-[#166534] text-white border-[#166534] shadow-md"
+                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#166534] hover:text-[#166534]"
                 }`}
               >
                 {cat}
@@ -652,7 +652,7 @@ const ServicesPage = () => {
             {(search || category !== "All") && (
               <button
                 onClick={() => { setSearch(""); setCategory("All"); }}
-                className="flex items-center gap-1 px-4 py-2 rounded-full font-body text-xs text-[#0B2545] border border-slate-200 hover:bg-slate-50 transition-all"
+                className="flex items-center gap-1 px-4 py-2 rounded-full font-body text-xs text-[#166534] border border-slate-200 hover:bg-slate-50 transition-all"
               >
                 <X className="w-3 h-3" /> Clear filters
               </button>
@@ -681,7 +681,7 @@ const ServicesPage = () => {
               <p className="font-body text-sm text-[#1E293B]">Try a different search or category</p>
               <button
                 onClick={() => { setSearch(""); setCategory("All"); }}
-                className="mt-4 bg-[#0B2545] text-white px-6 py-2.5 rounded-full font-body font-semibold text-sm hover:bg-[#14532d] transition-all"
+                className="mt-4 bg-[#166534] text-white px-6 py-2.5 rounded-full font-body font-semibold text-sm hover:bg-[#14532d] transition-all"
               >
                 View All Services
               </button>
@@ -705,7 +705,7 @@ const ServicesPage = () => {
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   to="/booking"
-                  className="bg-[#0B2545] hover:bg-[#14532d] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center shadow-md"
+                  className="bg-[#166534] hover:bg-[#14532d] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center shadow-md"
                 >
                   Book Any Service <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -732,7 +732,7 @@ const ServicesPage = () => {
           >
             <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-amber-100 text-amber-700 rounded-xl hidden sm:block">
+                <div className="p-2.5 bg-emerald-100 text-emerald-700 rounded-xl hidden sm:block">
                   <ShoppingBag className="w-5 h-5" />
                 </div>
                 <div>
@@ -740,7 +740,7 @@ const ServicesPage = () => {
                     {selectedServices.length} {selectedServices.length === 1 ? 'Service' : 'Services'} Selected
                   </p>
                   <p className="text-xs font-semibold text-slate-500">
-                    Total: <span className="text-amber-600 font-bold">₹{calculateTotal().toLocaleString("en-IN")}</span>
+                    Total: <span className="text-emerald-600 font-bold">₹{calculateTotal().toLocaleString("en-IN")}</span>
                   </p>
                 </div>
               </div>

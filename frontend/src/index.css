@@ -12,13 +12,13 @@
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 212 73% 15%; /* Deep Royal Navy (#0B2545) */
+    --primary: 143 64% 24%; /* Dark Green (#166534) */
     --primary-foreground: 0 0% 100%;
     --secondary: 210 40% 96%;
     --secondary-foreground: 222 47% 11%;
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
-    --accent: 211 72% 26%; /* Vibrant Royal Blue (#134074) */
+    --accent: 144 65% 20%; /* Vibrant Royal Blue (#14532d) */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;

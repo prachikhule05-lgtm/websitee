@@ -40,7 +40,7 @@ const HeroSection = () => {
             >
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-[#F59E0B] text-[#F59E0B]" />
+                  <Star key={i} className="w-3.5 h-3.5 fill-[#22c55e] text-[#22c55e]" />
                 ))}
               </div>
               <span className="font-body text-[13px] sm:text-[14px] font-semibold tracking-wide">
@@ -57,7 +57,7 @@ const HeroSection = () => {
             >
               Premium Cleaning.
               <br />
-              <span className="text-[#0B2545]">
+              <span className="text-[#166534]">
                 Royal Treatment.
               </span>
             </motion.h1>
@@ -68,7 +68,7 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="font-body text-[16px] sm:text-[18px] leading-[1.5] text-slate-600 max-w-[500px] mb-8"
             >
-              Top-rated professionals. Eco-friendly products. <span className="text-[#F59E0B] font-bold">Spotless</span> results.
+              Top-rated professionals. Eco-friendly products. <span className="text-[#22c55e] font-bold">Spotless</span> results.
             </motion.p>
 
             <motion.div
@@ -80,7 +80,7 @@ const HeroSection = () => {
               <Link
                 to="/booking"
                 data-testid={HERO.bookNowBtn}
-                className="group inline-flex h-12 sm:h-14 items-center justify-center rounded-full bg-[#0B2545] px-6 sm:px-8 text-[15px] sm:text-[16px] font-semibold text-white transition-all duration-300 hover:bg-[#134074] shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                className="group inline-flex h-12 sm:h-14 items-center justify-center rounded-full bg-[#166534] px-6 sm:px-8 text-[15px] sm:text-[16px] font-semibold text-white transition-all duration-300 hover:bg-[#14532d] shadow-lg hover:shadow-xl hover:-translate-y-0.5"
               >
                 Book Now
                 <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />

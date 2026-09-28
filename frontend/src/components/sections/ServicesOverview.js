@@ -34,7 +34,7 @@ const ServiceCard = ({ service, index }) => {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-body text-[10px] text-[#94A3B8] uppercase tracking-wide">Starting from</div>
-            <div className="font-heading font-extrabold text-lg text-[#0B2545]">
+            <div className="font-heading font-extrabold text-lg text-[#166534]">
               {isCustom ? "Custom Quote" : `₹${service.startingPrice.toLocaleString("en-IN")}`}
               {service.priceType === "per_seat" && <span className="font-body text-xs text-[#94A3B8] font-normal">/seat</span>}
               {service.priceType === "per_bathroom" && <span className="font-body text-xs text-[#94A3B8] font-normal">/bathroom</span>}
@@ -43,7 +43,7 @@ const ServiceCard = ({ service, index }) => {
           <Link
             to={`/booking?service=${service.slug}`}
             data-testid={SERVICES.bookBtn}
-            className="shadow-md bg-[#F59E0B] hover:bg-[#D97706] text-white px-4 py-2 rounded-xl font-body font-bold text-xs flex items-center gap-1 transition-all"
+            className="shadow-md bg-[#22c55e] hover:bg-[#D97706] text-white px-4 py-2 rounded-xl font-body font-bold text-xs flex items-center gap-1 transition-all"
           >
             Book <ArrowRight className="w-3 h-3" />
           </Link>
@@ -100,7 +100,7 @@ const ServicesOverview = () => {
           className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4"
         >
           <div>
-            <p className="font-body text-sm font-semibold text-[#F59E0B] uppercase tracking-widest mb-2">What We Offer</p>
+            <p className="font-body text-sm font-semibold text-[#22c55e] uppercase tracking-widest mb-2">What We Offer</p>
             <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[#0F172A]">Our Cleaning Services</h2>
             <p className="font-body text-base text-[#1E293B] mt-2">Professional cleaning for every space in Pune</p>
           </div>
@@ -130,7 +130,7 @@ const ServicesOverview = () => {
           className="mt-10 text-center"
         >
           <Link to="/booking"
-            className="inline-flex items-center gap-2 btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-full font-bold font-body text-base transition-all"
+            className="inline-flex items-center gap-2 btn-orange-glow bg-[#22c55e] hover:bg-[#D97706] text-white px-8 py-4 rounded-full font-bold font-body text-base transition-all"
           >
             <Zap className="w-5 h-5" />
             Book Any Service Now
