@@ -7,9 +7,9 @@ import api, { formatApiError } from "@/utils/api";
 import { ADMIN } from "@/constants/testIds";
 
 const statusColors = {
-  pending: "bg-amber-50 text-[#F59E0B]",
-  confirmed: "bg-green-50 text-[#10B981]",
-  completed: "bg-blue-50 text-[#2563EB]",
+  pending: "bg-green-50 text-[#166534]",
+  confirmed: "bg-green-50 text-[#22c55e]",
+  completed: "bg-green-50 text-[#166534]",
   cancelled: "bg-red-50 text-red-500",
 };
 
@@ -60,10 +60,10 @@ const AdminBookingsPage = () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94A3B8]" />
             <input type="text" placeholder="Search by ID, name, service..." value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 font-body text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB]" />
+              className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 font-body text-sm focus:outline-none focus:ring-2 focus:ring-[#166534]" />
           </div>
           <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
-            className="border border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] bg-white">
+            className="border border-gray-200 rounded-xl px-4 py-2.5 font-body text-sm focus:outline-none focus:ring-2 focus:ring-[#166534] bg-white">
             <option value="">All Status</option>
             <option value="pending">Pending</option>
             <option value="confirmed">Confirmed</option>
@@ -87,12 +87,12 @@ const AdminBookingsPage = () => {
               </thead>
               <tbody>
                 {loading ? (
-                  <tr><td colSpan={8} className="px-4 py-12 text-center"><div className="spinner mx-auto !w-6 !h-6" style={{ borderColor: "#2563EB44", borderTopColor: "#2563EB", borderWidth: "2px" }} /></td></tr>
+                  <tr><td colSpan={8} className="px-4 py-12 text-center"><div className="spinner mx-auto !w-6 !h-6" style={{ borderColor: "#16653444", borderTopColor: "#166534", borderWidth: "2px" }} /></td></tr>
                 ) : bookings.length === 0 ? (
                   <tr><td colSpan={8} className="px-4 py-12 text-center font-body text-sm text-[#94A3B8]">No bookings found</td></tr>
                 ) : bookings.map(b => (
                   <tr key={b.bookingId} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 font-body text-sm font-semibold text-[#2563EB] whitespace-nowrap">{b.bookingId}</td>
+                    <td className="px-4 py-3 font-body text-sm font-semibold text-[#166534] whitespace-nowrap">{b.bookingId}</td>
                     <td className="px-4 py-3">
                       <div className="font-body text-sm font-semibold text-[#0F172A]">{b.customerName}</div>
                       <div className="font-body text-xs text-[#94A3B8]">{b.mobile}</div>
@@ -113,11 +113,11 @@ const AdminBookingsPage = () => {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1">
-                        <button onClick={() => setSelected(b)} className="p-1.5 hover:bg-blue-50 rounded-lg text-[#2563EB] transition-colors" title="View">
+                        <button onClick={() => setSelected(b)} className="p-1.5 hover:bg-green-50 rounded-lg text-[#166534] transition-colors" title="View">
                           <Eye className="w-4 h-4" />
                         </button>
                         {b.status === "pending" && (
-                          <button onClick={() => updateStatus(b.bookingId, "confirmed")} className="p-1.5 hover:bg-green-50 rounded-lg text-[#10B981] transition-colors" title="Confirm">
+                          <button onClick={() => updateStatus(b.bookingId, "confirmed")} className="p-1.5 hover:bg-green-50 rounded-lg text-[#22c55e] transition-colors" title="Confirm">
                             <Check className="w-4 h-4" />
                           </button>
                         )}
@@ -127,7 +127,7 @@ const AdminBookingsPage = () => {
                           </button>
                         )}
                         {b.status === "confirmed" && (
-                          <button onClick={() => updateStatus(b.bookingId, "completed")} className="p-1.5 hover:bg-blue-50 rounded-lg text-[#2563EB] transition-colors text-xs font-bold" title="Complete">
+                          <button onClick={() => updateStatus(b.bookingId, "completed")} className="p-1.5 hover:bg-green-50 rounded-lg text-[#166534] transition-colors text-xs font-bold" title="Complete">
                             ✓
                           </button>
                         )}
@@ -174,11 +174,11 @@ const AdminBookingsPage = () => {
               <div className="mt-5 flex gap-2">
                 {selected.status === "pending" && (
                   <button onClick={() => updateStatus(selected.bookingId, "confirmed")} disabled={updating}
-                    className="flex-1 bg-[#10B981] text-white py-2.5 rounded-xl font-body font-bold text-sm">Confirm</button>
+                    className="flex-1 bg-[#22c55e] text-white py-2.5 rounded-xl font-body font-bold text-sm">Confirm</button>
                 )}
                 {selected.status === "confirmed" && (
                   <button onClick={() => updateStatus(selected.bookingId, "completed")} disabled={updating}
-                    className="flex-1 bg-[#2563EB] text-white py-2.5 rounded-xl font-body font-bold text-sm">Mark Completed</button>
+                    className="flex-1 bg-[#166534] text-white py-2.5 rounded-xl font-body font-bold text-sm">Mark Completed</button>
                 )}
                 {selected.status !== "cancelled" && (
                   <button onClick={() => updateStatus(selected.bookingId, "cancelled")} disabled={updating}

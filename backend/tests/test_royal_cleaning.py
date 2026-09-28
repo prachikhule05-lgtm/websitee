@@ -168,8 +168,7 @@ class TestReviews:
     def test_approve_review(self, admin_headers):
         if not TestReviews.review_id:
             pytest.skip("No review created")
-        resp = requests.put(f"{BASE_URL}/api/admin/reviews/{TestReviews.review_id}",
-                            json={"status": "approved"}, headers=admin_headers)
+        resp = requests.patch(f"{BASE_URL}/api/admin/reviews/{TestReviews.review_id}/approve", headers=admin_headers)
         assert resp.status_code == 200
 
 

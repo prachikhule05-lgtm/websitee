@@ -115,24 +115,48 @@ export const SERVICES_STATIC = [
 ];
 
 export const TESTIMONIALS_STATIC = [
-  { name: "Priya Sharma", service: "Home Deep Cleaning", rating: 5, location: "Koregaon Park",
+  {
+    name: "Priya Sharma",
+    service: "Home Deep Cleaning",
+    rating: 5,
+    date: "Jul 2025",
     text: "Absolutely amazing service! My 3BHK was cleaned spotlessly. The team was professional, punctual, and used eco-friendly products. Will definitely book again!",
-    image: "https://images.unsplash.com/photo-1757744705465-ea08b0ddc38a?w=100&q=80" },
-  { name: "Rahul Mehta", service: "Office Cleaning", rating: 5, location: "Baner",
+  },
+  {
+    name: "Rahul Mehta",
+    service: "Office Cleaning",
+    rating: 5,
+    date: "Jun 2025",
     text: "Royal Cleaning transformed our office space completely. The team was thorough, efficient, and very professional. Our entire office is sparkling clean!",
-    image: "https://images.unsplash.com/photo-1725033489648-a819750348eb?w=100&q=80" },
-  { name: "Anita Desai", service: "Sofa Cleaning", rating: 5, location: "Viman Nagar",
+  },
+  {
+    name: "Anita Desai",
+    service: "Sofa Cleaning",
+    rating: 5,
+    date: "Jun 2025",
     text: "My sofa looks brand new! All the stubborn stains were removed and it smells wonderful. Great value for money and very professional team.",
-    image: "https://images.unsplash.com/photo-1589386417686-0d34b5903d23?w=100&q=80" },
-  { name: "Suresh Patil", service: "Kitchen Deep Cleaning", rating: 5, location: "Kharadi",
+  },
+  {
+    name: "Suresh Patil",
+    service: "Kitchen Deep Cleaning",
+    rating: 5,
+    date: "May 2025",
     text: "The kitchen looks brand new! Every corner was cleaned thoroughly. The team worked efficiently and left no mess. Highly recommended!",
-    image: "https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?w=100&q=80" },
-  { name: "Meera Joshi", service: "Move-In Cleaning", rating: 5, location: "Hinjewadi",
+  },
+  {
+    name: "Meera Joshi",
+    service: "Move-In Cleaning",
+    rating: 5,
+    date: "May 2025",
     text: "We moved into a perfectly clean home thanks to Royal Cleaning Services. Every nook and corner was spotless. Amazing attention to detail!",
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" },
-  { name: "Amit Kumar", service: "Bathroom Deep Cleaning", rating: 4, location: "Wakad",
+  },
+  {
+    name: "Amit Kumar",
+    service: "Bathroom Deep Cleaning",
+    rating: 4,
+    date: "Apr 2025",
     text: "Very impressed with the bathroom cleaning. The tiles look sparkling clean and the limescale is completely gone. Very professional team!",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" },
+  },
 ];
 
 export const FAQ_DATA = [

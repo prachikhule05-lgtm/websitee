@@ -6,26 +6,26 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --background: 210 40% 98%; /* Light sky/off-white */
+    --foreground: 222 47% 11%; /* Slate dark navy text */
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 221 83% 53%;
+    --primary: 144 65% 24%; /* Forest Green (#166534) */
     --primary-foreground: 0 0% 100%;
     --secondary: 210 40% 96%;
     --secondary-foreground: 222 47% 11%;
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
-    --accent: 24 94% 53%;
+    --accent: 142 71% 45%; /* Emerald Green (#22c55e) */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 221 83% 53%;
-    --radius: 0.75rem;
+    --ring: 144 65% 24%;
+    --radius: 1rem; /* Softer, rounded corners */
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -43,7 +43,7 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #F8FAFC;
+    background-color: hsl(var(--background));
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -56,8 +56,8 @@
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #F1F5F9; }
-::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #1D4ED8; }
+::-webkit-scrollbar-thumb { background: #166534; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #14532d; }
 
 /* Smooth scroll */
 html { scroll-behavior: smooth; }
@@ -76,11 +76,11 @@ button:active:not(:disabled) {
   transform: scale(0.97);
   transition: transform 0.08s ease;
 }
-.btn-orange-glow:active:not(:disabled) {
+.shadow-md:active:not(:disabled) {
   transform: scale(0.97) translateY(0) !important;
   box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35) !important;
 }
-.btn-blue-glow:active:not(:disabled) {
+.shadow-md:active:not(:disabled) {
   transform: scale(0.97) translateY(0) !important;
 }
 
@@ -156,7 +156,7 @@ button:active:not(:disabled) {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #2563EB, #F59E0B);
+  background: linear-gradient(135deg, #166534, #166534);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -172,11 +172,11 @@ button:active:not(:disabled) {
 }
 
 /* Orange glow button */
-.btn-orange-glow {
+.shadow-md {
   box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
   transition: all 0.3s ease;
 }
-.btn-orange-glow:hover {
+.shadow-md:hover {
   box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
   transform: translateY(-2px);
 }
@@ -189,11 +189,11 @@ button:active:not(:disabled) {
 
 
 /* Blue glow button */
-.btn-blue-glow {
+.shadow-md {
   box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35);
   transition: all 0.3s ease;
 }
-.btn-blue-glow:hover {
+.shadow-md:hover {
   box-shadow: 0 8px 30px rgba(37, 99, 235, 0.5);
   transform: translateY(-2px);
 }
@@ -214,13 +214,13 @@ button:active:not(:disabled) {
 
 /* Booking step progress */
 .step-active {
-  background: #2563EB;
+  background: #166534;
   color: white;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 .step-completed {
-  background: #10B981;
+  background: #22c55e;
   color: white;
 }
 
@@ -231,7 +231,7 @@ button:active:not(:disabled) {
 
 /* Service card badge */
 .badge-popular {
-  background: linear-gradient(135deg, #F59E0B, #D97706);
+  background: linear-gradient(135deg, #166534, #14532d);
   color: white;
   font-size: 11px;
   font-weight: 700;

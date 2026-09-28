@@ -47,14 +47,14 @@ const HorizontalServiceCard = ({ service, index }) => {
             <div>
               <h3 className="font-heading font-bold text-[#0F172A] text-base leading-tight">{service.name}</h3>
               <span className={`inline-flex text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 ${
-                service.category === "commercial" ? "bg-purple-50 text-purple-600" : "bg-blue-50 text-[#2563EB]"
+                service.category === "commercial" ? "bg-purple-50 text-purple-600" : "bg-green-50 text-[#166534]"
               }`}>
                 {service.category === "commercial" ? "Commercial" : "Residential"}
               </span>
             </div>
             <div className="text-right flex-shrink-0">
               <div className="font-body text-[10px] text-[#94A3B8] uppercase tracking-wide">Starting</div>
-              <div className="font-heading font-extrabold text-lg text-[#2563EB] leading-tight">
+              <div className="font-heading font-extrabold text-lg text-[#166534] leading-tight">
                 {isCustom ? "Custom" : `₹${service.startingPrice?.toLocaleString("en-IN")}`}
               </div>
               {service.priceType === "per_seat" && (
@@ -75,7 +75,7 @@ const HorizontalServiceCard = ({ service, index }) => {
           <div className="flex flex-wrap gap-1.5 mb-4">
             {(service.features || []).slice(0, 3).map((f, fi) => (
               <div key={fi} className="flex items-center gap-1 bg-[#F8FAFC] rounded-full px-2.5 py-1 border border-gray-100">
-                <Check className="w-2.5 h-2.5 text-[#10B981] flex-shrink-0" />
+                <Check className="w-2.5 h-2.5 text-[#22c55e] flex-shrink-0" />
                 <span className="font-body text-[10px] text-[#1E293B]">{f}</span>
               </div>
             ))}
@@ -92,7 +92,7 @@ const HorizontalServiceCard = ({ service, index }) => {
           <div className="flex items-center gap-1.5">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
+                <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
               ))}
             </div>
             <span className="font-body text-[11px] text-[#1E293B] font-semibold">4.9</span>
@@ -101,7 +101,7 @@ const HorizontalServiceCard = ({ service, index }) => {
           <Link
             to={`/booking?service=${service.slug}`}
             data-testid={SERVICES.bookBtn}
-            className="btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-5 py-2.5 rounded-xl font-body font-bold text-xs flex items-center gap-1.5 transition-all"
+            className="bg-[#166534] hover:bg-[#14532d] text-white px-5 py-2.5 rounded-xl font-body font-bold text-xs flex items-center gap-1.5 transition-all shadow-md"
           >
             Book Now <ChevronRight className="w-3.5 h-3.5" />
           </Link>
@@ -136,26 +136,31 @@ const ServicesPage = () => {
       <Header />
       <main className="pb-16 md:pb-0">
         {/* Hero */}
-        <div className="bg-gradient-to-r from-[#0F172A] to-[#1E3A5F] pt-28 pb-14">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative pt-32 pb-14 border-b border-gray-100 overflow-hidden bg-[#F8FAFC]">
+          <div className="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1600&q=85" alt="Clean modern home" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-white/90" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] to-transparent" />
+          </div>
+          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="font-body text-sm font-semibold text-[#F59E0B] uppercase tracking-widest mb-2"
+              className="font-body text-sm font-semibold text-[#166534] uppercase tracking-widest mb-2"
             >
               What We Offer
             </motion.p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-heading text-4xl sm:text-5xl font-extrabold text-white mb-4"
+              className="font-heading text-4xl sm:text-5xl font-extrabold text-[#0F172A] mb-4"
             >
               Our Cleaning Services
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.2 } }}
-              className="font-body text-base text-slate-300 max-w-xl mx-auto mb-8"
+              className="font-body text-base text-slate-600 max-w-xl mx-auto mb-8"
             >
               Professional cleaning for homes, offices, and commercial spaces across Pune.
             </motion.p>
@@ -173,7 +178,7 @@ const ServicesPage = () => {
                 placeholder="Search services..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full bg-white rounded-2xl pl-12 pr-10 py-4 font-body text-sm focus:outline-none focus:ring-2 focus:ring-[#F59E0B] shadow-lg"
+                className="w-full bg-white border border-gray-200 rounded-2xl pl-12 pr-10 py-4 font-body text-sm focus:outline-none focus:ring-2 focus:ring-[#166534] shadow-md"
               />
               {search && (
                 <button
@@ -197,8 +202,8 @@ const ServicesPage = () => {
                 onClick={() => setCategory(cat)}
                 className={`px-5 py-2 rounded-full font-body text-sm font-semibold transition-all border ${
                   category === cat
-                    ? "bg-[#2563EB] text-white border-[#2563EB] shadow-blue"
-                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#2563EB] hover:text-[#2563EB]"
+                    ? "bg-[#166534] text-white border-[#166534] shadow-md"
+                    : "bg-white text-[#1E293B] border-gray-200 hover:border-[#166534] hover:text-[#166534]"
                 }`}
               >
                 {cat}
@@ -207,7 +212,7 @@ const ServicesPage = () => {
             {(search || category !== "All") && (
               <button
                 onClick={() => { setSearch(""); setCategory("All"); }}
-                className="flex items-center gap-1 px-4 py-2 rounded-full font-body text-xs text-[#F59E0B] border border-amber-200 hover:bg-amber-50 transition-all"
+                className="flex items-center gap-1 px-4 py-2 rounded-full font-body text-xs text-[#166534] border border-green-200 hover:bg-green-50 transition-all"
               >
                 <X className="w-3 h-3" /> Clear filters
               </button>
@@ -245,7 +250,7 @@ const ServicesPage = () => {
               <p className="font-body text-sm text-[#1E293B]">Try a different search or category</p>
               <button
                 onClick={() => { setSearch(""); setCategory("All"); }}
-                className="mt-4 bg-[#2563EB] text-white px-6 py-2.5 rounded-full font-body font-semibold text-sm hover:bg-[#1D4ED8] transition-all"
+                className="mt-4 bg-[#166534] text-white px-6 py-2.5 rounded-full font-body font-semibold text-sm hover:bg-[#14532d] transition-all"
               >
                 View All Services
               </button>
@@ -258,24 +263,24 @@ const ServicesPage = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mt-10 bg-gradient-to-r from-[#0F172A] to-[#1E3A5F] rounded-3xl p-8 text-center"
+              className="mt-10 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100 rounded-3xl p-8 text-center"
             >
-              <h3 className="font-heading text-2xl font-bold text-white mb-2">
+              <h3 className="font-heading text-2xl font-bold text-[#0F172A] mb-2">
                 Can't find what you're looking for?
               </h3>
-              <p className="font-body text-slate-300 text-sm mb-5">
+              <p className="font-body text-slate-600 text-sm mb-5">
                 Contact us for a custom cleaning quote tailored to your needs.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   to="/booking"
-                  className="btn-orange-glow bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center"
+                  className="bg-[#166534] hover:bg-[#14532d] text-white px-8 py-4 rounded-full font-body font-bold text-sm inline-flex items-center gap-2 transition-all justify-center shadow-md"
                 >
                   Book Any Service <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   to="/contact"
-                  className="bg-white/10 border border-white/20 text-white px-8 py-4 rounded-full font-body font-semibold text-sm hover:bg-white/20 transition-all justify-center inline-flex items-center gap-2"
+                  className="bg-white border border-slate-200 text-slate-800 px-8 py-4 rounded-full font-body font-semibold text-sm hover:bg-slate-50 transition-all justify-center inline-flex items-center gap-2"
                 >
                   Get Custom Quote
                 </Link>

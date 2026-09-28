@@ -1,12 +1,14 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Body
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Body, UploadFile, File, Form
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
-from pydantic import BaseModel, BeforeValidator, ConfigDict
+from mongomock_motor import AsyncMongoMockClient as AsyncIOMotorClient
+from pydantic import BaseModel, Field, field_validator, ConfigDict, BeforeValidator
 from typing import List, Optional, Annotated, Any, Dict
 import os, logging, bcrypt, jwt, random, string
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+import html
 from bson import ObjectId
 
 ROOT_DIR = Path(__file__).parent
@@ -31,7 +33,12 @@ def validate_object_id(v: Any) -> str:
         return str(v)
     return str(v)
 
-PyObjectId = Annotated[str, BeforeValidator(validate_object_id)]
+# Simplify object id handling to a plain string alias for compatibility
+PyObjectId = str
+
+
+def sanitize_text(value: str) -> str:
+    return html.escape(str(value).strip())
 
 
 def hash_password(password: str) -> str:
@@ -96,11 +103,41 @@ class LeadCreate(BaseModel):
     message: str
 
 class ReviewCreate(BaseModel):
-    customerName: str
+    name: str
     service: str
     rating: int
-    text: str
-    customerImage: Optional[str] = ""
+    review: str
+
+    @field_validator("name", mode="before")
+    def validate_name(cls, value):
+        if not value or not str(value).strip():
+            raise ValueError("Name is required")
+        return sanitize_text(value)
+
+    @field_validator("service", mode="before")
+    def validate_service(cls, value):
+        if not value or not str(value).strip():
+            raise ValueError("Service is required")
+        return sanitize_text(value)
+
+    @field_validator("rating", mode="before")
+    def validate_rating(cls, value):
+        if not isinstance(value, int):
+            raise ValueError("Rating must be a number between 1 and 5")
+        if value < 1 or value > 5:
+            raise ValueError("Rating must be between 1 and 5")
+        return value
+
+    @field_validator("review", mode="before")
+    def validate_review(cls, value):
+        if not value or not str(value).strip():
+            raise ValueError("Review text is required")
+        text = str(value).strip()
+        if len(text) < 20:
+            raise ValueError("Review must be at least 20 characters")
+        if len(text) > 500:
+            raise ValueError("Review must be less than 500 characters")
+        return sanitize_text(text)
 
 class BookingStatusUpdate(BaseModel):
     status: Optional[str] = None
@@ -108,6 +145,55 @@ class BookingStatusUpdate(BaseModel):
 
 class ReviewStatusUpdate(BaseModel):
     status: Optional[str] = None
+    approved: Optional[bool] = None
+
+class ReviewUpdate(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    service: Optional[str] = None
+    rating: Optional[int] = None
+    review: Optional[str] = None
+    images: Optional[List[str]] = None
+    verified: Optional[bool] = None
+    approved: Optional[bool] = None
+    status: Optional[str] = None
+
+    @field_validator("name", mode="before")
+    def validate_name(cls, value):
+        if value is None:
+            return value
+        if not str(value).strip():
+            raise ValueError("Name cannot be empty")
+        return sanitize_text(value)
+
+    @field_validator("service", mode="before")
+    def validate_service(cls, value):
+        if value is None:
+            return value
+        if not str(value).strip():
+            raise ValueError("Service cannot be empty")
+        return sanitize_text(value)
+
+    @field_validator("rating", mode="before")
+    def validate_rating(cls, value):
+        if value is None:
+            return value
+        if not isinstance(value, int):
+            raise ValueError("Rating must be a number between 1 and 5")
+        if value < 1 or value > 5:
+            raise ValueError("Rating must be between 1 and 5")
+        return value
+
+    @field_validator("review", mode="before")
+    def validate_review(cls, value):
+        if value is None:
+            return value
+        text = str(value).strip()
+        if len(text) < 20:
+            raise ValueError("Review must be at least 20 characters")
+        if len(text) > 500:
+            raise ValueError("Review must be less than 500 characters")
+        return sanitize_text(text)
 
 
 def generate_booking_id() -> str:
@@ -238,33 +324,188 @@ async def get_leads(admin=Depends(get_current_admin)):
 
 @api_router.get("/reviews")
 async def get_reviews():
-    reviews = await db.reviews.find({"status": "approved"}).sort("createdAt", -1).to_list(50)
+    reviews = await db.reviews.find({"approved": True}).sort("createdAt", -1).to_list(50)
     for r in reviews:
         r["id"] = str(r["_id"]); del r["_id"]
     return reviews
 
+def make_upload_path(filename: str) -> str:
+    clean_name = "".join(c for c in filename if c.isalnum() or c in "-. _").strip().replace(" ", "_")
+    suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+    name, ext = os.path.splitext(clean_name or "image")
+    return f"/uploads/review-images/{name[:60]}-{suffix}{ext or '.jpg'}"
+
+async def save_upload_file(upload_file: UploadFile) -> str:
+    upload_dir = ROOT_DIR / "uploads" / "review-images"
+    upload_dir.mkdir(parents=True, exist_ok=True)
+    file_path = ROOT_DIR / make_upload_path(upload_file.filename).lstrip("/")
+    with open(file_path, "wb") as out_file:
+        content = await upload_file.read()
+        out_file.write(content)
+    return str(file_path).replace(str(ROOT_DIR), "").replace("\\", "/")
+
 @api_router.post("/reviews")
-async def submit_review(review: ReviewCreate):
-    doc = {**review.model_dump(), "status": "pending", "createdAt": datetime.now(timezone.utc).isoformat()}
+async def submit_review(request: Request,
+                        name: Optional[str] = Form(None),
+                        phone: Optional[str] = Form(None),
+                        service: Optional[str] = Form(None),
+                        rating: Optional[int] = Form(None),
+                        review: Optional[str] = Form(None),
+                        images: Optional[List[UploadFile]] = File(None)):
+    payload = {}
+    content_type = request.headers.get("content-type", "")
+    if content_type.startswith("application/json"):
+        payload = await request.json()
+        normalized = {
+            "name": payload.get("name") or payload.get("customerName"),
+            "phone": payload.get("phone"),
+            "service": payload.get("service"),
+            "rating": payload.get("rating"),
+            "review": payload.get("review") or payload.get("text")
+        }
+        review_data = ReviewCreate.model_validate(normalized)
+        image_urls = []
+    else:
+        normalized = {
+            "name": name,
+            "phone": phone,
+            "service": service,
+            "rating": rating,
+            "review": review
+        }
+        review_data = ReviewCreate.model_validate(normalized)
+        image_urls = []
+        if images:
+            for upload in images:
+                image_urls.append(await save_upload_file(upload))
+
+    doc = {
+        "name": sanitize_text(review_data.name),
+        "phone": sanitize_text(payload.get("phone") or phone or ""),
+        "service": sanitize_text(review_data.service),
+        "rating": review_data.rating,
+        "review": sanitize_text(review_data.review),
+        "images": image_urls,
+        "verified": False,
+        "approved": False,
+        "status": "pending",
+        "createdAt": datetime.now(timezone.utc).isoformat(),
+        "updatedAt": datetime.now(timezone.utc).isoformat()
+    }
     result = await db.reviews.insert_one(doc)
     return {"id": str(result.inserted_id), "message": "Review submitted for approval"}
 
+@api_router.get("/reviews/summary")
+async def get_reviews_summary():
+    pipeline = [
+        {"$match": {"approved": True}},
+        {"$facet": {
+            "total": [{"$count": "n"}],
+            "avgRating": [{"$group": {"_id": None, "avg": {"$avg": "$rating"}}}],
+            "stars": [{"$group": {"_id": "$rating", "count": {"$count": "n"}}}]
+        }}
+    ]
+    result = await db.reviews.aggregate(pipeline).to_list(1)
+    data = result[0] if result else {"total": [], "avgRating": [], "stars": []}
+    total = data["total"][0]["n"] if data["total"] else 0
+    avg = round(data["avgRating"][0]["avg"], 1) if data["avgRating"] else 0
+    stars = {item["_id"]: item["count"] for item in data["stars"]}
+    distribution = [{"rating": i, "count": stars.get(i, 0)} for i in range(5, 0, -1)]
+    return {
+        "totalReviews": total,
+        "averageRating": avg,
+        "distribution": distribution
+    }
+
+@api_router.patch("/reviews/{review_id}")
+async def update_review(review_id: str, payload: ReviewUpdate, admin=Depends(get_current_admin)):
+    update_data = {k: v for k, v in payload.model_dump().items() if v is not None}
+    if "review" in update_data:
+        update_data["review"] = sanitize_text(update_data["review"])
+    if "name" in update_data:
+        update_data["name"] = sanitize_text(update_data["name"])
+    if "service" in update_data:
+        update_data["service"] = sanitize_text(update_data["service"])
+    if "phone" in update_data:
+        update_data["phone"] = sanitize_text(update_data["phone"])
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No update fields provided")
+    update_data["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    result = await db.reviews.update_one({"_id": ObjectId(review_id)}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Review not found")
+    return {"message": "Review updated"}
+
+@api_router.delete("/reviews/{review_id}")
+async def delete_review(review_id: str, admin=Depends(get_current_admin)):
+    result = await db.reviews.delete_one({"_id": ObjectId(review_id)})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Review not found")
+    return {"message": "Review deleted"}
+
 @api_router.get("/admin/reviews")
-async def get_all_reviews(admin=Depends(get_current_admin)):
-    reviews = await db.reviews.find().sort("createdAt", -1).to_list(200)
+async def get_all_reviews(status: str = "", search: str = "", sort: str = "newest", admin=Depends(get_current_admin)):
+    query = {}
+    if status and status != "all":
+        query["status"] = status
+    if search:
+        query["$or"] = [
+            {"name": {"$regex": search, "$options": "i"}},
+            {"service": {"$regex": search, "$options": "i"}},
+            {"review": {"$regex": search, "$options": "i"}},
+            {"status": {"$regex": search, "$options": "i"}}
+        ]
+    sort_order = -1 if sort == "newest" else 1
+    reviews = await db.reviews.find(query).sort([("createdAt", sort_order)]).to_list(200)
     for r in reviews:
         r["id"] = str(r["_id"]); del r["_id"]
     return reviews
 
-@api_router.put("/admin/reviews/{review_id}")
-async def update_review(review_id: str, update: ReviewStatusUpdate, admin=Depends(get_current_admin)):
-    await db.reviews.update_one({"_id": ObjectId(review_id)},
-        {"$set": {k: v for k, v in update.model_dump().items() if v is not None}})
-    return {"message": "Review updated"}
+class BulkReviewAction(BaseModel):
+    reviewIds: List[str]
+    action: str
+
+    @field_validator("reviewIds", mode="before")
+    def validate_review_ids(cls, value):
+        if not isinstance(value, list) or not value:
+            raise ValueError("reviewIds must be a non-empty list")
+        return value
+
+    @field_validator("action", mode="before")
+    def validate_action(cls, value):
+        if value not in {"approve", "reject", "delete"}:
+            raise ValueError("Action must be approve, reject, or delete")
+        return value
+
+@api_router.post("/admin/reviews/bulk")
+async def bulk_review_action(payload: BulkReviewAction, admin=Depends(get_current_admin)):
+    ids = [ObjectId(rid) for rid in payload.reviewIds]
+    if payload.action == "delete":
+        result = await db.reviews.delete_many({"_id": {"$in": ids}})
+        return {"deleted": result.deleted_count}
+    update = {"approved": payload.action == "approve", "status": payload.action + "d", "updatedAt": datetime.now(timezone.utc).isoformat()}
+    result = await db.reviews.update_many({"_id": {"$in": ids}}, {"$set": update})
+    return {"matched": result.matched_count, "modified": result.modified_count}
+
+@api_router.patch("/admin/reviews/{review_id}/approve")
+async def approve_review(review_id: str, admin=Depends(get_current_admin)):
+    result = await db.reviews.update_one({"_id": ObjectId(review_id)}, {"$set": {"approved": True, "status": "approved", "updatedAt": datetime.now(timezone.utc).isoformat()}})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Review not found")
+    return {"message": "Review approved"}
+
+@api_router.patch("/admin/reviews/{review_id}/reject")
+async def reject_review(review_id: str, admin=Depends(get_current_admin)):
+    result = await db.reviews.update_one({"_id": ObjectId(review_id)}, {"$set": {"approved": False, "status": "rejected", "updatedAt": datetime.now(timezone.utc).isoformat()}})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Review not found")
+    return {"message": "Review rejected"}
 
 @api_router.delete("/admin/reviews/{review_id}")
 async def delete_review(review_id: str, admin=Depends(get_current_admin)):
-    await db.reviews.delete_one({"_id": ObjectId(review_id)})
+    result = await db.reviews.delete_one({"_id": ObjectId(review_id)})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Review not found")
     return {"message": "Review deleted"}
 
 
@@ -384,24 +625,15 @@ SERVICES_SEED = [
 ]
 
 REVIEWS_SEED = [
-    {"customerName": "Priya Sharma", "service": "Home Deep Cleaning", "rating": 5,
-     "text": "Absolutely amazing service! My 3BHK was cleaned spotlessly. The team was professional, punctual, and used eco-friendly products. Will definitely book again!",
-     "status": "approved", "customerImage": "https://images.unsplash.com/photo-1757744705465-ea08b0ddc38a?w=100&q=80", "createdAt": "2024-12-15T10:00:00Z"},
-    {"customerName": "Rahul Mehta", "service": "Office Cleaning", "rating": 5,
-     "text": "Royal Cleaning transformed our office space completely. The team was thorough, efficient, and very professional. Our entire office is sparkling clean!",
-     "status": "approved", "customerImage": "https://images.unsplash.com/photo-1725033489648-a819750348eb?w=100&q=80", "createdAt": "2025-01-20T14:00:00Z"},
-    {"customerName": "Anita Desai", "service": "Sofa Cleaning", "rating": 5,
-     "text": "My sofa looks brand new after the cleaning! All the stubborn stains were removed and it smells wonderful. Great value for money!",
-     "status": "approved", "customerImage": "https://images.unsplash.com/photo-1589386417686-0d34b5903d23?w=100&q=80", "createdAt": "2025-01-25T11:00:00Z"},
-    {"customerName": "Suresh Patil", "service": "Kitchen Deep Cleaning", "rating": 5,
-     "text": "The kitchen looks brand new! Every corner was cleaned thoroughly. The team worked efficiently and left no mess. Highly recommended for Pune residents!",
-     "status": "approved", "customerImage": "https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?w=100&q=80", "createdAt": "2025-02-01T09:00:00Z"},
-    {"customerName": "Meera Joshi", "service": "Move-In Cleaning", "rating": 5,
-     "text": "We moved into a perfectly clean home thanks to Royal Cleaning Services. Every nook and corner was spotless. Amazing attention to detail!",
-     "status": "approved", "customerImage": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80", "createdAt": "2025-02-10T15:00:00Z"},
-    {"customerName": "Amit Kumar", "service": "Bathroom Deep Cleaning", "rating": 4,
-     "text": "Very impressed with the bathroom cleaning. The tiles look sparkling clean and the limescale is completely gone. Very professional team, on time and efficient.",
-     "status": "approved", "customerImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80", "createdAt": "2025-02-15T13:00:00Z"},
+    {"name": "Rahul Sharma", "service": "Deep Home Cleaning", "rating": 5,
+     "review": "The team arrived on time and transformed our home. Every corner was spotless, and the staff was polite and professional. Highly recommended!",
+     "approved": True, "status": "approved", "createdAt": "2025-01-20T14:00:00Z", "updatedAt": "2025-01-20T14:00:00Z"},
+    {"name": "Meera Joshi", "service": "Move-In Cleaning", "rating": 5,
+     "review": "We moved into a perfectly clean apartment thanks to Royal Cleaning Services. Amazing attention to detail and excellent customer service.",
+     "approved": True, "status": "approved", "createdAt": "2025-01-25T11:00:00Z", "updatedAt": "2025-01-25T11:00:00Z"},
+    {"name": "Amit Patil", "service": "Office Cleaning", "rating": 5,
+     "review": "Our office has never looked this clean. The team worked efficiently without disrupting our business operations.",
+     "approved": True, "status": "approved", "createdAt": "2025-02-01T09:00:00Z", "updatedAt": "2025-02-01T09:00:00Z"},
 ]
 
 
